@@ -11,7 +11,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             Console.WriteLine("This program is defined in it");
-            Console.WriteLine("This is my second line");
+            Console.WriteLine("This is my second line2");
             Console.ReadKey();
         }
     }
