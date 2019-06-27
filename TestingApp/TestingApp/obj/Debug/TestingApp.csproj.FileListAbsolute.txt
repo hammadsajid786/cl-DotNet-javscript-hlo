@@ -1,0 +1,10 @@
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\bin\Debug\TestingApp.exe.config
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\bin\Debug\TestingApp.exe
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\bin\Debug\TestingApp.pdb
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\obj\Debug\TestingApp.csprojAssemblyReference.cache
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\obj\Debug\TestingApp.Form1.resources
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\obj\Debug\TestingApp.Properties.Resources.resources
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\obj\Debug\TestingApp.csproj.GenerateResource.cache
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\obj\Debug\TestingApp.csproj.CoreCompileInputs.cache
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\obj\Debug\TestingApp.exe
+C:\Users\hammad.sajid\Documents\Visual Studio 2017\Projects\TestingApp\TestingApp\obj\Debug\TestingApp.pdb
