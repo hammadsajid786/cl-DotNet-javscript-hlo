@@ -1,0 +1,20 @@
+#header {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);
+    padding-top: 10px;
+    position:relative;
+    .logo{
+        /*margin: 0 0 -17px 5px;*/
+        position: relative;
+        z-index: 2;   
+        width: 170px;
+        img{ 
+            max-width: 100%;
+        }
+        @include media-breakpoint-up(lg) {
+           /* margin: 0 0 -27px 5px;*/
+            width: 250px
+        }
+    }
+}

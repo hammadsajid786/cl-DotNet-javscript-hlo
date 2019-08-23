@@ -1,0 +1,133 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLRMIS.Web.Services", "BLRMIS.Web.Services\BLRMIS.Web.Services.csproj", "{7B9EAFC7-DA87-47D2-A81B-B17C5B66BBF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLRMIS.Web.Domain", "BLRMIS.Web.Domain\BLRMIS.Web.Domain.csproj", "{C631ED26-E1FB-4FA1-A586-6102533D8CF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLRMIS.Web.Repositories", "BLRMIS.Web.Repositories\BLRMIS.Web.Repositories.csproj", "{BFD46091-7E83-476B-A8BD-E0D3502C7BDE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLRMIS.Web.API", "BLRMIS.Web.API\BLRMIS.Web.API.csproj", "{038D9878-6DD6-4940-B8D0-1D377EF4CAC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BRLMIS.Web.UI", "BRLMIS.Web.UI\BRLMIS.Web.UI.csproj", "{893FE7CC-C18D-41F2-9C44-85A85E9C1DB6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLRMIS.Web.Common", "BLRMIS.Web.Common\BLRMIS.Web.Common.csproj", "{E7861CA6-770E-4874-B5B3-C815B7A85BB7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLRMIS.Web.DataAccess", "BLRMIS.Web.DataAccess\BLRMIS.Web.DataAccess.csproj", "{E4CA246F-6AC6-4D35-9D52-53E2D76A20EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLRMIS.Web.AdminUI", "BLRMIS.Web.AdminUI\BLRMIS.Web.AdminUI.csproj", "{D9A935B1-EFFF-4542-9AD6-21A6F2AC384D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLRMIS.Console.ApiDownloadData", "BLRMIS.Console.ApiDownloadData\BLRMIS.Console.ApiDownloadData.csproj", "{75692D31-28B9-4D67-BA7E-DB0F244236B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B9EAFC7-DA87-47D2-A81B-B17C5B66BBF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9EAFC7-DA87-47D2-A81B-B17C5B66BBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9EAFC7-DA87-47D2-A81B-B17C5B66BBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9EAFC7-DA87-47D2-A81B-B17C5B66BBF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C631ED26-E1FB-4FA1-A586-6102533D8CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C631ED26-E1FB-4FA1-A586-6102533D8CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C631ED26-E1FB-4FA1-A586-6102533D8CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C631ED26-E1FB-4FA1-A586-6102533D8CF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD46091-7E83-476B-A8BD-E0D3502C7BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD46091-7E83-476B-A8BD-E0D3502C7BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD46091-7E83-476B-A8BD-E0D3502C7BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD46091-7E83-476B-A8BD-E0D3502C7BDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{038D9878-6DD6-4940-B8D0-1D377EF4CAC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{038D9878-6DD6-4940-B8D0-1D377EF4CAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{038D9878-6DD6-4940-B8D0-1D377EF4CAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{038D9878-6DD6-4940-B8D0-1D377EF4CAC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893FE7CC-C18D-41F2-9C44-85A85E9C1DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893FE7CC-C18D-41F2-9C44-85A85E9C1DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893FE7CC-C18D-41F2-9C44-85A85E9C1DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893FE7CC-C18D-41F2-9C44-85A85E9C1DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7861CA6-770E-4874-B5B3-C815B7A85BB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7861CA6-770E-4874-B5B3-C815B7A85BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7861CA6-770E-4874-B5B3-C815B7A85BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7861CA6-770E-4874-B5B3-C815B7A85BB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4CA246F-6AC6-4D35-9D52-53E2D76A20EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CA246F-6AC6-4D35-9D52-53E2D76A20EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CA246F-6AC6-4D35-9D52-53E2D76A20EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CA246F-6AC6-4D35-9D52-53E2D76A20EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A935B1-EFFF-4542-9AD6-21A6F2AC384D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A935B1-EFFF-4542-9AD6-21A6F2AC384D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A935B1-EFFF-4542-9AD6-21A6F2AC384D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A935B1-EFFF-4542-9AD6-21A6F2AC384D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75692D31-28B9-4D67-BA7E-DB0F244236B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75692D31-28B9-4D67-BA7E-DB0F244236B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75692D31-28B9-4D67-BA7E-DB0F244236B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75692D31-28B9-4D67-BA7E-DB0F244236B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF3CDE06-3A7B-4000-A682-DE0473C878AB}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs-pmo-app:8080/tfs/sl-dbu
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BLRMIS.Web.Services\\BLRMIS.Web.Services.csproj
+		SccProjectName1 = BLRMIS.Web.Services
+		SccLocalPath1 = BLRMIS.Web.Services
+		SccProjectUniqueName2 = BLRMIS.Web.Domain\\BLRMIS.Web.Domain.csproj
+		SccProjectName2 = BLRMIS.Web.Domain
+		SccLocalPath2 = BLRMIS.Web.Domain
+		SccProjectUniqueName3 = BLRMIS.Web.Repositories\\BLRMIS.Web.Repositories.csproj
+		SccProjectName3 = BLRMIS.Web.Repositories
+		SccLocalPath3 = BLRMIS.Web.Repositories
+		SccProjectUniqueName4 = BLRMIS.Web.API\\BLRMIS.Web.API.csproj
+		SccProjectName4 = BLRMIS.Web.API
+		SccLocalPath4 = BLRMIS.Web.API
+		SccProjectUniqueName5 = BRLMIS.Web.UI\\BRLMIS.Web.UI.csproj
+		SccProjectName5 = BRLMIS.Web.UI
+		SccLocalPath5 = BRLMIS.Web.UI
+		SccProjectUniqueName6 = BLRMIS.Web.Common\\BLRMIS.Web.Common.csproj
+		SccProjectName6 = BLRMIS.Web.Common
+		SccLocalPath6 = BLRMIS.Web.Common
+		SccProjectUniqueName7 = BLRMIS.Web.DataAccess\\BLRMIS.Web.DataAccess.csproj
+		SccProjectName7 = BLRMIS.Web.DataAccess
+		SccLocalPath7 = BLRMIS.Web.DataAccess
+		SccProjectUniqueName8 = BLRMIS.Web.AdminUI\\BLRMIS.Web.AdminUI.csproj
+		SccProjectName8 = BLRMIS.Web.AdminUI
+		SccLocalPath8 = BLRMIS.Web.AdminUI
+		SccProjectUniqueName9 = BLRMIS.Console.ApiDownloadData\\BLRMIS.Console.ApiDownloadData.csproj
+		SccProjectName9 = BLRMIS.Console.ApiDownloadData
+		SccLocalPath9 = BLRMIS.Console.ApiDownloadData
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs-pmo-app:8080/tfs/sl-dbu
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BLRMIS.Web.API\\BLRMIS.Web.API.csproj
+		SccProjectName1 = BLRMIS.Web.API
+		SccLocalPath1 = BLRMIS.Web.API
+		SccProjectUniqueName2 = BLRMIS.Web.Domain\\BLRMIS.Web.Domain.csproj
+		SccProjectName2 = BLRMIS.Web.Domain
+		SccLocalPath2 = BLRMIS.Web.Domain
+		SccProjectUniqueName3 = BLRMIS.Web.Repositories\\BLRMIS.Web.Repositories.csproj
+		SccProjectName3 = BLRMIS.Web.Repositories
+		SccLocalPath3 = BLRMIS.Web.Repositories
+		SccProjectUniqueName4 = BLRMIS.Web.Services\\BLRMIS.Web.Services.csproj
+		SccProjectName4 = BLRMIS.Web.Services
+		SccLocalPath4 = BLRMIS.Web.Services
+		SccProjectUniqueName5 = BRLMIS.Web.UI\\BRLMIS.Web.UI.csproj
+		SccProjectName5 = BRLMIS.Web.UI
+		SccLocalPath5 = BRLMIS.Web.UI
+		SccProjectUniqueName6 = BLRMIS.Web.Common\\BLRMIS.Web.Common.csproj
+		SccProjectName6 = BLRMIS.Web.Common
+		SccLocalPath6 = BLRMIS.Web.Common
+		SccProjectUniqueName7 = BLRMIS.Web.DataAccess\\BLRMIS.Web.DataAccess.csproj
+		SccProjectName7 = BLRMIS.Web.DataAccess
+		SccLocalPath7 = BLRMIS.Web.DataAccess
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,47 @@
+﻿<div id="main" class="innerpage" data-bind="if:IsSatisfied, visible:IsSatisfied" style="display:none">
+    <div class="container  mt50 mb50">
+        <div class="complaint-submitted">
+            <div class="col-md-8 offset-md-2 text-center sub-box">
+                <img class="mb-20" src="/images/closed-complaint.svg" alt="Complain Close icon" / >
+                <h3>Thank you!</h3>
+                <p class="largetext">Your complaint has been closed</p>
+                <p class="largetext">complaint number:</p>
+                <p class="phone-no" data-bind="text:ComplaintCode"></p>
+                <a asp-page="/complaint/complaintform" class="btn btn-print width90 mt30">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="main" class="innerpage" data-bind="if:IsUnSatisfied, visible:IsUnSatisfied" style="display:none">
+    <div class="container  mt50 mb50">
+        <div class="complaint-submitted">
+            <div class="col-md-8 offset-md-2 text-center sub-box">
+                <img src="/images/tick.png" / >
+                <h3>Thank you!</h3>
+                <p class="largetext">Your complaint has been submitted</p>
+                <p class="largetext">complaint number:</p>
+                <p class="phone-no" data-bind="text:ComplaintCode"></p>
+                @*<p class="Complaint-detail">
+                    Complaint number has been sent on your email and phone
+                    number. A representative will check out your complaint
+                    shortly for you help.
+                </p>*@
+                @*<a href="Complaint-page.html" class="btn btn-print mt30">Print</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main" class="innerpage" data-bind="if:IsError, visible:IsError" style="display:none">
+    <div class="container  mt50 mb50">
+        <div class="complaint-submitted">
+            <div class="col-md-8 offset-md-2 text-center sub-box">
+                <img class="mb-30" src="~/images/search-not-found.svg" alt="Result not found" / >
+                <h3>Oops!</h3>
+                <p class="largetext result-not-found" data-bind="text:ErrMessage"></p>
+                <a asp-page="/complaint/complaintform" class="btn btn-print width90 mt30">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+

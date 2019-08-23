@@ -1,0 +1,412 @@
+﻿@page  "/Resolvercomplaints"
+<div class="table-box">
+    <div class="hd-holder">
+        <h6>Complaints</h6>
+        <span class="bd-line"></span>
+    </div>
+    <partial name="_ComplaintListingFilterPartial" />
+    <div class="total-Complaints">
+        <div class="row">
+            <div class="col-md-9">
+                <p>Total Record(s): <b data-bind="text: totalRecordsCount"></b></p>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span class="custom-dropdown">
+                        <select class="form-control"
+                                data-bind="
+                                    options: ComplaintStatusList,
+                                    optionsText: 'Text',
+                                    optionsValue: 'Value',
+                                    optionsCaption: 'All Status',
+                                    value: SelectedStatus,
+                                    event: { change: OnfilterStatusChange }"></select>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-area" style="display:none" data-bind="visible:pageLoaded">
+        <table class="table table-bordered text-left">
+            <thead class="thead-light">
+                <tr>
+                    <th class="sorting" data-bind="click: onSort.bind($data, 'CreatedDate')">
+                        Date
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: onSort.bind($data, 'ComplaintCode')">
+                        Complaint No.
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: onSort.bind($data, 'ComplaintTitle')">
+                        Complaint Title
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: onSort.bind($data, 'ComplaintCategory.CategoryName')">
+                        Type
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: onSort.bind($data, 'ComplaintAssignToNavigation.FirstName')">
+                        Assign To
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th width="100px" class="sorting" data-bind="click: onSort.bind($data, 'ComplaintStatus.ComplaintStatus')">
+                        Status
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th width="100px" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: complaintList">
+                <tr>
+                    <td data-bind="date: CreatedDate, dateFormat: 'DD-MMM-YY'"></td>
+                    <td data-bind="text: ComplaintCode"></td>
+                    <td data-bind="text: ComplaintTitle"></td>
+                    <td data-bind="text: ComplaintCategory.CategoryName"></td>
+                    <td data-bind="text: AssignTo"></td>
+                    <td data-bind="text: ComplaintStatus.ComplaintStatus , class: ComplaintStatus.ComplaintStatusCode"></td>
+                    <td class="text-center action-items"><span class="icon-view-icon icon" alt="View details" title="View Details" data-bind="click: $parent.onViewDetails.bind($data)"></span></td>
+                </tr>
+            </tbody>
+            <tbody data-bind="if: complaintList().length <= 0">
+                <tr>
+                    <td colspan="7" align="center">
+                        <span>No Records Found.</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-12">
+            <div class="row">
+                <ul class="pagination col-sm-6">
+                    <li class="page-item" data-bind="class: getPreviousButtonClass">
+                        <a class="page-link left" href="#" data-bind="click: onPrevious"><span class="fa fa-caret-left"></span></a>
+                    </li>
+                    <li>
+                        <input type="text" class="page-link form-control" data-bind="integerInput, propertyName: 'totalPagesCount', value: currentPageNo, event: { change: onPageChange }" />
+                    </li>
+                    <li><p>of <span data-bind="text: totalPagesCount"></span></p></li>
+                    <li class="page-item" data-bind="class: getNextButtonClass">
+                        <a class="page-link right" href="#" data-bind="click: onNext"><span class="fa fa-caret-right"></span></a>
+                    </li>
+                </ul>
+                <div class="records-field col-sm-6 text-right">
+                    <label>
+                        Records per page
+                    </label>
+                    <div class="custom-dropdown cus-sel">
+                        <select class="form-control" id="ddlRecordsPerPage" data-bind="options: recordsPerPageList,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: selectedPageSize"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            var viewModel = {
+                complaintList: ko.observableArray(),
+                ComplaintTitle: ko.observable("-"),
+                ComplaintCode: ko.observable("-"),
+                ComplaintCategoryId: ko.observable(),
+                ComplaintStatusId: ko.observable(),
+                CreatedDate: ko.observable(),
+                totalPagesCount: ko.observable(0),
+                totalRecordsCount: ko.observable(0),
+                recordsPerPageList: ko.observableArray([]),
+                selectedPageSize: ko.observable(10),
+                currentPageNo: ko.observable(1),
+                orderBy: ko.observable("CreatedDate"),
+                isAscendingOrder: ko.observable(false),
+                SearchCategory: ko.observable(""),
+                onStatusChange: onStatusChange,
+                pageLoaded: ko.observable(false),
+                SelectedStatus: ko.observable(""),
+                SelectedPeriod: ko.observable(""),
+                StartDate: ko.observable(""),
+                EndDate: ko.observable(""),
+                ComplaintStatusList: ko.observableArray(),
+                ComplaintCodeSearch: ko.observable(""),
+                ComplaintCategoryList: ko.observableArray(),
+                SelectedCategory: ko.observable(),
+                // selectListModel: ko.observable(),
+                DatePeriods: ko.pureComputed(function () {
+                    var d = new Date();
+                    var list = [
+                        {
+                            Text: "Today",
+                            Value: d.toLocaleDateString()
+                        },
+                        {
+                            Text: "Yesturday",
+                            Value: new Date(d.setDate(d.getDate() - 1)).toLocaleDateString()
+                        },
+                        {
+                            Text: "Last 7 Days",
+                            Value: new Date(d.setDate(d.getDate() - 7)).toLocaleDateString()
+                        },
+                        {
+                            Text: "Last 15 Days",
+                            Value: new Date(d.setDate(d.getDate() - 15)).toLocaleDateString()
+                        },
+                        {
+                            Text: "Last 30 Days",
+                            Value: new Date(d.setDate(d.getDate() - 30)).toLocaleDateString()
+                        }
+                    ];
+                    return list;
+                }),
+                changeColor: ko.pureComputed(function () {
+                    if (faqId && !isNaN(parseInt(faqId)) && parseInt(faqId) > 0)
+                        return "focused";
+                    else
+                        return "";
+                }),
+                OnfilterStatusChange: GridLoad,
+                onPrevious: onPrevious,
+                onPageChange: GridLoad,
+                onNext: onNext
+            }
+
+            viewModel.getPreviousButtonClass = ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.currentPageNo());
+                return (currentPageNumber <= 1) ? '' : 'active';
+            }, viewModel);
+
+            viewModel.getNextButtonClass = ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.currentPageNo());
+                var totalPagesCount = parseInt(this.totalPagesCount());
+                return (currentPageNumber < totalPagesCount) ? 'active' : '';
+            }, viewModel);
+
+            var selectListModel = function (value, text) {
+                this.Text = text;
+                this.Value = value;
+            }
+
+
+            viewModel.fillRecordsPerPage = function () {
+
+                viewModel.recordsPerPageList([
+                    new selectListModel(10, "10"),
+                    new selectListModel(20, "20")
+                ]);
+            }
+
+            function onPrevious() {
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                if (currentPageNo > 1) {
+                    viewModel.currentPageNo(--currentPageNo);
+                    GridLoad();
+                }
+            }
+
+
+            function onNext() {
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                var totalPageCount = parseInt(viewModel.totalPagesCount());
+                if (currentPageNo < totalPageCount) {
+                    viewModel.currentPageNo(++currentPageNo);
+                    GridLoad();
+                }
+            }
+
+            function pageSize_Change() {
+
+                viewModel.selectedPageSize.subscribe(function () {
+                    viewModel.currentPageNo(1);
+                    GridLoad();
+                });
+            }
+
+            function GridLoad() {
+
+                viewModel.pageLoaded(false);
+                if (!isNaN(parseInt(viewModel.currentPageNo())) && parseInt(viewModel.currentPageNo()) > 0) {
+
+                    var queryParams = {
+                        Category: (viewModel.SelectedCategory() || ""),
+                        // Location: !viewModel.listModel.location() ? "" : viewModel.listModel.location(),
+                        PageIndex: parseInt(viewModel.currentPageNo()) - 1,
+                        OrderBy: viewModel.orderBy(),
+                        SortDirection: viewModel.isAscendingOrder() ? "Ascending" : "Descending",
+                        PageSize: viewModel.selectedPageSize(),
+                        StartDate: viewModel.StartDate(),
+                        EndDate: viewModel.EndDate()
+                    };
+
+                    var parameters =
+                        "filter:ComplaintCategoryId="
+                        + queryParams.Category
+                        //+ ",ComplaintAssignTo-"
+                        //+ queryParams.UserID
+                        + ",ComplaintStatusId="
+                        + (viewModel.SelectedStatus() || "")
+                        + ",ComplaintCode="
+                        + viewModel.ComplaintCodeSearch()
+                        + ",CreatedDate="
+                        + queryParams.StartDate
+                        + "||"
+                        + "CreatedDate="
+                        + queryParams.EndDate
+                        + ";orderby:"
+                        + queryParams.OrderBy
+                        + "="
+                        + queryParams.SortDirection
+                        + ";size:"
+                        + queryParams.PageSize
+                        + ";index:"
+                        + queryParams.PageIndex;
+
+                    $lib.showSpinner(true);
+                    $lib.http.get('/resolver/complaints?SearchParams=' + parameters, (err, res) => {
+                        $lib.showSpinner(false);
+                        viewModel.pageLoaded(true);
+                        if (err) return;
+                        var arr = [];
+
+                        for (var i = 0; i < res.Records.length; i++) {
+                            var model = {
+                                ComplaintCategory: { CategoryId: "", CategoryName: "", CategoryDescription: "" },
+                                ComplaintCategoryId: "",
+                                ComplaintCode: "",
+                                ComplaintDescription: "",
+                                ComplaintId: "",
+                                ComplaintStatus: { ComplaintStatusId: "", ComplaintStatus: "", ComplaintStatusCode: "" },
+                                ComplaintStatusId: "",
+                                ComplaintTitle: "",
+                                CreatedBy: "",
+                                CreatedDate: "",
+                                Location: { LocationId: "", LocationName: "" },
+                                LocationId: "",
+                                FunctionId: "",
+                                Function: { FunctionId: "", FunctionName: "" },
+                                ComplaintAssignTo: "",
+                                ComplaintAssignToNavigation: { UserId: "", UserName: "", FirstName: "", LastName: "" },
+                                AssignTo: ""
+
+                            };
+                            var item = res.Records[i];
+                            for (var p in item) {
+                                if (p == "FunctionId" && item[p] > 0) {
+                                    model["AssignTo"] = item["Function"].FunctionName;
+                                }
+                                if (p == "ComplaintAssignToNavigation" && item["ComplaintAssignTo"] > 0) {
+                                    model["AssignTo"] = item["ComplaintAssignToNavigation"].FirstName + " " + item["ComplaintAssignToNavigation"].LastName;
+                                }
+                                model[p] = item[p]
+                            }
+                            arr.push(model);
+                        }
+
+                        viewModel.complaintList(arr);
+                        viewModel.totalPagesCount(res.TotalPages);
+                        viewModel.totalRecordsCount(res.TotalRecords);
+                    })
+                }
+                else {
+                    $toastMessages.showError("Invalid Page Number");
+                    viewModel.pageLoaded(true);
+                }
+            }
+            function onStatusChange(abc) {
+                if (abc == 'Open') {
+                    return 'red'
+                }
+                else if (abc == 'Reopen') {
+                    return 'yellow'
+                }
+            }
+            GridLoad();
+            viewModel.fillRecordsPerPage();
+            pageSize_Change();
+
+            if (localStorage.getItem("successMessage") != null && localStorage.getItem("successMessage") != undefined) {
+                var message = localStorage.getItem("successMessage");
+                $toastMessages.showSuccess(message);
+                localStorage.removeItem("successMessage");
+            }
+
+            viewModel.onViewDetails = function (event) {
+                $util.navigateUrl(`ResolverComplaint/${event.ComplaintAccessToken}`);
+            }
+            viewModel.onSearch = function () {
+                viewModel.currentPageNo(1);
+                
+                GridLoad();
+            }
+
+
+
+            viewModel.onPrevious = function () {
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                if (currentPageNo > 1) {
+                    viewModel.currentPageNo(--currentPageNo);
+                    GridLoad();
+                }
+            }
+            viewModel.onNext = function () {
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                var totalPageCount = parseInt(viewModel.totalPagesCount());
+                if (currentPageNo < totalPageCount) {
+                    viewModel.currentPageNo(++currentPageNo);
+                    GridLoad();
+                }
+            }
+
+            viewModel.onSort = function (orderBy) {
+
+                var previousOrderBy = viewModel.orderBy();
+                var previousDirection = viewModel.isAscendingOrder();
+
+                if (previousOrderBy.toLowerCase() != orderBy.toLowerCase()) {
+
+                    viewModel.isAscendingOrder(true);
+                    viewModel.orderBy(orderBy);
+                }
+                else
+                    viewModel.isAscendingOrder(!previousDirection);
+
+                GridLoad();
+
+            }
+
+            $services.complaintStatusList((data) => {
+                viewModel.ComplaintStatusList(data);
+            })
+            $services.complaintCategoryList((data) => {
+                viewModel.ComplaintCategoryList(data);
+            })
+            $lib.bindUI(viewModel);
+            $lib.setPageTitle("Complaints (Resolver)");
+
+        })
+    </script>
+}

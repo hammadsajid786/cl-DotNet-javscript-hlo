@@ -1,0 +1,23 @@
+.selectstyle {
+  margin-top: 30px; }
+  .selectstyle .form-control {
+    color: #929292;
+    font-size: 14px;
+    margin-top: 15px;
+    font-weight: 300; }
+
+.mb20 {
+  margin-bottom: 20px; }
+
+.customBtn {
+  border: solid 1px #01923F;
+  margin-right: 10px;
+  line-height: 20px; }
+  .customBtn.whiteBtn {
+    border: 1px solid #01923F;
+    background: #fff;
+    color: #01923F !important; }
+  .customBtn.greyBtn {
+    border: 1px solid #898989;
+    background-color: #898989;
+    color: #fff !important; }

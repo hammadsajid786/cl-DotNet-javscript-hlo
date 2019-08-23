@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url("../fonts/icomoon.eot?nvkc63");
+  src: url("../fonts/icomoon.eot?nvkc63#iefix") format("embedded-opentype"), url("../fonts/icomoon.ttf?nvkc63") format("truetype"), url("../fonts/icomoon.woff?nvkc63") format("woff"), url("../fonts/icomoon.svg?nvkc63#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon-complaint-icon:before {
+  content: "\e900";
+  color: #fff; }
+
+.icon-digitize-map-icon:before {
+  content: "\e901";
+  color: #fff; }
+
+.icon-e-stamping-icon:before {
+  content: "\e902";
+  color: #fff; }
+
+.icon-fee-schedules-icon:before {
+  content: "\e903";
+  color: #fff; }
+
+.icon-grievance-icon:before {
+  content: "\e904";
+  color: #fff; }
+
+.icon-markaz-sahuliyat-icon:before {
+  content: "\e906";
+  color: #fff; }
+
+.icon-property-register-icon:before {
+  content: "\e907";
+  color: #fff; }
+
+.icon-registry-deeds-icon:before {
+  content: "\e908";
+  color: #fff; }
+
+.icon-tax-calculator-icon:before {
+  content: "\e909";
+  color: #fff; }

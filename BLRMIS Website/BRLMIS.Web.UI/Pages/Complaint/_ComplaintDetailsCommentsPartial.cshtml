@@ -1,0 +1,39 @@
+﻿@*<div style="clear: both;"></div>*@
+<h6>Comments:</h6>
+<div style="display:none" class="alert alert-sm alert-warning" data-bind="if:ComplaintLogs().length == 0, visible:ComplaintLogs().length == 0"> No Comments. </div>
+<div data-bind="if:ComplaintLogs().length > 0">
+    <div data-bind="foreach:ComplaintLogs">
+        <div class="comments comments-panel">
+            <div class="comments-title comments-panel">
+                <div><strong data-bind="text:CreatedByNavigation.FirstName + ' ' + CreatedByNavigation.LastName">Reviewer</strong></div>
+                <div><time data-bind="text: $parent.timeSince($data.CreatedDate)">.0 Hour ago</time></div>
+            </div>
+            <div class="comments-detail">
+                <p data-bind="text:ComplaintComments">-</p>
+            </div>
+            <div class="file-attacments">
+                <div class="inner-container mt10 nobrdrbtm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Attacments:</h6>
+                        </div>
+                        <!-- ko foreach: FileList -->
+                        <div class="col-md-3">
+                            <div class="attachment-detail">
+                                <div class="file-status">
+                                    <span> <img src="~/images/doc-icon.svg" alt=""></span>
+                                    <!-- ko text: OriginalFileName -->
+                                    <!-- /ko -->
+                                </div>
+                                <div class="file-action">
+                                    <a href="javascript:void(0)" data-bind="click: $root.viewAttachment"><img src="~/images/view-icon-news.svg" alt="" title="View File"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

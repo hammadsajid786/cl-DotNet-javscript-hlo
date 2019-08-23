@@ -1,0 +1,42 @@
+.tax-calculation-holder{
+  @include media-breakpoint-down(sm){
+    width: 357px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+  } 
+  .tax-calculation{
+    width: 500px;
+    margin: 0 auto;
+    tr{
+         border: 1px solid #ccc;
+         
+         td{
+          border: 1px solid #ccc;
+              &:last-child{
+                 border-right: none;
+              }
+         }
+        &:last-child,
+        &:nth-last-child(2){
+         background-color: $cyprus;
+          color: $white;
+          font-weight: 500; 
+          td{
+            border: none;
+          }
+        }
+       
+       
+    }
+  }
+  }
+.reg-code-holder{
+      padding: 5px;
+      width: 500px;
+      background-color: $cyprus;
+      margin: 0 auto;
+      margin-bottom: 20px;
+       input[type=text]{
+        width: 100%;
+       }
+    }

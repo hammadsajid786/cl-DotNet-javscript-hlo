@@ -1,0 +1,77 @@
+﻿@page "/NewsDetail"
+@{
+    ViewData["Title"] = "NewsDetail";
+}
+
+<div id="main" class="innerpage ">
+    <div class="banner-home about-page">
+        <div class="banner about-banner">
+            <div class="container">
+                <div class="banner-detail">
+                    <h1 class="heading">
+                        News
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="new-page mt20">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="updates-news">
+                        <div class="news-date">
+                            <div class="calendar">
+                                <p data-bind="date:newsDate,dateFormat:'YYYY'" class="year"></p>
+                                <span data-bind="date:newsDate,dateFormat:'DD'"></span>
+                                <strong data-bind="date:newsDate,dateFormat:'MMMM'"></strong>
+                            </div>
+                        </div>
+                        <div class="news-detail ul-list-style">
+                            <h6  data-bind="text: newsTitle"></h6>
+                            <p data-bind="html: newsDescription"></p>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        function GetData(id) {
+            $lib.http.get('/news/' + id, (err, res) => {
+                if (err) return;
+                else {
+                    viewModel.newsId(res.NewsId);
+                    viewModel.newsTitle(res.NewsTitle);
+                    viewModel.newsDescription(res.NewsDescription);
+                    viewModel.newsDate(res.NewsDate);
+
+
+                }
+            })
+        }
+
+        var viewModel = {
+            newsId: ko.observable(),
+            newsTitle: ko.observable(),
+            newsDescription: ko.observable(),
+            newsDate: ko.observable(),
+        }
+
+       // window.location.search.substring(1).split('=');
+        var id = window.location.search.substring(1).split('=')[1];
+
+        GetData(id);
+
+        $lib.bindUI(viewModel);
+    }())
+</script>
+}

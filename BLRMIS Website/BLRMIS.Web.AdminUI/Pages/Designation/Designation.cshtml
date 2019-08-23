@@ -1,0 +1,532 @@
+﻿@page "/designation"
+@{
+    ViewData["Title"] = "Designation Management";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="table-box designation-tbl">
+    <div class="hd-holder">
+        <h6>Designation Management</h6>
+        <span class="bd-line"></span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="add-user">
+                <a class="customBtn mgb20 mgt10" data-toggle="modal" data-target="#designationFormModal" data-backdrop="static" data-keyboard="false">Add Designation</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade popup" id="designationFormModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6 data-bind="text: formHeading"></h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="DesignationName">Enter Designation Name</label>
+                                                <input type="text" class="form-control pretty-input" id="DesignationName" data-bind="value: formModel.DesignationName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="ddlActive"></label>
+                                                <select class="form-control" id="ddlActive"
+                                                        data-bind="options: active,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: formModel.Active,
+                                                                                optionsCaption: 'Select Status'"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <textarea class="form-control pretty-input" rows="6" id="DesignationDetail" style="resize: none"
+                                                          data-bind="value: formModel.DesignationDescription" placeholder="Enter Designation Detail"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="login-button">
+                                        <button type="submit" class="customBtn" data-bind="text: saveButtonText, click: onFormSubmit, disable: isRequestInProcess()">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade popup" id="designationDetailModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6>Designation Detail</h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form form-detail">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: designationDetails.DesignationName"></span><strong>Designation</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: designationDetails.DesignationDescription"></span><strong>Detail</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: designationDetails.Status" class="detail-user-status"></span><strong>Status</strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="login-button">
+                                        <button type="button" class="customBtn" data-dismiss="modal" data-target="#designationDetailModal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-status">
+        <div class="row">
+            <div class="col-sm-10">
+                <p>Total Record(s): <b data-bind="text: listModel.totalRecordsCount"></b></p>
+            </div>
+            <div class="col-sm-2">
+                <div class="custom-dropdown">
+                    <select class="form-control" id="ddlStatusFilter" data-bind="options: active,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: listModel.selectedStatus,
+                                                                                optionsCaption: 'All Status',
+                                                                                event: { change: viewModel.onStatusFilterChange }"></select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="table-area">
+        <table class="table table-bordered text-left">
+            <thead class="thead-light">
+                <tr>
+                    <th class="sorting" style="cursor: pointer" data-bind="click: viewModel.onSort.bind($data, 'DesignationName')" width="20%">
+                        Designation Name
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" style="cursor: pointer" data-bind="click: viewModel.onSort.bind($data, 'DesignationDescription')" width="50%">
+                        Designation Detail
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting " style="cursor: pointer" data-bind="click: viewModel.onSort.bind($data, 'Active')">
+                        Status
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: listModel.list">
+                <tr>
+                    <td>
+                        <a href="#" class="green" data-bind="text: DesignationName, click: $root.onEdit.bind($data, true), disable: $root.isRequestInProcess()"></a>
+                    </td>
+                    <td data-bind="text: $data.DesignationDescription ? $data.DesignationDescription : ''"></td>
+                    <td class="" data-bind="class: Active ? 'active-st' : 'inactive-st'">
+                        <a href="#" data-bind="click: !$root.isRequestInProcess() ? $root.onStatusChange.bind($data, $index()) : ''">
+                            <span data-bind="text: (Active ? 'Active' : 'Inactive'), class: !Active ? 'inactive-st' : 'green'">
+                            </span>
+                        </a>
+                    </td>
+                    <td class="text-center action-items">
+                        <span class="icon-edit-icon icon" title="Edit" data-bind="click: $root.onEdit.bind($data, false), disable: $root.isRequestInProcess()"></span>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody data-bind="if: listModel.list().length <= 0">
+                <tr>
+                    <td colspan="6" align="center">
+                        <span>No Records Found.</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-12">
+            <div class="row">
+                <ul class="pagination col-sm-6">
+                    <li class="page-item" data-bind="class: getPreviousButtonClass">
+                    <a class="page-link left" href="#" data-bind="click: viewModel.onPrevious"><span class="fa fa-caret-left"></span></a>
+                    </li>
+                    <li>
+                        <input type="text" class="page-link form-control" data-bind="integerInput, propertyName: 'totalPagesCount', value: viewModel.listModel.currentPageNo, event: { change: viewModel.onPageChange }" />
+                    </li>
+                    <li><p>of <span data-bind="text: viewModel.listModel.totalPagesCount"></span></p></li>
+                    <li class="page-item" data-bind="class: getNextButtonClass">
+                    <a class="page-link right" href="#" data-bind="click: viewModel.onNext"><span class="fa fa-caret-right"></span></a>
+                    </li>
+                </ul>
+
+                <div class="records-field col-sm-6 text-right">
+                    <label>
+                        Records per page
+                    </label>
+                    <div class="custom-dropdown cus-sel">
+                        <select class="form-control" id="ddlRecordsPerPage" data-bind="options: listModel.recordsPerPageList,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: listModel.selectedPageSize"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            viewModel.formModel.errors = ko.validation.group(viewModel.formModel);
+            $lib.bindUI(viewModel);
+            $lib.setPageTitle("Designation Management");
+
+            viewModel.formModel.errors.showAllMessages(false);
+            viewModel.listModel.currentPageNo(1);
+
+            fillStatus();
+
+            fillRecordsPerPage();
+            viewModel.listModel.selectedStatus(1);
+            getDesignationList();
+            pageSize_Change();
+
+        });
+
+        var viewModel = {
+
+            formModel: {
+                DesignationId: ko.observable(null),
+                DesignationName: ko.observable("").extend({ required: true, maxLength: 50 }),
+                DesignationDescription: ko.observable("").extend({ maxLength: 500 }),
+                Active: ko.observable("").extend({ required: true }),
+                errors: null
+            },
+            listModel: {
+                list: ko.observableArray(null),
+                totalPagesCount: ko.observable(0),
+                currentPageNo: ko.observable(0),
+                orderBy: ko.observable("CreatedDate"),
+                isAscendingOrder: ko.observable(false),
+                selectedPageSize: ko.observable(10),
+                recordsPerPageList: ko.observableArray([]),
+                totalRecordsCount: ko.observable(0),
+                selectedStatus: ko.observable(null),
+            },
+            designationDetails: {
+                DesignationName: ko.observable(""),
+                DesignationDescription: ko.observable(""),
+                Status: ko.observable("")
+            },
+            saveButtonText: ko.observable("Add"),
+            isRequestInProcess: ko.observable(false),
+            formHeading: ko.observable("Add Designation"),
+            addFocus: ko.pureComputed(function () {
+                var DesignationId = this.viewModel.formModel.DesignationId();
+                if (DesignationId && !isNaN(parseInt(DesignationId)) && parseInt(DesignationId) > 0)
+                    return "focused";
+                else
+                    return "";
+            }),
+            getPreviousButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentPageNo());
+                return (currentPageNumber <= 1) ? '' : 'active';
+            }),
+            getNextButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentPageNo());
+                var totalPagesCount = parseInt(this.viewModel.listModel.totalPagesCount());
+                return (currentPageNumber < totalPagesCount) ? 'active' : '';
+            }),
+            active: ko.observableArray([]),
+            onFormSubmit: onSubmit,
+            onEdit: getDesignationDetails,
+            onShowDetails: getDesignationDetails,
+            onPageChange: getDesignationList,
+            onPrevious: onPrevious,
+            onNext: onNext,
+            onSort: onSort,
+            onStatusChange: onStatusChange,
+            onStatusFilterChange: getDesignationList
+        }
+
+        $('#designationFormModal').on('hidden.bs.modal', function () {
+
+            viewModel.saveButtonText("Add");
+            viewModel.formHeading("Add Designation");
+            resetForm();
+        });
+
+        var selectListModel = function (value, text) {
+            this.Text = text;
+            this.Value = value;
+        }
+
+        function fillRecordsPerPage() {
+
+            viewModel.listModel.recordsPerPageList([
+                new selectListModel(10, "10"),
+                new selectListModel(20, "20")
+            ]);
+        }
+
+        function pageSize_Change() {
+
+            viewModel.listModel.selectedPageSize.subscribe(function () {
+                viewModel.listModel.currentPageNo(1);
+                getDesignationList();
+            });
+        }
+
+        function fillStatus() {
+
+            viewModel.active([
+                new selectListModel(1, "Active"),
+                new selectListModel(0, "Inactive")
+            ]);
+        }
+
+        function onPrevious() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentPageNo());
+            if (currentPageNo > 1) {
+                viewModel.listModel.currentPageNo(--currentPageNo);
+                getDesignationList();
+            }
+        }
+
+        function onNext() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentPageNo());
+            var totalPageCount = parseInt(viewModel.listModel.totalPagesCount());
+            if (currentPageNo < totalPageCount) {
+                viewModel.listModel.currentPageNo(++currentPageNo);
+                getDesignationList();
+            }
+        }
+
+        function onSort(orderBy) {
+
+            var previousOrderBy = viewModel.listModel.orderBy();
+            var previousDirection = viewModel.listModel.isAscendingOrder();
+
+            if (previousOrderBy.toLowerCase() != orderBy.toLowerCase()) {
+
+                viewModel.listModel.isAscendingOrder(true);
+                viewModel.listModel.orderBy(orderBy);
+            }
+            else
+                viewModel.listModel.isAscendingOrder(!previousDirection);
+            getDesignationList();
+        }
+
+        function getDesignationList() {
+
+            if (!isNaN(parseInt(viewModel.listModel.currentPageNo())) && parseInt(viewModel.listModel.currentPageNo()) > 0) {
+                var queryParams = {
+                    PageIndex: parseInt(viewModel.listModel.currentPageNo()) - 1,
+                    OrderBy: viewModel.listModel.orderBy(),
+                    SortDirection: viewModel.listModel.isAscendingOrder() ? "Ascending" : "Descending",
+                    Status: viewModel.listModel.selectedStatus() == null || viewModel.listModel.selectedStatus() == undefined ? "" :
+                        (viewModel.listModel.selectedStatus() == 1 ? true : false),
+                    PageSize: viewModel.listModel.selectedPageSize()
+                };
+
+                var parameters = "filter:Active=" + queryParams.Status + ";orderby:" + queryParams.OrderBy + "=" + queryParams.SortDirection + ";size:" + queryParams.PageSize +
+                    ";index:" + queryParams.PageIndex;
+
+                $lib.showSpinner(true);
+                $lib.http.get("/designation?param=" + parameters, fillDesignationList);
+            }
+            else {
+                $toastMessages.showError("Invalid Page Number");
+            }
+        }
+
+        function fillDesignationList(err, res) {
+
+            $lib.showSpinner(false);
+            if (err)
+                return;
+            else {
+                viewModel.listModel.list(res.Records);
+                viewModel.listModel.totalPagesCount(res.TotalPages);
+                viewModel.listModel.totalRecordsCount(res.TotalRecords);
+            }
+        }
+
+        function onStatusChange(index) {
+
+            this.rowIndex = index;
+            viewModel.isRequestInProcess(true);
+            $lib.showSpinner(true);
+            $lib.http.get(`/designation/${this.DesignationId}/ChangeStatus`, afterStatusChanged.bind(this));
+        }
+
+        function afterStatusChanged(err) {
+
+            $lib.showSpinner(false);
+            if (err)
+                return
+            else {
+                var items = JSON.parse(JSON.stringify(viewModel.listModel.list()));
+                items[this.rowIndex].Active = !this.Active;
+                viewModel.listModel.list(items);
+            }
+            viewModel.isRequestInProcess(false);
+        }
+
+        function onSubmit() {
+
+            if (viewModel.formModel.errors().length == 0) {
+
+                var designationId = viewModel.formModel.DesignationId();
+                viewModel.isRequestInProcess(true);
+                $lib.showSpinner(true);
+                if (designationId && !isNaN(parseInt(designationId)) && parseInt(designationId) > 0) {
+
+                    $lib.http.put("/designation/" + designationId, viewModel.formModel, (err, res) => afterDesignationSaved(err, res, true));
+                }
+                else
+                    $lib.http.post("/designation/", viewModel.formModel, (err, res) => afterDesignationSaved(err, res, false));
+
+            } else {
+                viewModel.formModel.errors.showAllMessages();
+            }
+        }
+
+        function afterDesignationSaved(err, res, onEdit) {
+
+            if (err)
+                return;
+            else {
+                if (!onEdit) {
+                    viewModel.listModel.isAscendingOrder(false);
+                    $toastMessages.showSuccess("designation is created successfully");
+                }
+                else
+                    $toastMessages.showSuccess("designation information is updated successfully");
+                resetForm();
+                $("#designationFormModal").modal("hide");
+                getDesignationList();
+            }
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+        }
+
+        function getDesignationDetails(showDetails) {
+
+            $lib.showSpinner(true);
+            viewModel.isRequestInProcess(true);
+            if (showDetails)
+                $lib.http.get("/designation/" + this.DesignationId, showDesignationDetails);
+            else
+                $lib.http.get("/designation/" + this.DesignationId, fillDesignationForm);
+        }
+
+        function showDesignationDetails(err, res) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return
+            else {
+
+                viewModel.designationDetails.DesignationName(res.DesignationName);
+                if (res.DesignationDescription)
+                    viewModel.designationDetails.DesignationDescription(res.DesignationDescription);
+                viewModel.designationDetails.Status(res.Active ? 'Active' : 'Inactive');
+                $("#designationDetailModal").modal("show", { backdrop: 'static', keyboard: false });
+            }
+        }
+
+        function fillDesignationForm(err, res) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return;
+            else {
+
+                viewModel.formModel.DesignationId(res.DesignationId);
+                viewModel.formModel.DesignationName(res.DesignationName);
+                if (res.DesignationDescription)
+                    viewModel.formModel.DesignationDescription(res.DesignationDescription);
+                viewModel.formModel.Active(res.Active);
+                viewModel.formHeading("Edit Designation");
+                viewModel.saveButtonText("Save");
+                $("#designationFormModal").modal("show", { backdrop: 'static', keyboard: false });
+            }
+        }
+
+        function resetForm() {
+
+            viewModel.formModel.DesignationId(null);
+            viewModel.formModel.DesignationName("");
+            viewModel.formModel.DesignationDescription("");
+            viewModel.formModel.Active("");
+            viewModel.formModel.errors.showAllMessages(false);
+
+            viewModel.listModel.currentPageNo(1);
+            viewModel.listModel.orderBy("CreatedDate");
+        }
+
+    </script>
+}
+

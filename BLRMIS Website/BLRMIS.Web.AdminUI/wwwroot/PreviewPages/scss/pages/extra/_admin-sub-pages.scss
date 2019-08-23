@@ -1,0 +1,418 @@
+.admin-inner-pages{
+    padding-bottom: 30px;
+    
+    h4{
+        font-size: 14px;
+    
+    }
+    .custom-checkbox{
+        margin-bottom: 9px;
+        margin-left: 0;
+        display: block;
+        font-weight: 300;
+				font-size: 12px;
+				display: inline-block;
+    
+    }
+	.wd-third-half{
+			li{
+					width: 31%;
+			}
+			
+	}
+	.wd-second-half{
+			li{
+					width: 48%;
+			}
+	}
+	.create-user-table{
+	.action-oncick{
+			padding: 5px 0;
+			margin: 0;
+			li{
+				display: inline-block;
+				width: 31%;
+				i{
+					font-size: 25px;
+				}
+			}
+		}
+	}
+    /* Check box*/
+
+.custom-checkbox input[type="checkbox"]{
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    z-index: -999;
+}
+.custom-checkbox .custom-input {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #ced4da;
+    background: $white;
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    border-radius: 2px;
+}
+.custom-checkbox .custom-input:after{
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 13px;
+    left: 1px;
+    top: 1px;
+    border: 2px solid $white;
+    border-top: 0;
+    border-left: 0;
+    visibility: hidden;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin: 3px 0 0 8px;
+	}
+	.custom-checkbox input[type="checkbox"]:checked + .custom-input:after{
+			visibility: visible;
+	}
+	.custom-checkbox input[type="checkbox"]:checked + .custom-input{
+		background-color: $fun-green;
+	}
+/* End Check box*/
+	.form-group{
+		margin-bottom: 5px;
+	}
+	.deed-Information-panel{
+		.form-group{
+			margin-bottom: 11px;
+			}
+			.list-inline-item{
+				vertical-align: top;
+			}
+	}
+	&.creat-user-pages{
+		.action-oncick{
+			margin-bottom: 0;
+			a{
+				&:hover{
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	.table{
+
+		td{
+			border: none;
+			vertical-align: middle;
+			padding: 8px 10px;
+		}
+	}
+	.table-striped {
+		tbody {
+			tr{
+				background: $white;
+				&:nth-of-type(odd){
+					background-color: #FBFAF9;;
+				}
+			}
+		}
+    }
+  .hd-border{
+		width: 100%;
+	}
+    
+}
+
+.hd-border-strong{
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+/* Radio Button */
+.radio-button-holder{
+    margin: 10px 0;
+clear: both;
+float: left;
+li{
+    float: left;
+    margin-right: 20px;
+}
+.custom-radio{
+    margin-bottom: 10px;
+    margin-left: 0;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+
+}
+.custom-radio input[type="radio"]{
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    z-index: -999;
+}
+.custom-radio .custom-input {
+    width: 16px;
+    height: 16px;
+    border: 1px solid $cerulean;
+    background: $white;
+    float: left;
+    margin-right: 10px;
+    margin-top: 2px;
+    position: relative;
+    border-radius: 50px;
+}
+.custom-radio .custom-input:after{
+    content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: $cerulean;
+        /* height: 13px; */
+        left: 1px;
+        top: 1px;
+        visibility: hidden;
+        margin: 1px 0 0 1px;
+        border-radius: 50px;
+}
+.custom-radio input[type="radio"]:checked + .custom-input:after{
+    visibility: visible;
+}
+}
+/* End radio button*/
+.user-status-pic{
+    width: 100%;
+    text-align: right;
+		margin-bottom: 25px;
+		&.profile-popup{
+			width: 150px;
+			margin: 0 auto;
+			text-align: center;
+			margin-bottom: 20px;
+			position: relative;
+		}
+		.user-pic-holder{
+		#profile-img{
+			position: absolute; 
+			width: 30px;
+			bottom: 35px;
+			right: 30px; 
+			height: 30px;
+			opacity: 0;
+			filter: alpha(opacity=0); /* For IE8 and earlier */
+			cursor: pointer;
+			display: none;
+		}
+		.profile-cam{
+			position: absolute;
+			font-size: 30px;
+			bottom: 35px;
+			right: 30px;
+			color: $white;
+			
+			display: none;
+			}
+			&:hover{
+				#profile-img{
+					display: block;
+				}
+				.profile-cam{
+					display: block;
+				}
+			}
+		}
+		
+}
+
+.create-user-pages{
+	.table{
+		.action-oncick{
+			i{
+				font-size: 25px;
+				padding: 0 3px;
+			}
+		}
+	}
+	
+}
+.sub-tab{
+	td{
+		width: 17% !important;
+	}
+	th{
+		width: 17% !important;
+	}
+}
+.table{
+	th{
+		border-left: 1px solid #ddd !important;
+		border-bottom: 1px solid #ddd !important;
+		&.border-bottom{
+			border-bottom: none !important;
+		}
+		&.border-top{
+			border-top: none !important;
+		}
+		&.border-left{
+			border-left: none !important;
+		}
+	}
+	table {
+		width: 100%;
+		table{
+			th{
+				border-left: 1px solid #ddd !important;
+			}
+			table{
+				tr{
+					th{
+						&:first-child{
+							border-left: none !important;
+						}
+					}
+				}
+			}
+		}
+	
+	}
+	.cell-padding{
+		padding: 8px 0;
+	}
+	
+}
+.sub-col1{
+	width: 33.333%;
+}
+.sub-col2{
+	width: 66.666%;
+}
+.tab-col1,
+.td-col1{
+	width: 5%;
+}
+.tab-col2,
+.td-col2{
+	width: 8%;
+}
+.tab-col3,
+.td-col3{
+	width: 13%;
+}
+.td-col4{
+	width: 7%;
+}
+.td-col5{
+	width: 5.4%; 
+}
+.td-col6{
+	width: 5%; 
+}
+.td-col7{
+	width: 2%; 
+}
+.td-col8{
+	width: 5%; 
+}
+.td-col9{
+	width: 6%; 
+}
+.td-col10{
+	width: 7%; 
+}
+.td-col11{
+	width: 4%; 
+}
+.td-col12{
+	width: 6%; 
+}
+.tab-col13,
+.td-col13{
+	width: 6%; 
+}
+
+.tab-col4{
+	width: 68%;
+}
+
+/*User permissions */
+.permissions-panel-holder{
+	overflow-y: scroll;
+	padding: 20px;
+	border: 1px solid $wildsand;
+	background-color: $white;
+	.permissions-panel{
+		background-color: $white;
+		h5{
+			font-size: 12px;
+			background-color: $wildsand;
+			padding: 10px;
+			text-transform: capitalize;
+		}
+
+		.user-permissions-magane{
+			padding: 5px;
+			margin: 0;
+			
+			li{
+				list-style: none;
+				display: inline-block;
+				width: 24%;
+			}
+		}
+	}
+	&#boxscroll {
+		height: 320px;
+		width: 100%;
+		overflow: auto;
+	}
+}
+/* Role Functions*/
+.valuation-form-table{
+	&.table{
+		th{
+			border-top: none;
+			span{
+				min-height: 25px;
+				background-color: #EEEEEE;
+				display: block;
+				margin: 0 -10px -10px;
+				padding: 10px;
+
+			}
+		}
+	}
+}
+.nicescroll-cursors{
+	background-color: $boulder !important;
+}
+.valuation-form-table{
+	.action-oncick{
+			margin: 0;
+		li{
+			display: inline-block;
+			width: 47%;
+		}
+	}
+}
+.user-functions-actions{
+	.action-oncick{
+		
+			li{
+				width: 30%;
+				float: left;
+			}
+		
+	}
+}
+.action-oncick{
+	a{
+		i{
+			&:hover{
+				color: $flush-orange;
+			}
+		}
+	}
+}
+

@@ -1,0 +1,59 @@
+﻿@*<div class="hd-holder">
+        <h6>Complaint</h6>
+        <span class="bd-line"></span>
+    </div>
+    <form role="form" class="model-cus" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <p class="text-cetner">Verification Code will be sent to your register email & phone number</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group noerror-message" id="verificationField">
+                    <input class="form-control" maxlength="6" data-bind="value:VerificationCode" type="text" placeholder="Enter Verification Code *">
+                    <span class="error-icon">!</span>
+                    <span class="error" data-bind="text: $data.VerificationCodeError"></span>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="btn-group">*@
+@*<button type="button" data-bind="click:onGoBackFromVerification" class="btn btn-default">Go Back</button>*@
+@*<button type="button" data-bind="click:onVerificationCodeSubmit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>*@
+
+
+<div id="main" class="innerpage ">
+    <div class="container  mt50 mb50">
+        <div class="complaint-submitted verification-com">
+            <div class="col-md-8 offset-md-2 text-center sub-box">
+                <img src="~/images/message-sent.png" />
+                <p class="">
+                    Verification code has been sent on your<br>
+                    register email & phone number
+                </p>
+                <div class="form-group col-md-8 offset-md-2">
+                    <input class="form-control" maxlength="6" data-bind="value:VerificationCode" type="text" placeholder="Enter Verification Code *">
+                    @*<span class="error-icon">!</span>*@
+                    <span class="error" data-bind="text: $data.VerificationCodeError"></span>
+                    <p class="msgtxt"><small>Verification code will expire after 20 minutes</small></p>
+                </div>
+
+                <div class="form-group">
+                    <div id="divTimer" data-bind="ifnot:EnableResendLink">
+                        <p data-bind="text:TimeElapse"></p>
+                    </div>
+                    <div id="divResendLink" @*data-bind="visible:EnableResendLink" *@>
+                        <a href="javascript:" id="hrefResendLink" class="greenClr link-cus" data-bind="click:onResendVerificationCode, attr: { disabled:DisableResentLink}">Resend Verification Code</a>
+                    </div>
+                </div>
+                @*<a href="Complaint-page.html" class="btn btn-print btn-gray">Go Back</a>*@
+                <button type="submit" data-bind="click: onVerificationCodeSubmit" class="btn btn-print">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

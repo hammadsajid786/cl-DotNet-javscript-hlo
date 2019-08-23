@@ -1,0 +1,54 @@
+/* News */
+
+.updates-news{
+  display: flex;
+  flex-flow: row;
+  padding-bottom: 50px;
+  h6{
+    color: $fun-green;
+    font-size: 25px;
+  }
+  a{
+    color: $fun-green;
+    font-size: 14px;
+  }
+  .calendar{
+    background-color: $fun-green;
+    text-align: center;
+    border-radius: 5px;
+    width: 80px;
+    overflow: hidden;
+    padding-bottom: 3px;
+    .news-date {
+      margin-bottom: 0;
+      color: $white;
+    }
+    .year{
+      font-size: 12px;  
+      font-weight: 300;
+      margin-bottom: 0;
+      color: $white;
+      background-color: $cyprus; 
+    }
+    span{
+      font-size: 30px;  
+      font-weight: 700;
+       color: $white;
+       display: block;
+      line-height: 30px;
+      
+    }
+    strong{
+      font-size: 18px;
+      font-weight: 700;
+       color: $white;
+       line-height: 0;
+    }
+  }
+  .news-detail{
+    padding-left: 15px;
+  }
+  picture{
+    display: block;
+  }
+}

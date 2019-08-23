@@ -1,0 +1,833 @@
+﻿@page
+@{
+    ViewData["Title"] = "Download Management";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<title>Download Management</title>
+
+@*<script src="~/ckeditor/ckeditor.js"></script>*@
+<script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
+
+
+<div class="table-box">
+    <div class="hd-holder">
+        <h6>Download Managment</h6>
+        <span class="bd-line"></span>
+    </div>
+    <div class="search-bar news-page">
+        <div class="row">
+            <div class="col-md-6 left-sec">
+                <div class="add-user">
+                    <a data-toggle="modal" data-target="#modalpopup" data-bind="click:onAdd" class="customBtn">Add Download</a>
+
+                </div>
+            </div>
+            <div class="col-md-6 rit-sec">
+                <div class="search-form">
+                    <form class="form-inline">
+                        <ul class="nomargin">
+                            <li class="length length1">
+                                <input type="text" data-bind="value:searchTitle" class="form-control" placeholder="Enter Download Title">
+                            </li>
+                            <li class="length length2">
+                                <button type="submit" data-bind="click: onSearch" class="customBtn full-width-btn">Search</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-status">
+        <div class="row">
+            <div class="col-sm-10">
+                <p>Total Record(s): <b data-bind="text: totalRecordsCount"></b></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-area" style="display:none" data-bind="visible:pageLoaded">
+        <table class="table table-bordered text-left">
+            <thead class="thead-light">
+                <tr>
+                    <th class="sorting" style="cursor: pointer" data-bind="click: viewModel.onSort.bind($data, 'DownloadTitle')">
+                        Download Title
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1" @*data-bind="click: viewModel.onSort.bind($data, 'DownloadTitle', true)" *@></i>
+                            <i class="fa fa-fw fa-caret-down a2" @*data-bind="click: viewModel.onSort.bind($data, 'DownloadTitle', false)" *@></i>
+                        </span>
+                    </th>
+                    <th class="text-center" width="200">Actions</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: downloadList">
+                <tr>
+                    <td data-bind="text: DownloadId, visible: false"></td>
+                    <td data-bind="text: DownloadTitle"></td>
+                    <td class="text-center action-items">
+                        <span data-toggle="modal" data-target="#viewModalpopup" data-bind="click: $parent.onView" title="View" class="icon-view-icon icon"></span>
+                        <span data-toggle="modal" data-target="#modalpopup" data-bind="click: $parent.onEdit" title="Edit" class="icon-edit-icon icon"></span>
+
+
+                        <span data-bind="click: $parent.onDelete" title="Delete" class="icon-del-icon icon"></span>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody data-bind="if: downloadList().length <= 0">
+                <tr>
+                    <td colspan="3" align="center">
+                        <span>No Records Found.</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-12">
+            <div class="row">
+                <ul class="pagination col-sm-6">
+                    <li class="page-item" data-bind="class: getPreviousButtonClass">
+                        <a class="page-link left" href="#" data-bind="click: onPrevious"><span class="fa fa-caret-left"></span></a>
+                    </li>
+                    @*<li><a class="page-link" href="javascript:void(0)">10</a></li>
+                        <li><p>of <span>4,127</span></p></li>*@
+                    <li>
+                        <input type="text" class="page-link form-control" data-bind="integerInput, propertyName: 'totalPagesCount', value: currentPageNo, event: { change: onPageChange }" />
+                    </li>
+                    <li><p>of <span data-bind="text: totalPagesCount"></span></p></li>
+                    <li class="page-item" data-bind="class: getNextButtonClass">
+                        <a class="page-link right" href="#" data-bind="click: onNext"><span class="fa fa-caret-right"></span></a>
+                    </li>
+                </ul>
+                <div class="records-field col-sm-6 text-right">
+                    <label>
+                        Records per page
+                    </label>
+                    <div class="custom-dropdown cus-sel">
+                        <select class="form-control" id="ddlRecordsPerPage" data-bind="options: recordsPerPageList,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: selectedPageSize"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Download Modal !-->
+    <div class="modal fade popup" id="modalpopup" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6 data-bind="text:popupName"></h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <input name="id" data-bind="value:downloadId, visible: false" id="id">
+                                                <label for="firstname">Enter Download Title </label>
+                                                <input type="username" name="title" data-bind="value:downloadTitle, enable:isEdit" id="title" class="form-control pretty-input" required>
+                                                <div class="invalid-feedback">Enter valid Download Title</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @*<div class="form-group">
+                    <div id="editor" class="custom-editor mb20 text-left">
+                        <div id='edit2'></div>
+                    </div>
+                </div>*@
+
+                                            @*CK Editor 4*@
+                                            <textarea name="editor" id="editor" placeholder="Type something" rows="10" cols="80">
+                                                </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="display:none" data-bind="visible:(fileModelList().length > 0)">
+                                            <div class="complaint-holder text-left">
+                                                <div class="file-attacments">
+                                                    <div class="inner-container mt10">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h6>Attacments:</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" data-bind="foreach:fileModelList()">
+                                                            <div class="col-md-6">
+                                                                <div class="attachment-detail">
+                                                                    <div class="file-status"><span><img src="~/images/doc-icon.svg" alt=""></span><i data-bind="text:fileName"></i></div>
+                                                                    <div class="file-action">
+                                                                        <span href="" data-bind="click: $parent.onFilePreview" title="View"><img src="~/images/view-icon-news.svg" alt=""></span>
+                                                                        <span href="" data-bind="click: $parent.onFileDelete" title="Delete"><img src="~/images/del-icon-news.svg" alt=""></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col-md-12 text-left">
+                                                <div class="fileContainer mt20">
+                                                    <input id="file-upload" multiple type="file" data-bind="event:{change:onFileSelect}, enable:isEdit" />
+                                                    <a href="#"> Choose File </a>
+                                                </div>
+                                                <div id="fileError" data-bind="visible:fileValidationError" class="fileValidationError">
+                                                    Please upload atleast one file.
+                                                </div>
+                                                <p class="font12">Please upload related attachments (jpg, png, pdf are allowed.)</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="sub-btns text-left">
+                                            <button href="#" data-bind="click: onSave, enable:isEdit" class="customBtn">Save</button>
+                                            @*<button data-bind="click: onPreview" class="customBtn whiteBtn">Preview</button>*@
+                                            <button data-bind="click: onDiscard, enable:isEdit" class="customBtn greyBtn">Discard</button>
+                                            @*<a href="#" class="customBtn greyBtn" data-dismiss="modal">Discard</a>*@
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Download Modal !-->
+    <div class="modal fade popup" id="viewModalpopup" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6 data-bind="text:popupName"></h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <input name="id" data-bind="value:downloadId, visible: false" id="id">
+                                                <input type="username" name="title" data-bind="value:downloadTitle, enable:isEdit" id="title" class="form-control pretty-input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <textarea name="editor" id="vieweditor" rows="20" cols="80"></textarea>
+                                                @*CK Editor 4*@
+                                                @*<textarea name="vieweditor" id="vieweditor" rows="10" cols="80">
+                    </textarea>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="display:none" data-bind="visible:(alreadyAttachedFiles().length > 0)">
+                                            <div class="complaint-holder text-left">
+                                                <div class="file-attacments">
+                                                    <div class="inner-container mt10">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h6>Attacments:</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" data-bind="foreach:alreadyAttachedFiles()">
+                                                            <div class="col-md-6">
+                                                                <div class="attachment-detail">
+                                                                    <div class="file-status"><span><img src="~/images/doc-icon.svg" alt=""></span><i data-bind="text:OriginalFileName"></i></div>
+                                                                    <div class="file-action">
+                                                                        <span href="" data-bind="click: $parent.onFilePreview" title="View"><img src="~/images/view-icon-news.svg" alt=""></span>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="row">
+                                        </div>
+                                        <div class="sub-btns text-left">
+                                            <button type="button" class="customBtn" data-dismiss="modal" data-target="#viewModalpopup">Close</button>
+
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+           // $lib.bindUI(viewModel);
+
+            viewModel.errors.showAllMessages(false);
+            viewModel.currentPageNo(1);
+
+            fillRecordsPerPage();
+
+            pageSize_Change();
+        });
+
+        function MyCustomUploadAdapterPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                // Configure the URL to the upload script in your back-end here!
+                return new MyUploadAdapter(loader);
+            };
+        }
+
+      //  $(document).ready(function () {
+
+            var iconImg = {
+                txt: "txt-file-icon",
+                jpg: "image-icon",
+                png: "image-icon",
+                docx: "doc-icon",
+                xls:  "xls-icon"
+            };
+
+         var theEditor;
+       // ClassicEditor.create(document.querySelector('#contentDescription1')).then(editor => { theEditor = editor; });
+
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                extraPlugins: [MyCustomUploadAdapterPlugin],
+                image: {
+                    // You need to configure the image toolbar, too, so it uses the new style buttons.
+                    toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+
+                    styles: [
+                        // This option is equal to a situation where no style is applied.
+                        'full',
+
+                        // This represents an image aligned to the left.
+                        'alignLeft',
+
+                        // This represents an image aligned to the right.
+                        'alignRight'
+                    ]
+                }
+            })
+            .then(editor => { theEditor = editor; })
+            .catch(error => {
+            });
+
+        var theEditorView;
+        ClassicEditor
+            .create(document.querySelector('#vieweditor'), {
+                extraPlugins: [MyCustomUploadAdapterPlugin],
+            })
+            .then(editor => { theEditorView = editor; })
+            .catch(error => {
+            });
+
+        var selectListModel = function (value, text) {
+            this.Text = text;
+            this.Value = value;
+        }
+
+            var viewModel = {
+                searchTitle: ko.observable(""),
+                downloadTitle: ko.observable().extend({ required: true, maxLength: 100 }),
+                downloadDetail: ko.observable(""),
+                downloadId: ko.observable(),
+                //addDownloadTitle: ko.observable(),
+                downloadList: ko.observableArray(),
+                downloadDescription: ko.observable(),
+                isEdit: ko.observable(false),
+                isPost: ko.observable(false),
+                popupName: ko.observable(),
+                errors: ko.observable(),
+                selectedFiles: ko.observableArray(),
+                alreadyAttachedFiles: ko.observableArray(),
+                totalPagesCount: ko.observable(0),
+                totalRecordsCount: ko.observable(0),
+                currentPageNo: ko.observable(1),
+                orderBy: ko.observable("CreatedDate"),
+                isAscendingOrder: ko.observable(false),
+                selectedPageSize: ko.observable(10),
+                recordsPerPageList: ko.observableArray([]),
+                addFocus: ko.pureComputed(function () {
+                    var downloadId = viewModel.downloadId();
+                    if (downloadId && !isNaN(parseInt(downloadId)) && parseInt(downloadId) > 0)
+                        return "focused";
+                    else
+                        return "";
+                }),
+                fileModel: {
+                    fileId: ko.observable(),
+                    fileName: ko.observable(),
+                    fileSource: ko.observable(),
+                },
+                fileModelList: ko.observableArray(),
+                icon: ko.observable(),
+                pageLoaded: ko.observable(false),
+                fileValidationError: ko.observable(false),
+                // Title = ko.observable()
+        }
+
+        viewModel.getPreviousButtonClass = ko.pureComputed(function () {
+
+            var currentPageNumber = parseInt(this.currentPageNo());
+            return (currentPageNumber <= 1) ? '' : 'active';
+        }, viewModel);
+
+        viewModel.getNextButtonClass = ko.pureComputed(function () {
+
+            var currentPageNumber = parseInt(this.currentPageNo());
+            var totalPagesCount = parseInt(this.totalPagesCount());
+            return (currentPageNumber < totalPagesCount) ? 'active' : '';
+        }, viewModel);
+
+            function GridLoad() {
+                viewModel.pageLoaded(false);
+                if (!isNaN(parseInt(viewModel.currentPageNo())) && parseInt(viewModel.currentPageNo()) > 0) {
+
+                    var queryParams = {
+                        DownloadTitle: viewModel.searchTitle(),
+                        PageIndex: parseInt(viewModel.currentPageNo()) - 1,
+                        OrderBy: viewModel.orderBy(),
+                        SortDirection: viewModel.isAscendingOrder() ? "Ascending" : "Descending",
+                        PageSize: viewModel.selectedPageSize()
+                    };
+
+                    var parameters = "filter:DownloadTitle=" + queryParams.DownloadTitle + ";" +
+                        "orderby:" + queryParams.OrderBy + "=" + queryParams.SortDirection + ";size:" + queryParams.PageSize + ";index:" + queryParams.PageIndex;
+                    $lib.showSpinner(true);
+                    $lib.http.get('/download?SearchParams=' + parameters, (err, res) => {
+                        $lib.showSpinner(false);
+                        viewModel.pageLoaded(true);
+                        if (err) return;
+
+                        viewModel.downloadList(res.Records);
+                        viewModel.totalPagesCount(res.TotalPages);
+                        viewModel.totalRecordsCount(res.TotalRecords);
+                    })
+                }
+                else {
+                    //viewModel.listModel.currentPageNo(1)
+                    $toastMessages.showError("Invalid Page Number");
+                    viewModel.pageLoaded(true);
+                }
+            }
+
+            function GetData(id) {
+                $lib.http.get('/download/' + id, (err, res) => {
+                    if (err) return;
+
+                    // viewModel.downloadList(res.records);
+                   // console.log(res);
+                    viewModel.downloadId(res.DownloadId);
+                    viewModel.downloadTitle(res.DownloadTitle);
+                    viewModel.downloadDescription(res.DownloadDescription);
+                    theEditor.setData(res.DownloadDescription);
+                    var div = document.createElement("div");
+                    div.innerHTML = res.DownloadDescription;
+                    var text = div.textContent || div.innerText || "";
+                    viewModel.downloadDetail(text);
+
+                    if (!viewModel.isEdit()) {
+                        theEditorView.setData(res.DownloadDescription);
+                        theEditorView.isReadOnly = true;
+
+                        // CKEDITOR 4
+                        //CKEDITOR.instances['vieweditor'].setData(res.DownloadDescription);
+                        //CKEDITOR.instances['vieweditor'].setReadOnly(true)
+
+                    }
+                    viewModel.alreadyAttachedFiles(res.Attachments);
+
+                    for (var i = 0; i < viewModel.alreadyAttachedFiles().length; i++) {
+                        viewModel.fileModel.fileId = viewModel.alreadyAttachedFiles()[i].AttachmentId;
+                        viewModel.fileModel.fileName = viewModel.alreadyAttachedFiles()[i].OriginalFileName;
+                        viewModel.fileModelList.push(JSON.parse(JSON.stringify(viewModel.fileModel)));
+                    }
+                })
+            }
+
+            function pageSize_Change() {
+
+                viewModel.selectedPageSize.subscribe(function () {
+                    viewModel.currentPageNo(1);
+                GridLoad();
+            });
+        }
+
+        GridLoad();
+
+        viewModel.onPageChange = function () {
+            viewModel.currentPageNo(1);
+            GridLoad();
+        }
+
+        viewModel.onSearch = function () {
+            viewModel.currentPageNo(1);
+                GridLoad();
+            }
+
+            function fillRecordsPerPage() {
+
+            viewModel.recordsPerPageList([
+                new selectListModel(10, "10"),
+                new selectListModel(20, "20")
+            ]);
+        }
+
+            viewModel.onSave = function () {
+
+                if (viewModel.errors().length == 0 && (viewModel.selectedFiles().length + viewModel.alreadyAttachedFiles().length) > 0) {
+
+                    var formData = new FormData();
+                    var files = this.selectedFiles();
+
+                    for (var i = 0; i < files.length; i++) {
+                        formData.append('files', files[i]);
+                    }
+
+                    //var data = $('#editor').froalaEditor('html.get');
+                    var data = theEditor.getData();
+
+                    //var data = CKEDITOR.instances['editor1'].getData();
+                    var Model = {
+                        DownloadTitle: this.downloadTitle(),
+                        DownloadDescription: data,
+                    };
+                    for (var key in Model) {
+                        formData.append(key, Model[key] );
+                    }
+
+                    if (Model.DownloadTitle != "" && Model.DownloadDescription != "") {
+                        //console.log("Calling API");
+                        
+                        if (this.isPost()) {
+
+                            $lib.http.postForm("/Download", formData, (err, res) => {
+                                if (err) return;
+                                else {
+                                    GridLoad();
+                                    $("#modalpopup").modal("hide");
+                                    $toastMessages.showSuccess('Download added successfully')
+                                }
+                            })
+
+                        }
+                        else {
+                            
+                            var attachedfiles = this.alreadyAttachedFiles();
+                            for (var i = 0; i < files.length; i++) {
+                                formData.append('attachments', files[i]);
+                            }
+
+                            formData.append('ExistingAttachments', JSON.stringify(attachedfiles));
+
+                            $lib.http.putForm('/Download/' + this.downloadId(), formData, (err, res) => {
+
+                                if (err) return;
+                                else {
+                                    GridLoad();
+                                    $("#modalpopup").modal("hide");
+                                    $toastMessages.showSuccess('Download edited successfully');
+                                }
+                            });
+                        }
+                    }
+                    else {                      
+                        $toastMessages.showError('Please Enter All the Values.');
+                    }
+                }
+                else {
+                    if ((viewModel.selectedFiles().length + viewModel.alreadyAttachedFiles().length < 1)) {
+                        viewModel.fileValidationError(true);
+                    }
+
+                   // alert("hello");
+                    viewModel.errors.showAllMessages();
+                }
+            }
+
+            viewModel.onAdd = function () {
+                //console.log("onAdd");
+                viewModel.popupName('Add Download');
+                viewModel.downloadId('');
+                viewModel.downloadTitle('');
+                viewModel.selectedFiles([]);
+                viewModel.fileModelList([]);
+                viewModel.downloadDescription('');
+                viewModel.searchTitle('');
+                theEditor.setData('');
+                //$('#editor').froalaEditor('html.set', '');
+                viewModel.isEdit(true);
+                viewModel.isPost(true);
+                viewModel.errors.showAllMessages(false);
+                viewModel.fileValidationError(false);
+                //GetData(download.downloadId)
+            }
+
+            viewModel.onView = function (download) {
+                //console.log("OnView");
+                viewModel.selectedFiles([]);
+                viewModel.fileModelList([]);
+                viewModel.popupName('View Download');
+                viewModel.isEdit(false);
+                viewModel.fileValidationError(false);
+                GetData(download.DownloadId)
+            }
+
+            viewModel.onEdit = function (download) {
+                //console.log("OnView");
+                viewModel.selectedFiles([]);
+                viewModel.fileModelList([]);
+                viewModel.popupName('Edit Download');
+                viewModel.isEdit(true);
+                viewModel.isPost(false);
+                viewModel.fileValidationError(false);
+                GetData(download.DownloadId)
+            }
+
+            viewModel.onDelete = function (download) {
+
+                var title = "Delete Confirmation"
+                var message = "Are you sure you want to remove? This action cannot be undone.";
+                $util.confirmBox(title, message,(confirm)=>{
+                    if (confirm) {
+                        $lib.http.delete('/Download/' + download.DownloadId, (err, res) => {
+                            if (err) return;
+
+                            else {
+                                GridLoad();
+                                $toastMessages.showSuccess('Download deleted successfully')
+                            }
+                        })
+                        //console.log("Confirm = " + confirm);
+                    }
+                    else { }
+                })
+
+            }
+
+            viewModel.onFileSelect = function (elem, event) {
+                const target = event.target;
+                var loop = 0;
+                // viewModel.selectedFiles(viewModel.selectedFiles().concat(event.target.files));
+                
+                var files = event.target.files;
+
+                if ((files.length + viewModel.alreadyAttachedFiles().length) > 6) {
+                    alert('Maximum 6 files are allowed');
+                    files = [];
+                }
+
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].size > 1000000)  //1 MB allowed
+                    {
+                        alert(files[i].name + " \nToo big!");
+                        files = [];
+                    }
+                    else {
+                        switch (files[i].type) {
+                            case 'image/png':
+                            case 'image/jpeg':
+                            case 'application/pdf':
+                                break;
+                            default:
+                                alert('Unsupported File!');
+                                files = [];
+                        }
+                    }
+
+                }
+                viewModel.fileValidationError(false);
+                ko.utils.arrayForEach(files, function (file) {
+                    
+                var reader = new FileReader();
+                //self.selectedFiles([]);
+                // reader onload function is a callback from readAsDataURL
+                reader.onload = function (f) {
+                    // result is base64 string
+                   
+                    var b64 = (f.target.result);
+                    viewModel.fileModel.fileId = Math.floor((Math.random() * 1000) + 1);;
+                    viewModel.fileModel.fileName = files[loop].name;
+                    viewModel.fileModel.fileSource = (f.target.result);
+                    viewModel.fileModelList.push(JSON.parse(JSON.stringify(viewModel.fileModel)))
+                    viewModel.selectedFiles.push(file)
+                    // if selectedFiles length less than
+                    //if (self.selectedFiles().length < 3) {
+                    //    //push into array
+                    //    self.selectedFiles.push({ base64String: b64 });
+                    //}
+                    loop++;
+                };
+                var aa = reader.readAsDataURL(file);
+               // console.log(aa);
+
+            });
+               // viewModel.selectedFiles(files);
+
+
+               // viewModel.selectedFiles(event.target.files);
+
+               // viewModel.icon(iconImg[attachmentType])
+               // icon = iconImg[attachmentType];
+            }
+
+            viewModel.onPreview = function () {
+            var newWindow = window.open('PreviewPages/Configuration.html', '_blank');
+                var content = theEditor.getData();
+            // var content = CKEDITOR.instances['editor1'].getData();
+                $(newWindow).on('load', function () {
+                    newWindow.document.getElementById("heading").innerHTML = 'Download';
+                    newWindow.document.getElementById("divTitle").innerHTML = viewModel.downloadTitle();
+                    newWindow.document.getElementById("contentDescription").innerHTML = content;
+                    newWindow.document.getElementById('date').style.display = 'none';
+
+                });
+            }
+
+            viewModel.onDiscard = function () {
+                var title = "Discard Confirmation"
+                var message = "Are you sure you want to discard changes? This action cannot be undone.";
+                $util.confirmBox(title, message, (confirm) => {
+                    if (confirm) {
+                        $("#modalpopup").modal("hide");
+                    }
+                })
+            }
+
+            viewModel.onPrevious = function() {
+
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                if (currentPageNo > 1) {
+                    viewModel.currentPageNo(--currentPageNo);
+                    GridLoad();
+                }
+            }
+
+            viewModel.onNext = function() {
+
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                var totalPageCount = parseInt(viewModel.totalPagesCount());
+                if (currentPageNo < totalPageCount) {
+                    viewModel.currentPageNo(++currentPageNo);
+                    GridLoad();
+                }
+            }
+
+            viewModel.onSort = function(orderBy) {
+
+                var previousOrderBy = viewModel.orderBy();
+                var previousDirection = viewModel.isAscendingOrder();
+
+                if (previousOrderBy.toLowerCase() != orderBy.toLowerCase()) {
+
+                    viewModel.isAscendingOrder(true);
+                    viewModel.orderBy(orderBy);
+                }
+                else
+                    viewModel.isAscendingOrder(!previousDirection);
+
+                GridLoad();
+            }
+
+            viewModel.onFilePreview = function (file) {
+                if (file.fileSource == undefined)
+                {
+                        var id = "";
+                        if (file.fileId == undefined) {
+                            id = file.AttachmentId;
+                        }
+                        else {
+                            id = file.fileId;
+                        }
+                      url = '@ViewBag.apiBaseUrl' + "/Attachment/" + id;
+                      window.open(url, "_blank");
+                }
+                else {
+                    var win = window.open();
+                    win.document.write('<iframe src="' + file.fileSource + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+                }
+            }
+
+        viewModel.onFileDelete = function (file) {
+
+            var title = "Delete Confirmation"
+            var message = "Are you sure you want to remove this file? This action cannot be undone.";
+            $util.confirmBox(title, message, (confirm) => {
+                if (confirm) {
+                    
+                    var id = file.fileId;
+                    var name = file.name;
+
+                    viewModel.alreadyAttachedFiles.remove(function (file) {
+                        return file.AttachmentId == id;
+                    });
+
+
+                    viewModel.fileModelList.remove(function (file) {
+                        return file.fileId == id;
+                    });
+
+                    
+                    //    return file.name == name;
+                    //});
+
+                    if (viewModel.selectedFiles().length > 0) {
+                        var array = Array.prototype.slice.call(viewModel.selectedFiles())
+
+                        var index = array.findIndex(x => x.name == name);
+                        array.splice(index, 1);
+                        viewModel.selectedFiles(array);
+                    }
+                }
+                else {
+
+
+                }
+            })
+        }
+
+            viewModel.errors = ko.validation.group(viewModel);
+            $lib.bindUI(viewModel);
+
+       // }())
+    </script>
+
+}

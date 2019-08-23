@@ -1,0 +1,114 @@
+.pay {
+  button {
+    background-color: $white;
+    border: 1px solid $tundora;
+    border-radius: 2px;
+    font-weight: 300;
+    cursor: pointer;
+    &:hover {
+      background-color: $flush-orange;
+      color: $white;
+      border: 1px solid transparent;
+    }
+    &.only {
+      color: $white;
+      background-color: $cerulean;
+      border: 1px solid transparent;
+    }
+    @include media-breakpoint-up(md) { margin-top: 38px;}
+  }
+}
+.form-group {
+  label {
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: 500;
+    width: 100%;
+  }
+}
+
+.generate {
+  margin-top: 10px;
+  a{
+    color: $fun-green;
+    font-size: 16px;	
+    font-weight: 300;	
+    line-height: 19px;
+  }
+  span {
+    display: block;
+    font-size: 11px;	
+    font-weight: 300;	
+    line-height: 17px;
+    color: $tundora;
+  }
+}
+.submission {
+  padding-top: 0;
+  .buttons-pay-holder {
+    .btn {
+      padding: 8px 35px;
+    }
+  }
+}
+.captcha-authentication {
+  .hd-border {
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    color: #000
+  }
+}
+.buttons-holder {
+  .btn{
+    padding: 8px 35px;
+  }
+}
+.final-panel {
+  text-align: center;
+  margin-bottom: 60px;
+  padding-top: 50px;
+  .done-img-holder {
+    margin-bottom: 20px;
+  }
+  span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 19px;
+    color: $tundora;
+  }
+  strong {
+    display: block;
+    font-size: 22px;
+    font-weight: 500;	
+    line-height: 19px;
+  }
+  @include media-breakpoint-down(sm) {
+     padding-top: 20px;
+    img{
+        width: 50px;
+        height: 50px;
+    }
+    span{ font-size: 12px; }
+    strong{ font-size: 16px; }
+  }
+}
+.pay-stamp-popup {
+  padding: 20px 5px;
+  width: 100%;
+  background-color: #FFF4D1;
+  margin-top: 20px;
+  strong {
+    font-size: 18px;	
+    font-weight: 500;	
+    line-height: 19px;
+  }
+}
+.discription {
+  margin-bottom: 10px;
+  @include media-breakpoint-up(md) { margin-bottom: 25px;}
+}
+

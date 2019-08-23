@@ -1,0 +1,92 @@
+html,
+body {
+  height: 100%; }
+
+body {
+  display: -ms-grid;
+  display: grid;
+  font-family: Avenir;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased; }
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.inp {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 280px; }
+
+.inp .label {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  font-size: 16px;
+  color: #9098a9;
+  font-weight: 500;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease; }
+
+.inp .border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: #07f;
+  -webkit-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transition: all 0.15s ease;
+  -o-transition: all 0.15s ease;
+  transition: all 0.15s ease; }
+
+.inp input {
+  -webkit-appearance: none;
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  padding: 12px 0;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 2px solid #c8ccd4;
+  background: none;
+  border-radius: 0;
+  color: #223254;
+  -webkit-transition: all 0.15s ease;
+  -o-transition: all 0.15s ease;
+  transition: all 0.15s ease; }
+
+.inp input:hover {
+  background: rgba(34, 50, 84, 0.03); }
+
+.inp input:not(:placeholder-shown) + span {
+  color: #5a667f;
+  -webkit-transform: translateY(-26px) scale(0.75);
+  -ms-transform: translateY(-26px) scale(0.75);
+  transform: translateY(-26px) scale(0.75); }
+
+.inp input:focus {
+  background: none;
+  outline: none; }
+
+.inp input:focus + span {
+  color: #07f;
+  -webkit-transform: translateY(-26px) scale(0.75);
+  -ms-transform: translateY(-26px) scale(0.75);
+  transform: translateY(-26px) scale(0.75); }
+
+.inp input:focus + span + .border {
+  -webkit-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  transform: scaleX(1); }

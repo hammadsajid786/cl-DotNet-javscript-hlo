@@ -1,0 +1,11 @@
+﻿@using BLRMIS.Web.Common
+@using Newtonsoft.Json
+
+@inject Microsoft.Extensions.Options.IOptions<AppSettings> appSettings
+@{
+    ViewBag.apiBaseUrl = appSettings.Value.APIBaseUrl;
+    ViewBag.appSettings = Html.Raw(JsonConvert.SerializeObject(appSettings.Value));
+}
+@{
+    Layout = "_Layout";
+}

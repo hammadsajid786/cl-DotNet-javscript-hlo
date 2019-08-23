@@ -1,0 +1,907 @@
+﻿@page "/user"
+@{
+    ViewData["Title"] = "User Management";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="table-box">
+    <div class="hd-holder">
+        <h6>User Management</h6>
+        <span class="bd-line"></span>
+    </div>
+    <div class="search-bar">
+        <div class="row">
+            <div class="col-md-2 left-sec">
+                <div class="add-user">
+                   
+                    <a class="customBtn" data-toggle="modal" data-target="#userFormModal" data-backdrop="static" data-keyboard="false">Add User</a>
+                </div>
+            </div>
+            <div class="col-md-10 rit-sec">
+                <div class="search-form">
+                    <form class="form-inline">
+                        <ul class="nomargin">
+                            <li class="length length1">
+                                <input type="text" class="form-control" placeholder="User Name" data-bind="value: viewModel.listModel.userName">
+                            </li>
+                            <li class="length length1">
+                                <input type="text" class="form-control" placeholder="Name" data-bind="value: viewModel.listModel.name">
+                            </li>
+                            <li class="length length1">
+                                <select style="width: 100%" class="form-control"
+                                        data-bind="options: locations,
+                                            optionsText: 'Text',
+                                            optionsValue: 'Value',
+                                            value: viewModel.listModel.location,
+                                            optionsCaption: 'Location'"></select>
+                            </li>
+                            <li class="length length2">
+                                <button type="submit" class="customBtn" data-bind="click: viewModel.onSearchClick">Search</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade popup" id="userDetailModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6>User Detail</h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form form-detail">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.FullName"></span><strong>Name</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.FatherName"></span><strong>Father Name</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.Cnic"></span><strong>CNIC</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><spn data-bind="text: userDetails.EmailAddress"></spn><strong>E-mail</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.PhoneNumber"></span><strong>Phone Number</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.UserName"></span><strong>Username</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.Role"></span><strong>Role</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.Location"></span><strong>Location</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.DepartmentName"></span><strong>Department</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.DesignationName"></span><strong>Designation</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: userDetails.Status" class="detail-user-status"></span><strong>Status</strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="login-button">
+                                        <button type="button" class="customBtn" data-dismiss="modal" data-target="#userDetailModal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-status">
+        <div class="row">
+            <div class="col-sm-10">
+                <p>Total Record(s): <b data-bind="text: listModel.totalRecordsCount"></b></p>
+            </div>
+            <div class="col-sm-2">
+                <div class="custom-dropdown">
+                    <select class="form-control" id="ddlStatusFilter" data-bind="options: active,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: listModel.selectedStatus,
+                                                                                optionsCaption: 'All Status',
+                                                                                event: { change: viewModel.onStatusFilterChange }"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-area">
+        <table class="table table-bordered text-left">
+            <thead class="thead-light">
+                <tr>
+                    <th class="sorting" data-bind="click: viewModel.onSort.bind($data, 'UserName')">
+                        User Name
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: viewModel.onSort.bind($data, 'FirstName')">
+                        Name
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: viewModel.onSort.bind($data, 'Location.LocationName')">
+                        Location
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: viewModel.onSort.bind($data, 'Role.RoleName')">
+                        Role
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" data-bind="click: viewModel.onSort.bind($data, 'Active')">
+                        Status
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: listModel.list">
+                <tr>
+                    <td>
+                        <a href="#" class="green" data-bind="text: UserName, click: $root.onEdit.bind($data, true), disable: $root.isRequestInProcess()"></a>
+                    </td>
+                    <td data-bind="text: FirstName + ' ' + LastName"></td>
+                    <td data-bind="text: Location.LocationName"></td>
+                    <td data-bind="text: Role.RoleName"></td>
+                    <td class="" data-bind="class: Active ? 'active-st' : 'inactive-st'">
+                        <a href="#" data-bind="click: !$root.isRequestInProcess() ? $root.onStatusChange.bind($data, $index()) : ''">
+                            <span data-bind="text: (Active ? 'Active' : 'Inactive'), class: !Active ? 'inactive-st' : 'green'">
+                            </span>
+                        </a>
+                    </td>
+                    <td class="text-center action-items">
+                        <span class="icon-edit-icon icon" title="Edit" data-bind="click: $root.onEdit.bind($data, false), disable: $root.isRequestInProcess()"></span>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody data-bind="if: listModel.list().length <= 0">
+                <tr>
+                    <td colspan="6" align="center">
+                        <span>No Records Found.</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-12">
+            <div class="row">
+                <ul class="pagination col-sm-6">
+                    <li class="page-item" data-bind="class: getPreviousButtonClass">
+                        <a class="page-link left" href="#" data-bind="click: viewModel.onPrevious"><span class="fa fa-caret-left"></span></a>
+                    </li>
+                    <li>
+                        <input type="text" class="page-link form-control" data-bind="integerInput, propertyName: 'totalPagesCount', value: viewModel.listModel.currentPageNo, event: { change: viewModel.onPageChange }" />
+                    </li>
+                    <li><p>of <span data-bind="text: viewModel.listModel.totalPagesCount"></span></p></li>
+                    <li class="page-item" data-bind="class: getNextButtonClass">
+                        <a class="page-link right" href="#" data-bind="click: viewModel.onNext"><span class="fa fa-caret-right"></span></a>
+                    </li>
+                </ul>
+                <div class="records-field col-sm-6 text-right">
+                    <label>
+                        Records per page
+                    </label>
+                    <div class="custom-dropdown cus-sel">
+                        <select class="form-control" id="ddlRecordsPerPage" data-bind="options: listModel.recordsPerPageList,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: listModel.selectedPageSize"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade popup" id="userFormModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6 data-bind="text: formHeading"></h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="txtFirstName">First Name *</label>
+                                                <input type="text" class="form-control pretty-input" id="txtFirstName" data-bind="value: formModel.FirstName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="lastname">Last Name *</label>
+                                                <input type="text" class="form-control pretty-input" id="lastname" data-bind="value: formModel.LastName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="Fatherrname">Father Name *</label>
+                                                <input type="text" class="form-control pretty-input" id="Fatherrname" data-bind="value: formModel.FatherName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="CNIC">CNIC *</label>
+                                                <input type="text" class="form-control pretty-input" id="CNIC" data-bind="value: formModel.Cnic,
+                                                           masked: formModel.Cnic, mask: '00000-0000000-0'">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="emailaddress">Email Address *</label>
+                                                <input type="text" class="form-control pretty-input" id="emailaddress" data-bind="value: formModel.EmailAddress">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="Phoneno">Phone Number *</label>
+                                                <input type="text" class="form-control pretty-input" id="Phoneno" data-bind="value: formModel.PhoneNumber">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="username">User Name *</label>
+                                                <input type="text" class="form-control pretty-input" id="username" data-bind="value: formModel.UserName, enable: disableFields">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="pwd">Password *</label>
+                                                <input type="password" class="form-control pretty-input" id="pwd" data-bind="value: formModel.Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="Cpwd">Confirm Password *</label>
+                                                <input type="password" class="form-control pretty-input" id="Cpwd" data-bind="value: formModel.ConfirmPassword">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="ddlLocation"></label>
+                                                <select class="form-control" id="ddlLocation"
+                                                        data-bind="options: locations,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: formModel.LocationId,
+                                                                                optionsCaption: 'Select Location *'"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="ddlRole"></label>
+                                                <select class="form-control" id="ddlRole"
+                                                        data-bind="options: roles,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: formModel.RoleId,
+                                                                                optionsCaption: 'Select Role *'"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="ddlDepartment"></label>
+                                                <select class="form-control" id="ddlDepartment"
+                                                        data-bind="options: departments,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: formModel.DepartmentId,
+                                                                                optionsCaption: 'Select Department *'"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="ddlDesignation"></label>
+                                                <select class="form-control" id="ddlDesignation"
+                                                        data-bind="options: designations,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: formModel.DesignationId,
+                                                                                optionsCaption: 'Select Designation *'"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="ddlActive"></label>
+                                                <select class="form-control" id="ddlActive"
+                                                        data-bind="options: active,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: formModel.Active,
+                                                                                optionsCaption: 'Select Status *'"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="login-button">
+                                        <button type="submit" class="customBtn" data-bind="text: saveButtonText, click: onFormSubmit, disable: isRequestInProcess()">
+                                            Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            initValidations();
+            $lib.bindUI(viewModel);
+            $lib.setPageTitle("User Management");
+
+            viewModel.formModel.errors.showAllMessages(false);
+            viewModel.listModel.currentPageNo(1);
+            getLocations();
+            getRoles();
+            fillStatus();
+            fillRecordsPerPage();
+            getDepartment();
+            getDesignation();
+            pageSize_Change();
+            viewModel.listModel.selectedStatus(1);
+            getUsersList();
+        });
+
+        function initValidations() {
+
+            viewModel.formModel.errors = ko.validation.group(viewModel.formModel);
+            addValidations();
+        }
+
+        function addValidations() {
+
+            viewModel.formModel.ConfirmPassword.extend({
+                required: true, maxLength: $constants.passwordMaxLength, equal: { message: $constants.passwordMustMatchMessage, params: viewModel.formModel.Password }
+            });
+        }
+
+        var viewModel = {
+
+            formModel: {
+                UserId: ko.observable(null),
+                FirstName: ko.observable("").extend({
+                    required: true, maxLength: 50,
+                    pattern: { message: $constants.alphaNumericMessage, params: $constants.alphaNumericRegex }
+                }),
+                LastName: ko.observable("").extend({
+                    required: true, maxLength: 50,
+                    pattern: { message: $constants.alphaNumericMessage, params: $constants.alphaNumericRegex }
+                }),
+                FatherName: ko.observable("").extend({
+                    required: true, maxLength: 50,
+                    pattern: { message: $constants.alphaNumericMessage, params: $constants.alphaNumericRegex }
+                }),
+                Cnic: ko.observable("").extend({
+                    required: true, maxLength: 15, pattern: {
+                        message: "CNIC number should be in this format (00000-0000000-0)",
+                        params: $constants.cnicRegex
+                    }
+                }),
+                EmailAddress: ko.observable("").extend({ required: true, maxLength: 50, email: true }),
+                PhoneNumber: ko.observable("").extend({
+                    required: true, maxLength: 12, pattern: {
+                        message: "Invalid phone number",
+                        params: $constants.phoneNumberRegex
+                    }
+                }),
+                UserName: ko.observable("").extend({
+                    required: true, maxLength: 50, pattern: {
+                        message: "Spaces are not allowed",
+                        params: $constants.noSpaces
+                    }
+                }),
+                Password: ko.observable("").extend({
+                    required: true, minLength: { message: $constants.passwordLengthMessage, params: $constants.passwordMinLength },
+                    maxLength: { message: $constants.passwordLengthMessage, params: $constants.passwordMaxLength },
+                    pattern: {
+                        message: $constants.passwordPolicyMessage,
+                        params: $constants.passwordRegex
+                    }
+                }),
+                ConfirmPassword: ko.observable(""),
+                LocationId: ko.observable("").extend({ required: true }),
+                RoleId: ko.observable("").extend({ required: true }),
+                Active: ko.observable("").extend({ required: true }),
+                DepartmentId: ko.observable("").extend({ required: true }),
+                DesignationId: ko.observable("").extend({ required: true }),
+                errors: null
+            },
+            listModel: {
+                list: ko.observableArray(null),
+                userName: ko.observable(""),
+                name: ko.observable(""),
+                location: ko.observable(""),
+                totalPagesCount: ko.observable(0),
+                currentPageNo: ko.observable(0),
+                orderBy: ko.observable("CreatedDate"),
+                isAscendingOrder: ko.observable(false),
+                totalRecordsCount: ko.observable(0),
+                recordsPerPageList: ko.observableArray([]),
+                selectedStatus: ko.observable(null),
+                selectedPageSize: ko.observable(10),
+                lastFilters: {
+                    userName: ko.observable(""),
+                    name: ko.observable(""),
+                    location: ko.observable(""),
+                }
+            },
+            userDetails: {
+                FullName: ko.observable(""),
+                LastName: ko.observable(""),
+                FatherName: ko.observable(""),
+                Cnic: ko.observable(""),
+                EmailAddress: ko.observable(""),
+                PhoneNumber: ko.observable(""),
+                UserName: ko.observable(""),
+                Status: ko.observable(""),
+                Role: ko.observable(""),
+                Location: ko.observable(""),
+                DepartmentName: ko.observable(""),
+                DesignationName: ko.observable("")
+            },
+            locations: ko.observableArray([]),
+            roles: ko.observableArray([]),
+            departments: ko.observable([]),
+            designations: ko.observable([]),
+            active: ko.observableArray([]),
+            isRequestInProcess: ko.observable(false),
+            formHeading: ko.observable("Add User"),
+            saveButtonText: ko.observable("Add"),
+            disableFields: ko.observable(true),
+            addFocus: ko.pureComputed(function () {
+
+                var userId = this.viewModel.formModel.UserId();
+                if (userId && !isNaN(parseInt(userId)) && parseInt(userId) > 0)
+                    return "focused";
+                else
+                    return "";
+            }),
+            getPreviousButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentPageNo());
+                return (currentPageNumber <= 1) ? '' : 'active';
+            }),
+            getNextButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentPageNo());
+                var totalPagesCount = parseInt(this.viewModel.listModel.totalPagesCount());
+                return (currentPageNumber < totalPagesCount) ? 'active' : '';
+            }),
+            onFormSubmit: onSubmit,
+            onEdit: getUserDetails,
+            onShowDetails: getUserDetails,
+            onSearchClick: onSearch_Click,
+            onPageChange: getUsersList,
+            onPrevious: onPrevious,
+            onNext: onNext,
+            onSort: onSort,
+            onStatusChange: onStausChange,
+            onStatusFilterChange: getUsersList
+        }
+
+        $('#userFormModal').on('hidden.bs.modal', function () {
+
+            viewModel.formModel.UserId(null);
+            viewModel.disableFields(true);
+            viewModel.formHeading("Add User");
+            viewModel.saveButtonText("Add");
+            resetForm();
+        });
+
+        var selectListModel = function (value, text) {
+            this.Text = text;
+            this.Value = value;
+        }
+
+        function pageSize_Change() {
+
+            viewModel.listModel.selectedPageSize.subscribe(function () {
+                viewModel.listModel.currentPageNo(1);
+                getUsersList();
+            });
+        }
+
+        function onSearch_Click() {
+
+            viewModel.listModel.currentPageNo(1);
+            viewModel.listModel.orderBy("CreatedDate");
+            viewModel.listModel.lastFilters.userName(viewModel.listModel.userName());
+            viewModel.listModel.lastFilters.name(viewModel.listModel.name());
+            viewModel.listModel.lastFilters.location(viewModel.listModel.location());
+            getUsersList();
+        }
+
+        function resetForm() {
+
+            viewModel.formModel.UserId(null);
+            viewModel.formModel.FirstName("");
+            viewModel.formModel.LastName("");
+            viewModel.formModel.FatherName("");
+            viewModel.formModel.Cnic("");
+            viewModel.formModel.EmailAddress("");
+            viewModel.formModel.PhoneNumber("");
+            viewModel.formModel.UserName("");
+            viewModel.formModel.Password("");
+            viewModel.formModel.ConfirmPassword("");
+            viewModel.formModel.LocationId("");
+            viewModel.formModel.RoleId("");
+            viewModel.formModel.Active("");
+            viewModel.formModel.DepartmentId("");
+            viewModel.formModel.DesignationId("");
+            viewModel.formModel.errors.showAllMessages(false);
+
+            viewModel.listModel.currentPageNo(1);
+            viewModel.listModel.orderBy("CreatedDate");
+            viewModel.listModel.userName("");
+            viewModel.listModel.name("");
+            viewModel.listModel.location("");
+            viewModel.listModel.lastFilters.userName("");
+            viewModel.listModel.lastFilters.name("");
+            viewModel.listModel.lastFilters.location("");
+        }
+
+        function getLocations() {
+
+            $lib.http.get("/Locations", fillLocations);
+        }
+
+        function getRoles() {
+
+            $lib.http.get("/Roles", fillRoles);
+        }
+
+        function onPrevious() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentPageNo());
+            if (currentPageNo > 1) {
+                viewModel.listModel.currentPageNo(--currentPageNo);
+                getUsersList();
+            }
+        }
+
+        function onNext() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentPageNo());
+            var totalPageCount = parseInt(viewModel.listModel.totalPagesCount());
+            if (currentPageNo < totalPageCount) {
+                viewModel.listModel.currentPageNo(++currentPageNo);
+                getUsersList();
+            }
+        }
+
+        //function onSort(orderBy, isAscendingOrder) {
+
+        //    viewModel.listModel.isAscendingOrder(isAscendingOrder);
+        //    viewModel.listModel.orderBy(orderBy);
+        //    getUsersList();
+        //}
+
+        function onSort(orderBy) {
+
+            var previousOrderBy = viewModel.listModel.orderBy();
+            var previousDirection = viewModel.listModel.isAscendingOrder();
+
+            if (previousOrderBy.toLowerCase() != orderBy.toLowerCase()) {
+
+                viewModel.listModel.isAscendingOrder(true);
+                viewModel.listModel.orderBy(orderBy);
+            }
+            else
+                viewModel.listModel.isAscendingOrder(!previousDirection);
+            getUsersList();
+        }
+
+        function getUsersList() {
+
+            if (!isNaN(parseInt(viewModel.listModel.currentPageNo())) && parseInt(viewModel.listModel.currentPageNo()) > 0) {
+                var queryParams = {
+                    UserName: viewModel.listModel.lastFilters.userName(),
+                    Name: viewModel.listModel.lastFilters.name(),
+                    Location: !viewModel.listModel.lastFilters.location() ? "" : viewModel.listModel.lastFilters.location(),
+                    Status: viewModel.listModel.selectedStatus() == null || viewModel.listModel.selectedStatus() == undefined ? "" :
+                        (viewModel.listModel.selectedStatus() == 1 ? true : false),
+                    PageIndex: parseInt(viewModel.listModel.currentPageNo()) - 1,
+                    OrderBy: viewModel.listModel.orderBy(),
+                    SortDirection: viewModel.listModel.isAscendingOrder() ? "Ascending" : "Descending",
+                    PageSize: viewModel.listModel.selectedPageSize()
+                };
+                
+                var parameters = "filter:UserId!=" + $lib.appSettings.PublicUserId + ",UserName=" + queryParams.UserName;
+                parameters += (queryParams.Name && queryParams.Name.toString().trim() != "") ? `,FirstName=${queryParams.Name}|LastName=${queryParams.Name}` : "";
+                parameters += ",LocationId=" + queryParams.Location + ",Active=" + queryParams.Status + ";" + "orderby:" + queryParams.OrderBy + "="
+                    + queryParams.SortDirection + ";size:" + queryParams.PageSize + ";index:" + queryParams.PageIndex;
+
+                $lib.showSpinner(true);
+                $lib.http.get("/user?param=" + parameters, fillUsersList);
+            }
+            else {
+                $toastMessages.showError("Invalid Page Number");
+            }
+        }
+
+        function onStausChange(index) {
+
+            this.rowIndex = index;
+            viewModel.isRequestInProcess(true);
+            $lib.showSpinner(true);
+            $lib.http.get(`/user/${this.UserId}/ChangeStatus`, afterStatusChanged.bind(this));
+        }
+
+        function getDepartment() {
+
+            $lib.http.get("/Designations", fillDesignations);
+        }
+
+        function getDesignation() {
+
+            $lib.http.get("/Departments", fillDepartments);
+        }
+
+        function getUserDetails(showDetails) {
+
+            $lib.showSpinner(true);
+            viewModel.isRequestInProcess(true);
+            if (showDetails)
+                $lib.http.get("/user/" + this.UserId, showUserDetails);
+            else
+                $lib.http.get("/user/" + this.UserId, fillUserForm);
+        }
+
+        function onSubmit() {
+
+            if (viewModel.formModel.errors().length == 0) {
+
+                var requestModal = JSON.parse(ko.toJSON(viewModel.formModel));
+                var userId = requestModal.UserId;
+
+                viewModel.isRequestInProcess(true);
+                $lib.showSpinner(true);
+                if (userId && !isNaN(parseInt(userId)) && parseInt(userId) > 0) {
+
+                    requestModal.UserName = null;
+                    //requestModal.Password = null;
+                    $lib.http.put("/user/" + userId, requestModal, (err, res) => afterUserSaved(err, res, true));
+                }
+                else
+                    $lib.http.post("/user/", requestModal, (err, res) => afterUserSaved(err, res, false));
+
+            } else {
+                viewModel.formModel.errors.showAllMessages();
+            }
+        }
+
+        function fillLocations(err, res) {
+
+            if (err)
+                return;
+            else {
+                viewModel.locations(res);
+            }
+        }
+
+        function fillRoles(err, res) {
+
+            if (err)
+                return;
+            else {
+                viewModel.roles(res);
+            }
+        }
+
+        function fillStatus() {
+
+            viewModel.active([
+                new selectListModel(1, "Active"),
+                new selectListModel(0, "Inactive")
+            ]);
+        }
+
+        function fillRecordsPerPage() {
+
+            viewModel.listModel.recordsPerPageList([
+                new selectListModel(10, "10"),
+                new selectListModel(20, "20")
+            ]);
+        }
+
+        function fillDepartments(err, res) {
+
+            if (err)
+                return;
+            else {
+                viewModel.departments(res);
+            }
+        }
+
+        function fillDesignations(err, res) {
+
+            if (err)
+                return;
+            else {
+                viewModel.designations(res);
+            }
+        }
+
+        function fillUsersList(err, res) {
+
+            $lib.showSpinner(false);
+            if (err) {
+                return;
+            }
+            else {
+                viewModel.listModel.list(res.Records);
+                viewModel.listModel.totalPagesCount(res.TotalPages);
+                viewModel.listModel.totalRecordsCount(res.TotalRecords);
+            }
+        }
+
+        function afterUserSaved(err, res, onEdit) {
+
+            if (err) {
+                if (err.responseText && err.responseText.trim().toLowerCase() == "usernamealreadyexists")
+                    $toastMessages.showError("Username already exists");
+            }
+            else {
+                if (!onEdit) {
+                    viewModel.listModel.isAscendingOrder(false);
+                    $toastMessages.showSuccess("User is created successfully");
+                }
+                else {
+                    $toastMessages.showSuccess("User detail updated successfully");
+                }
+                resetForm();
+                $("#userFormModal").modal("hide");
+                getUsersList();
+            }
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+        }
+
+        function fillUserForm(err, res) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return;
+            else {
+
+                viewModel.formModel.UserId(res.UserId);
+                viewModel.formModel.FirstName(res.FirstName);
+                viewModel.formModel.LastName(res.LastName);
+                viewModel.formModel.FatherName(res.FatherName);
+                viewModel.formModel.Cnic(res.Cnic);
+                viewModel.formModel.EmailAddress(res.EmailAddress);
+                viewModel.formModel.PhoneNumber(res.PhoneNumber);
+                viewModel.formModel.UserName(res.UserName);
+                viewModel.formModel.Password(res.Password);
+                viewModel.formModel.ConfirmPassword(res.Password);
+                viewModel.formModel.LocationId(res.LocationId);
+                viewModel.formModel.RoleId(res.RoleId);
+                viewModel.formModel.DepartmentId(res.DepartmentId);
+                viewModel.formModel.DesignationId(res.DesignationId);
+                viewModel.formModel.Active(res.Active);
+                viewModel.disableFields(false);
+                viewModel.formHeading("Edit User");
+                viewModel.saveButtonText("Save");
+                $("#userFormModal").modal("show", { backdrop: 'static', keyboard: false });
+            }
+        }
+
+        function showUserDetails(err, res) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return
+            else {
+                viewModel.userDetails.FullName(res.FirstName + " " + res.LastName);
+                viewModel.userDetails.FatherName(res.FatherName);
+                viewModel.userDetails.Cnic(res.Cnic);
+                viewModel.userDetails.EmailAddress(res.EmailAddress);
+                viewModel.userDetails.PhoneNumber(res.PhoneNumber);
+                viewModel.userDetails.UserName(res.UserName);
+                if (res.Role && res.Role.RoleName)
+                    viewModel.userDetails.Role(res.Role.RoleName);
+                if (res.Location && res.Location.LocationName)
+                    viewModel.userDetails.Location(res.Location.LocationName);
+                if (res.Department && res.Department.DepartmentName)
+                    viewModel.userDetails.DepartmentName(res.Department.DepartmentName);
+                if (res.Designation && res.Designation.DesignationName)
+                    viewModel.userDetails.DesignationName(res.Designation.DesignationName);
+                viewModel.userDetails.Status(res.Active ? 'Active' : 'Inactive');
+                $("#userDetailModal").modal("show");
+            }
+        }
+
+        function afterStatusChanged(err) {
+
+            $lib.showSpinner(false);
+            if (err)
+                return
+            else {
+                var items = JSON.parse(JSON.stringify(viewModel.listModel.list()));
+                items[this.rowIndex].Active = !this.Active;
+                viewModel.listModel.list(items);
+            }
+            viewModel.isRequestInProcess(false);
+        }
+
+    </script>
+}
+

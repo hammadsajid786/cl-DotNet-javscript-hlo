@@ -1,0 +1,88 @@
+﻿@page "/FAQ"
+@{
+    ViewData["Title"] = "FAQ";
+}
+
+
+<main id="main">
+    <div class="faqs innerpage ">
+        <div class="banner-home about-page">
+            <div class="banner faq-banner ">
+                <div class="container">
+                    <div class="row align-items-md-center">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="banner-detail text-center">
+                                <p>How we can help you?</p>
+                                <div class="input-group md-form form-sm form-2 pl-0">
+                                    <input class="form-control my-0 py-1 amber-border" type="text" data-bind="value:searchTitle" placeholder="Search" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button type="button" data-bind="click: onSearch" class="btn btn-primary">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt50 mb30">
+            <div id="accordion">
+                <div data-bind="foreach: faqList">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse" data-bind="attr:{'data-target':'#collapse'+$index()}" aria-expanded="false" aria-controls="collapseOne">
+                                    <span data-bind="text: ($index()+1)"></span>.&nbsp;&nbsp;
+                                    <span data-bind="text: FaqTitle"></span>
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapse" data-bind="attr:{'id':'collapse'+$index()}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body ul-list-style ">
+                                <span data-bind="html:FaqDescription"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+@section scripts{
+
+    <script>
+
+
+        $(document).ready(function () {
+            $lib.setPageTitle("Faq");
+            var viewModel = {
+                searchTitle: ko.observable(""),
+                faqList: ko.observableArray(),
+                orderBy: ko.observable("CreatedDate"),
+                isAscendingOrder: ko.observable(true),
+            }
+
+            function GridLoad() {
+
+                $lib.http.get('/Faq/GetAll?Title=' + viewModel.searchTitle() + '&Description=' + viewModel.searchTitle(), (err, res) => {
+                    if (err) return;
+                    else {
+                        viewModel.faqList(res.Records);
+                    }
+                })
+            }
+
+            GridLoad();
+
+            viewModel.onSearch = function () {
+                GridLoad();
+            }
+
+            $lib.bindUI(viewModel);
+        }())
+    </script>
+}

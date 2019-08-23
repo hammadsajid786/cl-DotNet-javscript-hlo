@@ -1,0 +1,884 @@
+﻿@page "/role"
+@{
+    ViewData["Title"] = "Role Management";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="table-box">
+    <div class="hd-holder">
+        <h6>Role Management</h6>
+        <span class="bd-line"></span>
+    </div>
+    <div class="row">
+        <div class="col-md-2 left-sec">
+            <div class="add-user">
+                <a class="customBtn mgb20 mgt10" data-toggle="modal" data-target="#roleFormModal" data-backdrop="static" data-keyboard="false">Add Role</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade popup" id="roleDetailModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6>Role Detail</h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form form-detail">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: roleDetails.RoleName"></span><strong>Role</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: roleDetails.RoleDescription"></span><strong>Detail</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <p><span data-bind="text: roleDetails.Status" class="detail-user-status"></span><strong>Status</strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="login-button">
+                                        <button type="button" class="customBtn" data-dismiss="modal" data-target="#roleDetailModal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-status">
+        <div class="row">
+            <div class="col-sm-10">
+                <p>Total Record(s): <b data-bind="text: listModel.totalRecordsCount"></b></p>
+            </div>
+            <div class="col-sm-2">
+                <div class="custom-dropdown">
+                    <select class="form-control" id="ddlStatusFilter" data-bind="options: active,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: listModel.selectedStatus,
+                                                                                optionsCaption: 'All Status',
+                                                                                event: { change: viewModel.onStatusFilterChange }"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-area">
+        <table class="table table-bordered text-left">
+            <thead class="thead-light">
+                <tr>
+                    <th class="sorting" style="cursor: pointer" data-bind="click: viewModel.onSort.bind($data, 'RoleName')" width="20%">
+                        Role Name
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="sorting" style="cursor: pointer" data-bind="click: viewModel.onSort.bind($data, 'RoleDescription')" width="50%">
+                        Role Detail
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class=" sorting" style="cursor: pointer" data-bind="click: viewModel.onSort.bind($data, 'Active')">
+                        Status
+                        <span class="sort-icons">
+                            <i class="fa fa-fw fa-caret-up a1"></i>
+                            <i class="fa fa-fw fa-caret-down a2"></i>
+                        </span>
+                    </th>
+                    <th class="text-center">
+                        Functions
+                    </th>
+                    <th class="text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: listModel.list">
+                <tr>
+                    <td>
+                        <a href="#" class="green" data-bind="text: RoleName, click: $root.onEdit.bind($data, true), disable: $root.isRequestInProcess()"></a>
+                    </td>
+                    <td data-bind="text: RoleDescription"></td>
+                    <td class="" data-bind="class: Active ? 'active-st' : 'inactive-st'">
+                        <a href="#" data-bind="click: !$root.isRequestInProcess() ? $root.onStatusChange.bind($data, $index()) : ''">
+                            <span data-bind="text: (Active ? 'Active' : 'Inactive'), class: !Active ? 'inactive-st' : 'green'">
+                            </span>
+                        </a>
+                    </td>
+                    <td class="text-center action-items">
+                        <i class="fa fa-bars green" style="cursor: pointer" title="Functions" data-toggle="modal" data-target="#functionRoleMappingModal"
+                           data-bind="click: $root.getMappings.bind($data), disable: $root.isRequestInProcess()"></i>
+                    </td>
+                    <td class="text-center action-items">
+                        <span class="icon-edit-icon icon" title="Edit" data-bind="click: $root.onEdit.bind($data, false), disable: $root.isRequestInProcess()"></span>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody data-bind="if: listModel.list().length <= 0">
+                <tr>
+                    <td colspan="6" align="center">
+                        <span>No Records Found.</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-12">
+            <div class="row">
+                <ul class="pagination col-sm-6">
+                    <li class="page-item" data-bind="class: getPreviousButtonClass">
+                        <a class="page-link left" href="#" data-bind="click: viewModel.onPrevious"><span class="fa fa-caret-left"></span></a>
+                    </li>
+                    <li>
+                        <input type="text" class="page-link form-control" data-bind="integerInput, propertyName: 'totalPagesCount', value: viewModel.listModel.currentPageNo, event: { change: viewModel.onPageChange }" />
+                    </li>
+                    <li><p>of <span data-bind="text: viewModel.listModel.totalPagesCount"></span></p></li>
+                    <li class="page-item" data-bind="class: getNextButtonClass">
+                        <a class="page-link right" href="#" data-bind="click: viewModel.onNext"><span class="fa fa-caret-right"></span></a>
+                    </li>
+                </ul>
+                <div class="records-field col-sm-6 text-right">
+                    <label>
+                        Records per page
+                    </label>
+                    <div class="custom-dropdown cus-sel">
+                        <select class="form-control" id="ddlRecordsPerPage" data-bind="options: listModel.recordsPerPageList,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: listModel.selectedPageSize"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade popup" id="roleFormModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6 data-bind="text: formHeading"></h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+
+                            <div class="login-container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <label for="RoleName">Enter Role Name (eg. Reviewer, Resolver, Admin)</label>
+                                                <input type="text" class="form-control pretty-input" id="RoleName" data-bind="value: formModel.RoleName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="ddlActive"></label>
+                                                <select class="form-control" id="ddlActive"
+                                                        data-bind="options: active,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: formModel.Active,
+                                                                                optionsCaption: 'Select Status'"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" data-bind="class: addFocus">
+                                                <textarea class="form-control pretty-input" rows="6" id="RoleDetail" style="resize: none"
+                                                          data-bind="value: formModel.RoleDescription" placeholder="Enter Role Detail"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="login-button">
+                                        <button type="submit" class="customBtn" data-bind="text: saveButtonText, click: onFormSubmit, disable: isRequestInProcess()"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade popup" id="functionRoleMappingModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="hd-holder  modal-title">
+                        <h6>Functions</h6>
+                        <span class="bd-line"></span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="login custom-form">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="login-cnt-holder">
+
+                            <div class="login-container log2">
+                                <form>
+                                    <div class="row-status text-left">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <p>Total Record(s): <b data-bind="text: listModel.totalFunctionRecordsCount"></b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-area functions-table">
+                                        <table class="table table-bordered text-left">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th width="30px"></th>
+                                                    <th class="sorting" data-bind="click: viewModel.onFunctionSort.bind($data, 'FunctionName')">
+                                                        Function Name
+                                                        <span class="sort-icons">
+                                                            <i class="fa fa-fw fa-caret-up a1"></i>
+                                                            <i class="fa fa-fw fa-caret-down a2 "></i>
+                                                        </span>
+                                                    </th>
+                                                    <th width="130px" class="text-center">Add Function</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: functionRoleMappings">
+                                                <tr>
+                                                    <td width="30px" data-bind="text: (($root.listModel.selectedFunctionPageSize() * ($root.listModel.currentFunctionPageNo() - 1)) + ($index() + 1))"></td>
+                                                    <td data-bind="text: FunctionName"></td>
+                                                    <td class="cus-Check text-center">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" data-bind="checked: Include, click: onCheckChange.bind($data, Include)" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody data-bind="if: functionRoleMappings().length <= 0">
+                                                <tr>
+                                                    <td colspan="3" align="center">
+                                                        <span>No Records Found.</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <ul class="pagination col-sm-6">
+                                                    <li class="page-item" data-bind="class: getFunctionsPreviousButtonClass">
+                                                        <a class="page-link left" href="#" data-bind="click: onFunctionPrevious"><span class="fa fa-caret-left"></span></a>
+                                                    </li>
+                                                    <li>
+                                                        <input type="text" class="page-link form-control" data-bind="integerInput, propertyName: 'totalFunctionPagesCount', value: listModel.currentFunctionPageNo, event: { change: onFunctionPageChange }" />
+                                                    </li>
+                                                    <li><p>of <span data-bind="text: viewModel.listModel.totalFunctionPagesCount"></span></p></li>
+                                                    <li class="page-item" data-bind="class: getFunctionsNextButtonClass">
+                                                        <a class="page-link right" href="#" data-bind="click: onFunctionNext"><span class="fa fa-caret-right"></span></a>
+                                                    </li>
+                                                </ul>
+                                                <div class="records-field col-sm-6 text-right">
+                                                    <label>
+                                                        Records per page
+                                                    </label>
+                                                    <div class="custom-dropdown cus-sel">
+                                                        <select class="form-control" id="ddlRecordsPerPage" data-bind="options: listModel.recordsFunctionPerPageList,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: listModel.selectedFunctionPageSize"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="login-button">
+                                        <button type="submit" class="customBtn" data-bind="click: postMappings, disable: isRequestInProcess()">Save</button>
+                                        <a href="javascript:void(0)" data-target="#functionRoleMappingModal" data-dismiss="modal" class="customBtn greyBtn">Close</a>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            viewModel.formModel.errors = ko.validation.group(viewModel.formModel);
+            $lib.bindUI(viewModel);
+            $lib.setPageTitle("Role Management");
+
+            viewModel.formModel.errors.showAllMessages(false);
+            viewModel.listModel.currentPageNo(1);
+            viewModel.listModel.currentFunctionPageNo(1);
+
+            fillStatus();
+            fillRecordsPerPage();
+            pageSize_Change();
+            pageSize_ChangeFunction();
+            viewModel.listModel.selectedStatus(1);
+            getRolesList();
+        });
+
+        var viewModel = {
+
+            formModel: {
+                RoleId: ko.observable(null),
+                RoleName: ko.observable("").extend({ required: true, maxLength: 50 }),
+                RoleDescription: ko.observable("").extend({ required: true, maxLength: 500 }),
+                Active: ko.observable("").extend({ required: true }),
+                errors: null
+            },
+            listModel: {
+                list: ko.observableArray(null),
+                totalPagesCount: ko.observable(0),
+                currentPageNo: ko.observable(0),
+                orderBy: ko.observable("CreatedDate"),
+                functionOrderBy: ko.observable("FunctionName"),
+                isAscendingOrder: ko.observable(false),
+                totalRecordsCount: ko.observable(0),
+                selectedStatus: ko.observable(null),
+                selectedPageSize: ko.observable(10),
+                selectedFunctionPageSize: ko.observable(10),
+                recordsPerPageList: ko.observableArray([]),
+                roleID: ko.observable(0),
+
+                isFunctionAscendingOrder: ko.observable(true),
+                currentFunctionPageNo: ko.observable(0),
+                totalFunctionPagesCount: ko.observable(0),
+                recordsFunctionPerPageList: ko.observableArray([]),
+                totalFunctionRecordsCount: ko.observable(0)
+            },
+            roleDetails: {
+                RoleName: ko.observable(""),
+                RoleDescription: ko.observable(""),
+                Status: ko.observable("")
+            },
+            functionRoleMappings: ko.observableArray(null),
+            active: ko.observableArray([]),
+            isRequestInProcess: ko.observable(false),
+            formHeading: ko.observable("Add Role"),
+            addFocus: ko.pureComputed(function () {
+                var roleId = this.viewModel.formModel.RoleId();
+                if (roleId && !isNaN(parseInt(roleId)) && parseInt(roleId) > 0)
+                    return "focused";
+                else
+                    return "";
+            }),
+            getPreviousButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentPageNo());
+                return (currentPageNumber <= 1) ? '' : 'active';
+            }),
+            getNextButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentPageNo());
+                var totalPagesCount = parseInt(this.viewModel.listModel.totalPagesCount());
+                return (currentPageNumber < totalPagesCount) ? 'active' : '';
+            }),
+            getFunctionsPreviousButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentFunctionPageNo());
+                return (currentPageNumber <= 1) ? '' : 'active';
+            }),
+            getFunctionsNextButtonClass: ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.viewModel.listModel.currentFunctionPageNo());
+                var totalPagesCount = parseInt(this.viewModel.listModel.totalFunctionPagesCount());
+                return (currentPageNumber < totalPagesCount) ? 'active' : '';
+            }),
+            saveButtonText: ko.observable("Add"),
+            selectedFunctions: ko.observableArray(null),
+            onFormSubmit: onSubmit,
+            onEdit: getRoleDetails,
+            onShowDetails: getRoleDetails,
+            onPageChange: getRolesList,
+            onPrevious: onPrevious,
+            onNext: onNext,
+            onSort: onSort,
+            onFunctionPrevious: onFunctionPrevious,
+            onFunctionNext: onFunctionNext,
+            onFunctionSort: onFunctionSort,
+            onStatusChange: onStatusChange,
+            onFunctionPageChange: getFunctionList,
+            //Haris
+            //getMappings: getFunctionRoleMappings,
+            getMappings: getFunctionList,
+            postMappings: onMappingsPost,
+            onStatusFilterChange: getRolesList,
+            onCheckChange: onCheckChange
+        }
+
+        $('#roleFormModal').on('hidden.bs.modal', function () {
+
+            viewModel.saveButtonText("Add");
+            viewModel.formHeading("Add Role");
+            resetForm();
+        });
+
+        $('#functionRoleMappingModal').on('hidden.bs.modal', function () {
+            resetForm();
+        });
+
+        var selectListModel = function (value, text) {
+            this.Text = text;
+            this.Value = value;
+        }
+
+        function onCheckChange(checked) {
+
+            var index = viewModel.selectedFunctions().findIndex(x => x.FunctionId == this.FunctionId);
+            if (index < 0)
+                viewModel.selectedFunctions().push(this);
+            else
+                viewModel.selectedFunctions()[index].Include = checked;
+            return true;
+        }
+
+        function markFunctions(res) {
+
+            for (var i = 0; i < res.length; i++) {
+                var selectedIndex = viewModel.selectedFunctions().findIndex(x => x.FunctionId == res[i].FunctionId);
+                if (selectedIndex >= 0)
+                    res[i].Include = viewModel.selectedFunctions()[selectedIndex].Include;
+            }
+        }
+
+        function pageSize_Change() {
+
+            viewModel.listModel.selectedPageSize.subscribe(function () {
+                viewModel.listModel.currentPageNo(1);
+                getRolesList();
+            });
+        }
+
+        function pageSize_ChangeFunction() {
+
+            viewModel.listModel.selectedFunctionPageSize.subscribe(function () {
+                viewModel.listModel.currentFunctionPageNo(1);
+                getFunctionList();
+            });
+        }
+
+        function fillStatus() {
+
+            viewModel.active([
+                new selectListModel(1, "Active"),
+                new selectListModel(0, "Inactive")
+            ]);
+        }
+
+        function fillRecordsPerPage() {
+
+            viewModel.listModel.recordsPerPageList([
+                new selectListModel(10, "10"),
+                new selectListModel(20, "20")
+            ]);
+
+            viewModel.listModel.recordsFunctionPerPageList([
+                new selectListModel(10, "10"),
+                new selectListModel(20, "20")
+            ]);
+        }
+
+        function onMappingsPost() {
+
+            $lib.showSpinner(true);
+            viewModel.isRequestInProcess(true);
+            var functionRoleMappings = viewModel.functionRoleMappings().concat(viewModel.selectedFunctions());
+            $lib.http.post("/role/rolefunctions", functionRoleMappings, afterMappingsPost);
+        }
+
+        function afterMappingsPost(err) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return;
+            else {
+                $toastMessages.showSuccess("Functions assignment updated successfully");
+                $("#functionRoleMappingModal").modal("hide");
+            }
+        }
+
+        function getFunctionRoleMappings() {
+
+            if (!isNaN(parseInt(viewModel.listModel.currentFunctionPageNo())) && parseInt(viewModel.listModel.currentFunctionPageNo()) > 0) {
+
+                var queryParams = {
+                    // DownloadTitle: viewModel.searchTitle(),
+                    PageIndex: parseInt(viewModel.listModel.currentFunctionPageNo()) - 1,
+                    OrderBy: viewModel.listModel.functionOrderBy(),
+                    SortDirection: viewModel.listModel.isFunctionAscendingOrder() ? "Ascending" : "Descending",
+                    PageSize: viewModel.listModel.selectedFunctionPageSize()
+                };
+
+                var parameters = "filter:FunctionName=" + "" + ";" +
+                    "orderby:" + queryParams.OrderBy + "=" + queryParams.SortDirection + ";size:" + queryParams.PageSize + ";index:" + queryParams.PageIndex;
+                $lib.showSpinner(true);
+                viewModel.isRequestInProcess(true);
+                viewModel.listModel.roleID(this.RoleId);
+                $lib.http.get("/role/" + this.RoleId + "/rolefunctions?SearchParams=" + parameters, fillFunctionRoleMappings);
+                //    (err, res) => {
+                //    $lib.showSpinner(false);
+                //    if (err) return;
+
+                //    viewModel.downloadList(res.Records);
+                //    viewModel.totalPagesCount(res.TotalPages);
+                //    viewModel.totalRecordsCount(res.TotalRecords);
+                //})
+            }
+            else {
+                //viewModel.listModel.currentPageNo(1)
+                $toastMessages.showError("Invalid Page Number");
+            }
+
+
+
+
+            //Haris Code
+            //$lib.showSpinner(true);
+            //viewModel.isRequestInProcess(true);
+
+            //viewModel.listModel.roleID(this.RoleId);
+            //$lib.http.get("/role/" + this.RoleId + "/rolefunctions", fillFunctionRoleMappings);
+        }
+
+        function getFunctionList() {
+
+            if (!isNaN(parseInt(viewModel.listModel.currentFunctionPageNo())) && parseInt(viewModel.listModel.currentFunctionPageNo()) > 0) {
+
+                var queryParams = {
+                    // DownloadTitle: viewModel.searchTitle(),
+                    PageIndex: parseInt(viewModel.listModel.currentFunctionPageNo()) - 1,
+                    OrderBy: viewModel.listModel.functionOrderBy(),
+                    SortDirection: viewModel.listModel.isFunctionAscendingOrder() ? "Ascending" : "Descending",
+                    PageSize: viewModel.listModel.selectedFunctionPageSize()
+                };
+
+                var parameters = "filter:FunctionName=" + "" + ";" +
+                    "orderby:" + queryParams.OrderBy + "=" + queryParams.SortDirection + ";size:" + queryParams.PageSize + ";index:" + queryParams.PageIndex;
+                $lib.showSpinner(true);
+                viewModel.isRequestInProcess(true);
+                if (!(this.RoleId == undefined)) {
+                    viewModel.listModel.roleID(this.RoleId);
+                }
+                $lib.http.get("/role/" + viewModel.listModel.roleID() + "/rolefunctions?SearchParams=" + parameters, fillFunctionRoleMappings);
+                //    (err, res) => {
+                //    $lib.showSpinner(false);
+                //    if (err) return;
+
+                //    viewModel.downloadList(res.Records);
+                //    viewModel.totalPagesCount(res.TotalPages);
+                //    viewModel.totalRecordsCount(res.TotalRecords);
+                //})
+            }
+            else {
+                //viewModel.listModel.currentPageNo(1)
+                $toastMessages.showError("Invalid Page Number");
+            }
+
+        }
+
+        function getFunctionRoleMappingsSorting() {
+
+            $lib.showSpinner(true);
+            viewModel.isRequestInProcess(true);
+
+            // listModel.roleID.observable(this.RoleId);
+            $lib.http.get("/role/" + viewModel.listModel.roleID() + "/rolefunctions", fillFunctionRoleMappings);
+        }
+
+        function fillFunctionRoleMappings(err, res) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return;
+            else {
+                //viewModel.listModel.isAscendingOrder() ? "Ascending" : "Descending",
+                //if (viewModel.listModel.isAscendingOrder() == "Ascending")
+                //    res.sort();
+                // else
+                //  res.reverse();
+                if ($('.a1').hasClass('active')) {
+                    res.sort();
+                }
+                else if ($('.a2').hasClass('active')) {
+                    res.Records.reverse();
+                }
+
+                markFunctions(res.Records);
+                viewModel.functionRoleMappings(res.Records);
+                viewModel.listModel.totalFunctionPagesCount(res.TotalPages);
+                viewModel.listModel.totalFunctionRecordsCount(res.TotalRecords);
+                $("#functionRoleMappingModal").modal("show", { backdrop: 'static', keyboard: false });
+            }
+        }
+
+        function onPrevious() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentPageNo());
+            if (currentPageNo > 1) {
+                viewModel.listModel.currentPageNo(--currentPageNo);
+                getRolesList();
+            }
+        }
+
+        function onNext() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentPageNo());
+            var totalPageCount = parseInt(viewModel.listModel.totalPagesCount());
+            if (currentPageNo < totalPageCount) {
+                viewModel.listModel.currentPageNo(++currentPageNo);
+                getRolesList();
+            }
+        }
+
+        function onFunctionNext() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentFunctionPageNo());
+            var totalPageCount = parseInt(viewModel.listModel.totalFunctionPagesCount());
+            if (currentPageNo < totalPageCount) {
+                viewModel.listModel.currentFunctionPageNo(++currentPageNo);
+                getFunctionList();
+            }
+        }
+
+        function onFunctionPrevious() {
+
+            var currentPageNo = parseInt(viewModel.listModel.currentFunctionPageNo());
+            if (currentPageNo > 1) {
+                viewModel.listModel.currentFunctionPageNo(--currentPageNo);
+                getFunctionList();
+            }
+        }
+        function onSort(orderBy) {
+
+            var previousOrderBy = viewModel.listModel.orderBy();
+            var previousDirection = viewModel.listModel.isAscendingOrder();
+
+            if (previousOrderBy.toLowerCase() != orderBy.toLowerCase()) {
+
+                viewModel.listModel.isAscendingOrder(true);
+                viewModel.listModel.orderBy(orderBy);
+            }
+            else
+                viewModel.listModel.isAscendingOrder(!previousDirection);
+
+            getRolesList();
+        }
+
+        function onFunctionSort(orderBy) {
+
+            var previousOrderBy = viewModel.listModel.orderBy();
+            var previousDirection = viewModel.listModel.isFunctionAscendingOrder();
+
+            if (previousOrderBy.toLowerCase() != orderBy.toLowerCase()) {
+
+                viewModel.listModel.isAscendingOrder(true);
+                viewModel.listModel.functionOrderBy(orderBy);
+            }
+            else
+                viewModel.listModel.isAscendingOrder(!previousDirection);
+
+            getFunctionList();
+        }
+
+        function getRolesList() {
+
+            if (!isNaN(parseInt(viewModel.listModel.currentPageNo())) && parseInt(viewModel.listModel.currentPageNo()) > 0) {
+
+                var queryParams = {
+                    PageIndex: parseInt(viewModel.listModel.currentPageNo()) - 1,
+                    OrderBy: viewModel.listModel.orderBy(),
+                    SortDirection: viewModel.listModel.isAscendingOrder() ? "Ascending" : "Descending",
+                    Status: viewModel.listModel.selectedStatus() == null || viewModel.listModel.selectedStatus() == undefined ? "" :
+                        (viewModel.listModel.selectedStatus() == 1 ? true : false),
+                    PageSize: viewModel.listModel.selectedPageSize()
+                };
+
+                var parameters = "filter:Active=" + queryParams.Status + ";orderby:" + queryParams.OrderBy + "=" + queryParams.SortDirection + ";size:"
+                    + queryParams.PageSize + ";index:" + queryParams.PageIndex;
+
+                $lib.showSpinner(true);
+                $lib.http.get("/role?param=" + parameters, fillRolesList);
+            }
+            else {
+                $toastMessages.showError("Invalid Page Number");
+            }
+        }
+
+        function fillRolesList(err, res) {
+
+            $lib.showSpinner(false);
+            if (err)
+                return;
+            else {
+                viewModel.listModel.list(res.Records);
+                viewModel.listModel.totalPagesCount(res.TotalPages);
+                viewModel.listModel.totalRecordsCount(res.TotalRecords);
+            }
+        }
+
+        function onStatusChange(index) {
+
+            this.rowIndex = index;
+            viewModel.isRequestInProcess(true);
+            $lib.showSpinner(true);
+            $lib.http.get(`/role/${this.RoleId}/ChangeStatus`, afterStatusChanged.bind(this));
+        }
+
+        function afterStatusChanged(err, res) {
+
+            $lib.showSpinner(false);
+            if (err)
+                return
+            else {
+                if (res) {
+                    var items = JSON.parse(JSON.stringify(viewModel.listModel.list()));
+                    items[this.rowIndex].Active = !this.Active;
+                    viewModel.listModel.list(items);
+                }
+                else {
+                    $toastMessages.showError("You cannot inactive the role as it is already assigned to some users, please disassociate the users first");
+                }
+            }
+            viewModel.isRequestInProcess(false);
+        }
+
+        function onSubmit() {
+
+            if (viewModel.formModel.errors().length == 0) {
+
+                var roleId = viewModel.formModel.RoleId();
+                viewModel.isRequestInProcess(true);
+                $lib.showSpinner(true);
+                if (roleId && !isNaN(parseInt(roleId)) && parseInt(roleId) > 0) {
+
+                    $lib.http.put("/role/" + roleId, viewModel.formModel, (err, res) => afterRoleSaved(err, res, true));
+                }
+                else
+                    $lib.http.post("/role/", viewModel.formModel, (err, res) => afterRoleSaved(err, res, false));
+
+            } else {
+                viewModel.formModel.errors.showAllMessages();
+            }
+        }
+
+        function afterRoleSaved(err, res, onEdit) {
+
+            if (err)
+                return;
+            else {
+                if (!onEdit) {
+                    viewModel.listModel.isAscendingOrder(false);
+                    $toastMessages.showSuccess("role is created successfully");
+                }
+                else {
+                    if (res)
+                        $toastMessages.showSuccess("role information is updated successfully");
+                    else
+                        $toastMessages.showError("You cannot inactive the role as it is already assigned to some users, please disassociate the users first");
+                }
+                resetForm();
+                $("#roleFormModal").modal("hide");
+                getRolesList();
+            }
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+        }
+
+        function getRoleDetails(showDetails) {
+
+            $lib.showSpinner(true);
+            viewModel.isRequestInProcess(true);
+            if (showDetails)
+                $lib.http.get("/role/" + this.RoleId, showRoleDetails);
+            else
+                $lib.http.get("/role/" + this.RoleId, fillRoleForm);
+        }
+
+        function showRoleDetails(err, res) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return
+            else {
+                viewModel.roleDetails.RoleName(res.RoleName);
+                viewModel.roleDetails.RoleDescription(res.RoleDescription);
+                viewModel.roleDetails.Status(res.Active ? 'Active' : 'Inactive');
+                $("#roleDetailModal").modal("show", { backdrop: 'static', keyboard: false });
+            }
+        }
+
+        function fillRoleForm(err, res) {
+
+            $lib.showSpinner(false);
+            viewModel.isRequestInProcess(false);
+            if (err)
+                return;
+            else {
+
+                viewModel.formModel.RoleId(res.RoleId);
+                viewModel.formModel.RoleName(res.RoleName);
+                viewModel.formModel.Active(res.Active);
+                viewModel.formModel.RoleDescription(res.RoleDescription);
+                viewModel.formHeading("Edit Role");
+                viewModel.saveButtonText("Save");
+                $("#roleFormModal").modal("show", { backdrop: 'static', keyboard: false });
+            }
+        }
+
+        function resetForm() {
+
+            viewModel.formModel.RoleId(null);
+            viewModel.formModel.RoleName("");
+            viewModel.formModel.RoleDescription("");
+            viewModel.formModel.errors.showAllMessages(false);
+            viewModel.functionRoleMappings([]);
+            viewModel.selectedFunctions([]);
+            viewModel.formModel.Active("");
+            viewModel.listModel.currentFunctionPageNo(1);
+
+            viewModel.listModel.currentPageNo(1);
+            viewModel.listModel.orderBy("CreatedDate");
+        }
+
+    </script>
+}

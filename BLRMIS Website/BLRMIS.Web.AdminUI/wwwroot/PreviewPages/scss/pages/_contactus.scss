@@ -1,0 +1,48 @@
+/* Contact us */
+.contact-us{
+  ul.content-detail{
+    li{
+      padding-bottom: 20px;
+      .phone-no:before{
+      color: $cyprus;
+      font-size: 24px;
+      position: absolute;
+      left: 0;
+      top: 2px;
+        
+      }
+      .email-address:before{
+        color: $cyprus;
+        font-size: 20px;
+        position: absolute;
+        left: 0;
+        top: 2px;
+
+
+      }
+      .location:before{
+          color: $cyprus;
+          font-size: 27px;
+          left: 0;
+          top: 2px;
+          position: absolute;
+      }
+      a{ 
+        color: $black;
+        position: relative;
+        padding-left: 32px;
+
+         }
+      p{
+        position: relative;
+        padding-left: 32px;
+      }
+    }
+  }
+  picture{
+    display: block;
+    img{
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,474 @@
+﻿@page "/complaints/{type}/{id}"
+
+<div id="main" class="innerpage complaint-detail">
+    <div class="container">
+        <div class="hd-holder" data-bind="if:DataLoaded">
+            <h6>Complaints</h6>
+            <span class="bd-line"></span>
+            <span class="complaint-assignby"><a class="nav-link" asp-page="/complaint/complaintform">< Back to Complaint Search</a></span>
+        </div>
+        <div data-bind="if:IsVerificationRequired,hidden:DataLoaded" style="display:none">
+            <partial name="_ComplaintVerificationPartial">
+        </div>
+        <div class="complaitn-list-page">
+            <div class="page-content">
+                <div class="table-box" data-bind="if:DataLoaded">
+                    <div class="search-bar complaints-calendar-bar">
+                        <div class="row">
+                            <div class="col-md-10 left-sec">
+                                <div class="search-form">
+                                    <form class="form-inline" data-bind="submit: onApplyButon_Click">
+                                        <ul class="nomargin">
+                                            <li class="length length1">
+                                                <div class="calendar-holder calendar-start">
+                                                    <input type="text" class="form-control" placeholder="Complaint No." data-bind="value: complaintNo">
+                                                </div>
+                                            </li>
+                                            <li class="length length1">
+                                                <div class="calendar-holder calendar-end">
+                                                    <input type="text" class="form-control datepicker" placeholder="Start Date" data-bind="value: startDate">
+                                                    <span class="icon-calander-icon">
+                                                        <img src="~/images/calendar.png" alt="calendar">
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li class="length length1">
+                                                <div class="calendar-holder calendar-end">
+                                                    <input type="text" class="form-control datepicker" placeholder="End Date" data-bind="value: endDate">
+                                                    <span class="icon-calander-icon">
+                                                        <img src="~/images/calendar.png" alt="calendar">
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li class="length length2">
+                                                <button class="customBtn" type="submit">Apply</button>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-2 rit-sec">
+                                <div class="custom-dropdown">
+                                    <select class="form-control" id="ddlStatusFilter" data-bind="
+                                                                                options: statuses,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: selectedStatus,
+                                                                                optionsCaption: 'All Status',
+                                                                                event: { change: onStatusFilterChange }"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-status">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p>Total Complaints: <b data-bind="text: totalRecordsCount"></b></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-area" style="display:none" data-bind="if:DataLoaded, visible:DataLoaded">
+                        <table class="table table-bordered text-left">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="cursor: pointer" class="sorting" data-bind="click: onSort.bind($data, 'CreatedDate')">
+                                        Date
+                                        <span class="sort-icons">
+                                            <i class="fa fa-fw fa-caret-up a1"></i>
+                                            <i class="fa fa-fw fa-caret-down a2"></i>
+                                        </span>
+                                    </th>
+                                    <th style="cursor: pointer" class="sorting" data-bind="click: onSort.bind($data, 'ComplaintCode')">
+                                        Complaint No.
+                                        <span class="sort-icons">
+                                            <i class="fa fa-fw fa-caret-up a1"></i>
+                                            <i class="fa fa-fw fa-caret-down a2"></i>
+                                        </span>
+                                    </th>
+                                    <th style="cursor: pointer" data-bind="click: onSort.bind($data, 'ComplaintTitle')" class="sorting">
+                                        Complaint Title
+                                        <span class="sort-icons">
+                                            <i class="fa fa-fw fa-caret-up a1"></i>
+                                            <i class="fa fa-fw fa-caret-down a2"></i>
+                                        </span>
+                                    </th>
+                                    <th style="cursor: pointer" data-bind="click: onSort.bind($data, 'ComplaintCategory.CategoryName')" class="sorting">
+                                        Type
+                                        <span class="sort-icons">
+                                            <i class="fa fa-fw fa-caret-up a1"></i>
+                                            <i class="fa fa-fw fa-caret-down a2"></i>
+                                        </span>
+                                    </th>
+                                    <th style="cursor: pointer" data-bind="click: onSort.bind($data, 'ComplaintStatus.ComplaintStatus')" class="sorting">
+                                        Status
+                                        <span class="sort-icons">
+                                            <i class="fa fa-fw fa-caret-up a1"></i>
+                                            <i class="fa fa-fw fa-caret-down a2"></i>
+                                        </span>
+                                    </th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: ComplaintList">
+                                <tr>
+                                    <td data-bind="date: CreatedDate, dateFormat: 'DD-MMM-YY'"></td>
+                                    <td data-bind="text: ComplaintCode"></td>
+                                    <td data-bind="text: ComplaintTitle"></td>
+                                    <td data-bind="text: ComplaintCategory.CategoryName"></td>
+                                    <td data-bind="text: ComplaintStatus.ComplaintStatus , class: ComplaintStatus.ComplaintStatusCode"></td>
+                                    <td class="text-center action-items">
+                                        <a href="Complaint-Detail.html">
+                                            <span class="fa fa-eye green" alt="View details" data-bind="click: $parent.onViewDetails.bind($data)"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody data-bind="if: ComplaintList().length == 0">
+                                <tr>
+                                    <td colspan="6" align="center">
+                                        <span>No Records Found.</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <ul class="pagination col-sm-6">
+                                    <li class="page-item" data-bind="class: getPreviousButtonClass">
+                                        <a class="page-link left" href="#" data-bind="click: onPrevious"><span class="fa fa-caret-left"></span></a>
+                                    </li>
+                                    <li>
+                                        <input type="text" class="page-link form-control" data-bind="integerInput, propertyName: 'totalPagesCount', value: currentPageNo, event: { change: onPageChange }" />
+                                    </li>
+                                    <li><p>of <span data-bind="text: totalPagesCount"></span></p></li>
+                                    <li class="page-item" data-bind="class: getNextButtonClass">
+                                        <a class="page-link right" href="#" data-bind="click: onNext"><span class="fa fa-caret-right"></span></a>
+                                    </li>
+                                </ul>
+
+                                <div class="records-field col-sm-6 text-right">
+                                    <label>
+                                        Records per page
+                                    </label>
+                                    <div class="custom-dropdown cus-sel">
+                                        <select class="form-control" id="ddlRecordsPerPage" data-bind="
+                                                                                options: recordsPerPageList,
+                                                                                optionsText: 'Text',
+                                                                                optionsValue: 'Value',
+                                                                                value: selectedPageSize"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-bind="if:ComplaintClosed, visible:ComplaintClosed" style="display:none">
+            <partial name="_ComplaintFeedBackSubmmit">
+        </div>
+        @*<div class="alert alert-sm alert-info" data-bind="visible:HasComplaintMessage() != '', text:HasComplaintMessage">  </div>*@
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var viewModel = {};
+            viewModel.DataLoaded = ko.observable(false);
+            viewModel.VerificationCode = ko.observable();
+            viewModel.onGoBackFromVerification = ko.observable();
+            viewModel.CreatedDate =  ko.observable();
+            viewModel.ComplaintList = ko.observableArray();
+            viewModel.ComplaintTitle = ko.observable("-");
+            viewModel.ComplaintCode = ko.observable("-");
+            viewModel.IsVerificationRequired = ko.observable(false),
+            viewModel.HasComplaintMessage = ko.observable("");
+            //pagination, sorting, filter work start
+            var selectListModel = function (value, text) {
+                this.Text = text;
+                this.Value = value;
+            }
+            viewModel.orderBy = ko.observable("CreatedDate");
+            viewModel.isAscendingOrder = ko.observable(false);
+            viewModel.totalRecordsCount = ko.observable(0);
+            viewModel.selectedStatus = ko.observable(null);
+            viewModel.statuses = ko.observableArray([]);
+            viewModel.totalPagesCount = ko.observable(0);
+            viewModel.currentPageNo = ko.observable(1);
+            viewModel.recordsPerPageList = ko.observableArray([]);
+            viewModel.selectedPageSize = ko.observable(10);
+            viewModel.complaintNo = ko.observable();
+            viewModel.EnableResendLink= ko.observable(false),
+            viewModel.TimeElapse = ko.observable("00:20"),
+            viewModel.DisableResentLink = ko.observable(false),
+            viewModel.startDate = ko.observable();
+            viewModel.endDate = ko.observable();
+            viewModel.IsSatisfied = ko.observable(false);
+            viewModel.IsUnSatisfied = ko.observable(false);
+            viewModel.IsError = ko.observable(false);
+            viewModel.ErrMessage = ko.observable("");
+            viewModel.ComplaintClosed = ko.observable(false);
+            viewModel.DetailsLoaded = ko.observable(false);
+            viewModel.onApplyButon_Click = function () {
+
+                viewModel.onVerificationCodeSubmit();
+            }
+
+            viewModel.onStatusFilterChange = function () {
+
+                viewModel.onVerificationCodeSubmit();
+            }
+
+            viewModel.onPageChange = function () {
+
+                viewModel.onVerificationCodeSubmit();
+            }
+
+            viewModel.selectedPageSize.subscribe(function () {
+                viewModel.currentPageNo(1);
+                viewModel.onVerificationCodeSubmit();
+            });
+
+            viewModel.onPrevious = function () {
+
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                if (currentPageNo > 1) {
+                    viewModel.currentPageNo(--currentPageNo);
+                    viewModel.onVerificationCodeSubmit();
+                }
+            }
+
+            viewModel.onNext = function () {
+
+                var currentPageNo = parseInt(viewModel.currentPageNo());
+                var totalPageCount = parseInt(viewModel.totalPagesCount());
+                if (currentPageNo < totalPageCount) {
+                    viewModel.currentPageNo(++currentPageNo);
+                    viewModel.onVerificationCodeSubmit();
+                }
+            }
+
+            viewModel.onSort = function (orderBy) {
+
+                var previousOrderBy = viewModel.orderBy();
+                var previousDirection = viewModel.isAscendingOrder();
+
+                if (previousOrderBy.toLowerCase() != orderBy.toLowerCase()) {
+
+                    viewModel.isAscendingOrder(true);
+                    viewModel.orderBy(orderBy);
+                }
+                else
+                    viewModel.isAscendingOrder(!previousDirection);
+                viewModel.onVerificationCodeSubmit();
+            }
+
+            var resendAttempt = 0;
+            viewModel.onResendVerificationCode = function () {
+
+                if (viewModel.DisableResentLink() == "") {
+                    if (resendAttempt < 3) {
+
+                        viewModel.EnableResendLink(false);
+                      //  EnableResendButton();
+                        verifyComplaintAndSendVerificationToken();
+                        //SendVerificationCode();
+                        resendAttempt++;
+                    }
+                    else {
+                        
+                        viewModel.DisableResentLink("disabled");
+                    }
+                }                
+            }
+
+            viewModel.getPreviousButtonClass = ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.currentPageNo());
+                return (currentPageNumber <= 1) ? '' : 'active';
+            }, viewModel);
+
+            viewModel.getNextButtonClass = ko.pureComputed(function () {
+
+                var currentPageNumber = parseInt(this.currentPageNo());
+                var totalPagesCount = parseInt(this.totalPagesCount());
+                return (currentPageNumber < totalPagesCount) ? 'active' : '';
+            }, viewModel);
+
+            function fillRecordsPerPage() {
+
+                viewModel.recordsPerPageList([
+                    new selectListModel(10, "10"),
+                    new selectListModel(20, "20")
+                ]);
+            }
+
+            function fillStatus() {
+
+                $lib.http.get("/complaints/status", (error, res) => {
+
+                    if (error)
+                        return;
+                    viewModel.statuses(res);
+                });
+            }
+
+            function EnableResendButton() {
+
+                var sec = 20;
+                var timeLeft = 0;
+                var timer = setInterval(function () {
+                    --sec;
+                    if (sec < 10) timeLeft = "0" + sec; else timeLeft = sec;
+                    viewModel.TimeElapse("00:" + timeLeft);
+                    viewModel.DisableResentLink("disabled");
+                    if (sec == 0) {
+                        clearInterval(timer);
+                        viewModel.EnableResendLink(true);
+                        viewModel.DisableResentLink("");
+                        //  $("#divTimer").hide();
+                        //   $("#divResendLink").show();
+
+                    }
+                }, 1000);
+            }
+
+
+            //function SendVerificationCode() {
+            //    //if (viewModel.errors().length > 0) {
+            //    //    viewModel.errors.showAllMessages();
+            //    //    return;
+            //    //};
+            //    var payload = {
+            //        // viewModel.CitizenEmailAddress(res.EmailAddress);
+            //        // viewModel.CitizenPhoneNumber(res.PhoneNumber);
+            //        PhoneNumber: viewModel.CitizenPhoneNumber,
+            //        EmailAddress: viewModel.CitizenEmailAddress
+            //    }
+            //    // viewModel.displayVerification(true);
+            //    $lib.http.post('/verification-token', payload, (err, res) => {
+            //        if (err) return $lib.handleError(err);
+            //        console.log(res);
+            //    })
+            //}
+
+            fillRecordsPerPage();
+            fillStatus();
+            //pagination, sorting, filter work end
+
+            viewModel.onSearch = function () {
+                //console.log(viewModel);
+                //GridLoad();
+            }
+
+            viewModel.onViewDetails = function (event) {
+
+                sessionStorage.setItem("selectedComplaintAccessToken", event.ComplaintAccessToken);
+                $util.navigateUrl(`complaint/${event.ComplaintCode}`);
+            }
+
+            requestGard();
+            verifyComplaintAndSendVerificationToken();
+            executeOnVerificationCodeSubmit();
+            $lib.bindUI(viewModel);
+            // check user shoud come on this page from search.
+
+            function requestGard() {
+                var validRequest = sessionStorage.getItem("complaintSerach");
+                if (validRequest == null) {
+                    $util.navigateUrl(`complaint-form`);
+                    return;
+                }
+            }
+
+            function verifyComplaintAndSendVerificationToken() {
+                $lib.showSpinner(true);
+                $lib.http.get(`/complaint/search/@RouteData.Values["type"]/@RouteData.Values["id"]`, (err, res) => {
+                    if (err) {
+                        $lib.showSpinner(false);
+                        viewModel.ComplaintClosed(true);
+                        viewModel.DetailsLoaded(false);
+                        viewModel.IsSatisfied(false);
+                        viewModel.IsUnSatisfied(false);
+                        viewModel.IsError(true);
+
+                        viewModel.ErrMessage("We couldn’t find results for your search");
+
+                        //viewModel.HasComplaintMessage("No record found.");
+                        $lib.handleError(err);
+                        EnableResendLink(false);
+                        viewModel.IsVerificationRequired(false);
+                        return
+                      
+                    }
+                    //viewModel.CitizenEmailAddress(res.EmailAddress);
+                    //viewModel.CitizenPhoneNumber(res.PhoneNumber);
+                    $lib.showSpinner(false);
+                    viewModel.IsVerificationRequired(true);
+                    EnableResendButton();
+             })
+            }
+
+            viewModel.Test = function () {
+                
+            }
+
+            function executeOnVerificationCodeSubmit() {
+                
+                viewModel.onVerificationCodeSubmit = function () {
+
+                     if (!isNaN(parseInt(viewModel.currentPageNo())) && parseInt(viewModel.currentPageNo()) > 0) {
+                         var queryParams = {
+                             PageIndex: parseInt(viewModel.currentPageNo()) - 1,
+                             OrderBy: viewModel.orderBy(),
+                             SortDirection: viewModel.isAscendingOrder() ? "Ascending" : "Descending",
+                             Status: (viewModel.selectedStatus() == null || viewModel.selectedStatus() == undefined) ? "" : viewModel.selectedStatus(),
+                             PageSize: viewModel.selectedPageSize(),
+                             ComplaintNo: viewModel.complaintNo(),
+                             StartDate: viewModel.startDate(),
+                             EndDate: viewModel.endDate()
+                         };
+
+                         var id = ("@RouteData.Values["id"]");
+                         var filter = ("@RouteData.Values["type"]") == "CNIC" ? "CitizenCnic" : "CitizenPhoneNumber";
+                         var parameters = "filter:" + filter + "==" + id + "|" + filter + "==" + id.replace(/-/g, '') + "|" + filter + "==" + id.replace(/ /g, '');
+                         parameters += queryParams.Status.toString().trim() != "" ? (`,ComplaintStatusId=${queryParams.Status}`) : "";
+                         parameters += (queryParams.ComplaintNo && queryParams.ComplaintNo.toString().trim() != "") ? `,ComplaintCode=${queryParams.ComplaintNo}` : "";
+                         parameters += (queryParams.StartDate && queryParams.StartDate != "") ? `,CreatedDate=${queryParams.StartDate}||` : ",CreatedDate=||";
+                         parameters += (queryParams.EndDate && queryParams.EndDate != "") ? `CreatedDate=${queryParams.EndDate}` : "CreatedDate=";
+                         parameters += ";orderby:" + queryParams.OrderBy + "=" + queryParams.SortDirection + ";size:" + queryParams.PageSize + ";index:" + queryParams.PageIndex;
+
+                         $lib.showSpinner(true);
+
+                         var verificationCode = viewModel.VerificationCode();
+                         var complaintCode = '@RouteData.Values["id"]';
+                        
+                         $lib.http.get(`/complaints/@RouteData.Values["type"]/@RouteData.Values["id"]/token/${verificationCode}?param=${parameters}`, (err, res) => {
+
+                         $lib.showSpinner(false);
+                         if (err) {
+                             $lib.handleError(err);
+                             return false;
+                         }
+
+                         viewModel.DataLoaded(true);
+                         $(".datepicker").datepicker();
+
+                         viewModel.ComplaintList(res.Records);
+                         viewModel.totalPagesCount(res.TotalPages);
+                         viewModel.totalRecordsCount(res.TotalRecords);
+                     });
+                     }
+                     else {
+                         $toastMessages.showError("Invalid Page Number");
+                     }
+            }
+            }
+
+        })
+    </script>
+
+}

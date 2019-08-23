@@ -1,0 +1,265 @@
+﻿@page "/complaint/x/{complaintNo}"
+
+<div data-bind="ifnot:detailsLoaded,hidden:detailsLoaded" >
+    <partial name="_ComplaintVerificationPartial">
+</div>
+
+<div class="dashboard-holder" style="display:none" data-bind="if:detailsLoaded,visible:detailsLoaded">
+
+    <div class="complaint-holder">
+        <div class="table-box">
+            <div class="black-hd-holder">
+                <h6>Complaint Detail</h6>
+            </div>
+
+            <div class="complaint_det-inner">
+                <div class="inner-container">
+                    <div class="row">
+                        <div class="col-md-3"><strong> Complaint No: </strong></div>
+                        <div class="col-md-6"><p data-bind="text:ComplaintCode"> - </p></div>
+                        <div class="col-md-3"><span class="complaint-assignby-update"><strong>Last Updated: </strong> <span data-bind="text:CreatedOrModifiedDate, dateFormat:'DD-MMM-YY'">-</span></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="complaint_det-inner">
+                <div class="inner-container">
+                    <div class="row">
+                        <div class="col-md-3"><strong>Name: </strong></div>
+                        <div class="col-md-4"><p data-bind="text:CitizenName">-</p></div>
+                        <div class="col-md-2 text-center"><strong>  CNIC </strong></div>
+                        <div class="col-md-3"><p class="text-right" data-bind="text:CitizenCnic">-</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="complaint_det-inner">
+                <div class="inner-container">
+                    <div class="row">
+                        <div class="col-md-3"><strong>Email Address: </strong></div>
+                        <div class="col-md-4"><p data-bind="text:CitizenEmailAddress">-</p></div>
+                        <div class="col-md-2 text-center"><strong> Phone No: </strong></div>
+                        <div class="col-md-3"><p class="text-right" data-bind="text:CitizenPhoneNumber">-</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="complaint_det-inner">
+                <div class="inner-container">
+                    <div class="row">
+                        <div class="col-md-3"><strong>Complaint Type: </strong></div>
+                        <div class="col-md-9"><p> E-Stamp</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="complaint_det-inner">
+                <div class="inner-container">
+                    <div class="row">
+                        <div class="col-md-3"><strong>Complaint Title: </strong></div>
+                        <div class="col-md-9">
+                            <p data-bind="text:ComplaintTitle"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="complaint_det-inner">
+                <div class="inner-container">
+                    <div class="row">
+                        <div class="col-md-3"><strong>Complaint Detail: </strong></div>
+                        <div class="col-md-9">
+                            <p data-bind="text:ComplaintDetails"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="file-attacments">
+                <div class="inner-container mt10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Attacments:</h6>
+                        </div>
+                    </div>
+                    <div class="row" data-bind="foreach: complaintAttachments">
+                        <div class="col-md-6">
+                            <div class="attachment-detail">
+                                <div class="file-status"><span> <img src="~/images/doc-icon.svg" alt=""></span> <i data-bind="text:OriginalFileName"></i></div>
+                                <div class="file-action">
+                                    <a href=""><img src="~/images/view-icon-news.svg" alt=""></a>
+                                    <a href=""><img src="~/images/del-icon-news.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="comments-section mt10">
+
+                    <h6> Comments</h6>
+                    <div class="comments">
+                        <div class="comments-title">
+                            <div><strong>Reviewer</strong></div>
+                            <div><time>. 6 Hour ago</time></div>
+                        </div>
+                        <div class="comments-detail">
+                            <p>I believe any, and all genuine efforts of giving in all its various facets, whether its winter attire, and providing housing for the many homeless women and men of many communities, to providing toys for deprived and unfortunate children of many various communities,</p>
+                        </div>
+                    </div>
+                    <div class="comments comments-panel">
+                        <div class="comments-title">
+                            <div><strong>Complaintner - 4102019-001</strong></div>
+                            <div><time>6 Hour ago</time></div>
+                        </div>
+                        <div class="comments-detail">
+                            <p>I believe any, and all genuine efforts of giving in all its various facets, whether its winter attire, and providing housing for the many homeless women and men of many communities, to providing toys for deprived and unfortunate children of many various communities,</p>
+                        </div>
+                        <div class="file-attacments">
+                            <div class="inner-container mt10">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="attachment-detail">
+                                            <div class="file-status"><span> <img src="images/doc-icon.svg" alt=""></span> Registryfile.doc</div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="attachment-detail">
+                                            <div class="file-status"><span> <img src="images/txt-file-icon.svg" alt=""></span> complaintinf.txt</div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            @*<div class="complaint-status-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect2">
+                                    <option>Update Status *</option>
+                                    <option>Update Status</option>
+                                    <option>Update Status</option>
+                                    <option>Update Status</option>
+                                    <option>Update Status</option>
+                                </select>
+                                <!--<label for="exampleFormControlSelect1"></label>
+                                <span class="custom-dropdown">
+                                  <select class="form-control" id="exampleFormControlSelect1">
+                                      <option>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                      <option>5</option>
+                                  </select>
+                                </span>-->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect2">
+                                    <option>Update Status *</option>
+                                    <option>Update Status</option>
+                                    <option>Update Status</option>
+                                    <option>Update Status</option>
+                                    <option>Update Status</option>
+                                </select>
+                                <!--<label for="exampleFormControlSelect1"></label>
+                                <span class="custom-dropdown">
+                                  <select class="form-control" id="exampleFormControlSelect1">
+                                      <option>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                      <option>5</option>
+                                  </select>
+                                </span>-->
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea id="status-textarea" placeholder="Describe yourself here...">
+
+                          </textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="fileContainer">
+                                <input type="file" name="myFile" class="">
+                                <a href=""> Choose File </a>
+                            </div>
+                            <p>Please upload related attachments (jpg, png, pdf are allowed.)</p>
+                            <input type="submit" name="Submit" class="customBtn">
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const SOURCE_TYPE = 5;
+           // $lib.showSpinner(true);
+        var viewModel = {
+            CitizenPhoneNumber: ko.observable(),
+            CitizenName: ko.observable(),
+            CitizenEmailAddress: ko.observable(),
+            CitizenCnic: ko.observable(),
+            ComplaintTitle: ko.observable(),
+            ComplaintDetails: ko.observable(),
+            ComplaintCode: ko.observable(),
+            CreatedOrModifiedDate: ko.observable(),
+            detailsLoaded: ko.observable(false),
+            complaintAttachments: ko.observableArray(),
+            VerificationCode: ko.observable()
+            }
+
+
+            $lib.http.get(`/complaint/search/@RouteData.Values["complaintNo"]`, (err, res) => {
+                if (err) return $lib.handleError(err);
+                viewModel.CitizenEmailAddress(res.EmailAddress);
+                viewModel.CitizenPhoneNumber(res.PhoneNumber);
+                //console.log(res);
+            })
+
+            viewModel.onVerificationCodeSubmit = function () {
+                var verificationCode = viewModel.VerificationCode();
+                var complaintCode = '@RouteData.Values["complaintNo"]';
+                $lib.http.get(`/complaint/${complaintCode}/verify/${verificationCode}`, (err, res) => {
+                    if (err) { $lib.handleError(err); return false };
+                    var accessToken = res;
+                    if (!accessToken) {
+                        $lib.handleError("Complaint not found.");
+                        return;
+                    }
+
+                    $lib.http.get(`/complaint/${accessToken}`, (err, res) => {
+                    $lib.showSpinner(false);
+                    if (err) {
+                        return;
+                        }
+                        viewModel.detailsLoaded(true);
+                    viewModel.CitizenName(res.CitizenName);
+                    viewModel.CitizenCnic(res.CitizenCnic);
+                    viewModel.CitizenEmailAddress(res.CitizenEmailAddress);
+                    viewModel.CitizenPhoneNumber(res.CitizenPhoneNumber);
+                    viewModel.ComplaintTitle(res.ComplaintTitle);
+                    viewModel.ComplaintDetails(res.ComplaintDetails);
+                    viewModel.CreatedOrModifiedDate(res.ModifiedDate || res.CreatedDate);
+                    viewModel.ComplaintCode(res.ComplaintCode);
+                    $lib.http.get(`/attachments/source/${SOURCE_TYPE}/id/${res.ComplaintId}`, (err, res) => {
+                        console.log(res);
+                        viewModel.complaintAttachments(res);
+                        })
+                    })
+                })
+            }
+
+            viewModel.onGoBackFromVerification = function () {
+                $util.navigateUrl(`/complaint-form`);       
+            }
+
+        $lib.bindUI(viewModel);
+    })
+    </script>
+}

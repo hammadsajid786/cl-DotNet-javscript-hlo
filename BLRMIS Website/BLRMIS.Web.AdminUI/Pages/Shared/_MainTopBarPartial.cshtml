@@ -1,0 +1,27 @@
+﻿<div class="row">
+    <div class="col-md-5 d-flex align-items-center">
+        <div class="toggle-menu d-inline-block">
+            <div class="toggle-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="d-inline-block"> <a href="/BLRMIS.AdminUI/"> <img src="~/images/logo-admin.svg"> </a></div>
+    </div>
+    <div class="col-md-7 justify-content-end d-flex align-items-center">
+        <div class="user-dropdown">
+            <span class="user_role">
+                <span id="loggedinuser">
+                    @(User.FindFirst("FirstName")?.Value + " " + User.FindFirst("LastName")?.Value)
+                </span>
+                <span class="arrow-down"></span>
+            </span>
+            <ul class="action">
+                @*<li> <a href=""> <span class="icon-profile"></span> Profile </a></li>*@
+                <li><a href="changepassword"> <span class="icon-profile"></span> Change Password</a></li>
+                <li><a asp-page="/login/signout"> <span class="icon-signout"></span> logout </a> </li>
+            </ul>
+        </div>
+    </div>
+</div>

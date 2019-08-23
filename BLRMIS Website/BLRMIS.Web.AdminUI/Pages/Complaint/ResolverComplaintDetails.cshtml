@@ -1,0 +1,305 @@
+﻿@page "/ResolverComplaint/{id?}"
+@{
+    ViewData["Title"] = "ComplaintDetails";
+}
+
+<div class="complaint-holder" style="display:none" data-bind="if:pageLoaded, visible:pageLoaded">
+    <div class="table-box">
+        <div class="black-hd-holder">
+            <h6>Complaint Detail</h6>
+            <span class="complaint-assignby"><strong>Assigned by: </strong><span data-bind="text:ComplaintAssignByName"></span></span>
+            @*<span class="complaint-assignby"><strong>Assigned by:</strong> Reviewer</span>*@
+        </div>
+        <div class="alert alert-sm alert-danger" data-bind="visible:HasComplaintErrors() != '', text:HasComplaintErrors">  </div>
+        <div data-bind="visible:complaintDetailsLoaded">
+
+            <partial name="_ComplaintDetailViewPartial" />
+            <div class="file-attacments" data-bind="">
+                <partial name="_ComplaintDetailsAttachmentsPartial" />
+            </div>
+            <div class="comments-section">
+                <partial name="_ComplaintDetailsCommentsPartial" />
+            </div>
+            <div class="complaint-status-form">
+                <partial name="_ComplaintCommentBoxPartial" />
+            </div>
+
+            <div class="modal fade popup-overly" id="delete-confirmation">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <div class="hd-holder  modal-title" ">
+                                <h6>Delete Confirmation</h6>
+                                <span class="bd-line"></span>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="delete-confirmation-text">
+                            <p>
+                                Are you sure you want to remove this file? This action cannot be undone.
+                            </p>
+                            <div class="sub-btns text-left">
+                                <button type="button" class="customBtn greyBtn" data-dismiss="modal">Close</button>
+                                <a href="javascript:" class="btn btn-danger" data-bind="click:DeleteFile()">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        const usersListDefaultCaption = "Assign to concern person *";
+        $(document).ready(function () {
+
+           
+
+            var viewModel = {
+               
+
+                CitizenPhoneNumber: ko.observable(),
+                CitizenName: ko.observable(),
+                CitizenEmailAddress: ko.observable(),
+                CitizenCnic: ko.observable(),
+                ComplaintTitle: ko.observable(),
+                ComplaintType: ko.observable(),
+                ComplaintDescription: ko.observable(""),
+                ComplaintCode: ko.observable(),
+                complaintDetailsLoaded: ko.observable(false),
+                ComplaintStatusList: ko.observableArray(),
+                ComplaintStatus: ko.observable(),
+                Location: ko.observable(),
+                UserList: ko.observableArray(),
+                ComplaintCategory: ko.observable(),
+                CreatedOrModifiedDate: ko.observable(),
+                ComplaintLogs: ko.observableArray(),
+                complaintAttachments: ko.observableArray(),
+                SelectedStatus: $lib.rules.required("Please select status."),
+                SelectedUser: ko.observable(), //$lib.rules.required("Please select user."),
+                pageLoaded: ko.observable(false),
+                ComplaintComments: $lib.rules.required("Please enter comments.").extend({ required: true, maxLength: 500 }),
+                ComplaintId: ko.observable(),
+                ComplaintAssignTo: ko.observable(""),
+                AllowDelete: ko.observable(true),
+                viewModel: ko.observable(false),
+                EnabledUserList: ko.observable(true),
+                HasComplaintErrors: ko.observable(""),
+                AllowDelete: ko.observable(true),
+                ComplaintAssignByName: ko.observable(),
+                selectedFiles: ko.observableArray(),
+                SuccessMessage: ko.observable(""),
+                errors: ko.observable(false),
+                showError: ko.observable(false),
+                usersListCaption: ko.observable(usersListDefaultCaption)
+            }
+
+            window.addEventListener('beforeunload', function (e) {
+                var formData = new FormData();
+                $lib.http.putFormAsync(`/complaint/unlock/${viewModel.ComplaintId()}`, formData, false, (err, res) => { if (err) { return; } })
+                return false;
+            });
+
+            //File Upload Work Start
+            function hasExtension(fileName, exts) {
+                return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+            }
+            viewModel.onFileSelect = function (elem, event) {
+                
+                const target = event.target;
+                for (var i = 0; i < target.files.length; i++) {
+                    if (!hasExtension(target.files[i].name, [".jpg", ".png", ".pdf"])) {
+                        $lib.handleError("Only JPG,PNG and PDF files are allowed.");
+                        return;
+                    }
+                }
+                if ((viewModel.selectedFiles().length + target.files.length) > 6) {
+                    $lib.handleError("Maximum 6 files are allowed.");
+                    return;
+                }
+                for (var i = 0; i < target.files.length; i++) {
+                    var file = target.files[i];
+                    viewModel.selectedFiles.push(file);
+                }
+            }
+            viewModel.deleteSelectedFile = function (elemId, event) {
+                
+                var index = viewModel.selectedFiles().findIndex(i => i.name == event.name);
+                var arr = viewModel.selectedFiles();
+                viewModel.selectedFiles().splice(index, 1);
+                $("#" + elemId).remove();
+            }
+            viewModel.viewSelectedFile = function (elemId, file) {
+
+                $util.viewFile(file);
+            }
+            // File Upload Work End
+
+            viewModel.OpenConfimation = function (event, elemID) {
+
+                $util.confirmDeleteFile(elemID, event);
+            }
+
+
+            viewModel.DeleteFile = function () {
+                var event = $util.event;
+                if (event != null) {
+                    var elemId = $util.selectedFileID; //viewModel.selectedFileID();
+                    var event = $util.event;
+                    var index = viewModel.selectedFiles().findIndex(i => i.name == event.name);
+                    var arr = viewModel.selectedFiles();
+                    viewModel.selectedFiles().splice(index, 1);
+                    $("#" + elemId).remove();
+                    $("#delete-confirmation").modal("hide");
+                }
+
+            }
+
+
+            $lib.showSpinner(true);
+            $lib.http.get(`/complaint//resolver/${'@RouteData.Values["id"]'}`, (err, res) => {
+                $lib.showSpinner(false);
+                viewModel.pageLoaded(true);
+                if (err) {
+                    if (err.responseJSON && err.responseJSON.status == "COMPLAINT_NOT_FOUND") {
+                        viewModel.HasComplaintErrors(err.responseJSON.description);
+                    }
+                    return;
+                };
+                const SOURCE_TYPE_COMPLAINT = 5;
+                viewModel.CitizenPhoneNumber(res.CitizenPhoneNumber);
+                viewModel.CitizenName(res.CitizenName);
+                viewModel.CitizenEmailAddress(res.CitizenEmailAddress);
+                viewModel.CitizenCnic(res.CitizenCnic);
+                viewModel.ComplaintTitle(res.ComplaintTitle);
+                if (res.ComplaintDescription != "undefined")
+                    viewModel.ComplaintDescription(res.ComplaintDescription);
+
+                viewModel.ComplaintCode(res.ComplaintCode);
+                viewModel.ComplaintCategory(res.ComplaintCategory["CategoryDescription"]);
+                viewModel.ComplaintStatus(res.ComplaintStatus["ComplaintStatus"]);
+                viewModel.Location(res.Location["LocationName"]);
+                viewModel.complaintDetailsLoaded(true);
+                viewModel.CreatedOrModifiedDate(res.ModifiedDate || res.CreatedDate);
+                viewModel.ComplaintId(res.ComplaintId);
+                $lib.http.get(`/attachments/source/${SOURCE_TYPE_COMPLAINT}/id/${res.ComplaintId}`, (err, res) => {
+                    
+                    viewModel.complaintAttachments(res);
+                })
+                $lib.http.get(`/complaint/${res.ComplaintId}/logs`, (err, res) => {
+                    viewModel.ComplaintLogs(res);
+                    if (res.length > 0)
+                        viewModel.ComplaintAssignByName(res[res.length - 1].ComplaintAssignByNavigation.FirstName + " " + res[res.length - 1].ComplaintAssignByNavigation.LastName);
+                    else
+                        viewModel.ComplaintAssignByName("Public User");
+                    //viewModel.ComplaintAssignByName(res[res.length - 1].ComplaintAssignByNavigation.FirstName + " " + res[res.length - 1].ComplaintAssignByNavigation.LastName);
+                })
+            });
+
+            // this will fire on status changed
+            viewModel.SelectedStatus.subscribe(function (val) {
+                const STATUS_RESOLVED = 4; 
+                if (val == STATUS_RESOLVED) {
+                    viewModel.SelectedUser.extend({ validatable: false });
+                    viewModel.SelectedUser("");
+                    viewModel.EnabledUserList(false);
+                    viewModel.SuccessMessage("Complaint has resolved successfully.");
+                } else {
+                  //  viewModel.SelectedUser.extend({ required: { message: 'Please select user.' } });
+                    viewModel.SelectedUser("");
+                    viewModel.EnabledUserList(true);
+                    viewModel.SuccessMessage("Complaint has assigned successfully.");
+                }
+                if (viewModel.SelectedStatus() == STATUS_RESOLVED)
+                    viewModel.usersListCaption("Public User");
+                else
+                    viewModel.usersListCaption(usersListDefaultCaption);
+            })
+            
+            viewModel.downloadFile = function (event) {
+                $util.downloadFile(event.AttachmentId);
+            }
+            viewModel.timeSince = function (date) {
+                return $util.timeSince(new Date(date)) + " ago";
+            }
+
+            viewModel.deleteAttachment = function (event) {
+                var attachmentId = event.AttachmentId;
+                $services.deleteAttachment(attachmentId, (err, res) => {
+                    if (!err) {
+                        $("#att" + attachmentId).remove();
+                    }
+                });
+            }
+            viewModel.onFormSubmit = function () {
+
+                if (viewModel.SelectedStatus() != 4) {
+                    viewModel.SelectedUser.extend({ required: { message: 'Please select user.' } });
+                    if (viewModel.hasErrors()) {
+                        return;
+                    }
+                }
+                else {
+                    viewModel.SelectedUser.extend({ validatable: false });
+                    if (viewModel.errors()[0] != "Please select user.") {
+                        if (viewModel.hasErrors()) {
+                            return;
+                        }
+                    }
+                }
+
+                var payload = {
+                    complaintId: viewModel.ComplaintId(),
+                    complaintStatusId: viewModel.SelectedStatus()  ,
+                    ComplaintAssignTo: viewModel.SelectedUser() == undefined ? "" : viewModel.SelectedUser(),
+                    ComplaintComments:viewModel.ComplaintComments()
+                }
+                var formData = new FormData();
+                var selectedFiles = viewModel.selectedFiles();
+                for (var i = 0; i < selectedFiles.length; i++) {
+                    formData.append('Files', selectedFiles[i]);
+                }
+                for (var p in payload) {
+                    formData.append(p, payload[p]);
+                }
+                $lib.showSpinner(true);
+                $lib.http.putForm(`/complaint/${payload.complaintId}`, formData, (err, res) => {
+                    $lib.showSpinner(false);
+                    if (err) return;
+
+                    if (res != undefined && res.status == "SUCCESS") {
+                        console.log("Complaint updated successfully.");
+                        localStorage.setItem("successMessage", viewModel.SuccessMessage());
+                        $util.navigateUrl("ResolverComplaints");
+                    }
+                    else if (res != undefined && res.status == "ERROR") {
+                        $toastMessages.showWarning(res.description);
+                    }
+
+                  //  console.log("Complaint updated successfully.");
+                   // localStorage.setItem("successMessage", "Complaint updated successfully.");                  
+                    
+                })
+            }
+            $services.complaintStatusList((res) => {
+                var filteredList = res.filter(
+                        i => i.Text.toUpperCase()   != "OPEN"
+                        && i.Text.toUpperCase()     != "CLOSED"
+                        && i.Text.toUpperCase()     != "REOPEN")
+                viewModel.ComplaintStatusList(filteredList)
+            });
+            //$lib.http.get(`/complaint-status`, (err, res) => {
+            //    if (err) return;
+            //    viewModel.ComplaintStatusList(res);
+            //})
+            $lib.http.get(`/users/short-list`, (err, res) => {
+                if (err) return;
+                viewModel.UserList(res);
+            })
+            $lib.bindUI(viewModel);
+        })
+    </script>
+}

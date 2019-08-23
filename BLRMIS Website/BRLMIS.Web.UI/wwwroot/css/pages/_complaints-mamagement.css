@@ -1,0 +1,25 @@
+.complaint_det-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
+.comments-section {
+  width: 100%; }
+  .comments-section .comments {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding-bottom: 5px; }
+    .comments-section .comments .comments-title {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      .comments-section .comments .comments-title strong {
+        color: #017373;
+        font-size: 14px;
+        font-weight: 700;
+        padding-right: 8px; }
+      .comments-section .comments .comments-title time {
+        color: #75A2A2;
+        font-size: 12px;
+        line-height: 21px; }

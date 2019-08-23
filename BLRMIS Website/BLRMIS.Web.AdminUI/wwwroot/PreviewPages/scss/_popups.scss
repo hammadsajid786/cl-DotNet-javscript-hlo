@@ -1,0 +1,177 @@
+
+/* Home page popup */
+.popup{
+	.modal-header{
+		border-bottom: none;
+		padding: 0;
+		background: lightgray;
+	}
+	.modal-body{ 
+		padding: 10px 30px;
+		.speaker-logo{
+			border-bottom: 1px solid $junglegreen;
+			display: inline-block;
+			vertical-align: top;
+			padding-bottom: 5px;
+			position: absolute;
+			bottom: 0;
+			a{
+				text-decoration: none;
+				color: inherit;
+			}
+			.speaker{
+				color: $junglegreen;
+				cursor: pointer;
+				padding: 0 8px;
+				font-size: 22px;
+				line-height: 26px;
+				font-weight: 300;
+			}
+		}
+		label{
+			width: 100%;
+			text-transform: capitalize;
+		}
+	}
+	.align{
+		padding-bottom: 45px;
+	}
+	.float-right{
+		right: 0;
+		img{
+			float: right;
+			transform: rotate(180deg);
+		}
+	}
+	.modal-dialog{
+		max-width: 1110px !important;
+	}
+	p{
+		font-size: 18px;	
+		font-weight: 300;	
+		line-height: 38px;
+	}
+	.custom-checkbox{
+		margin-top: 40px;
+		font-size: 14px;
+    	font-weight: 300;
+	}
+	
+}
+.bdr-right{
+	border-right: none;
+	@include media-breakpoint-up(lg) {
+		border-right: 1px solid $dustygray;
+	}
+}
+.modal-footer{
+	.disagree{ }
+	.btn-primary {
+		padding: 10px 26px;
+		border-radius: 2px; 
+		&:hover{
+			background-color: $flush-orange;
+			color: $white;
+			border: 1px solid $flush-orange;
+		}
+		@include media-breakpoint-down(sm) {
+			padding: 5px 10px ;
+		}
+	}
+	
+}
+.del-popup {
+	.modal-dialog {
+		max-width: 310px !important;
+	}
+	.modal-title {
+    margin-bottom: 0;
+    line-height: 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+		padding: 25px 5px;
+		margin: 0;
+		outline: none;
+	}
+	.close {
+		position: absolute;
+    right: 10px;
+    top: -15px;
+	}
+	span {
+		text-align: center;
+    display: block;
+    width: 100%;
+		padding: 0;
+		&.del {
+			padding: 20px 0;
+			font-size: 14px;
+			line-height: 16px;
+		}
+	}
+	.modal-footer {
+		.btn-primary{
+			padding: 10px 25px;
+		}
+	}
+}
+.modal{ 
+	z-index: 9999;;
+	}
+	#create-user-model{
+		.user-pic-holder{
+			position: relative;
+		picture{
+		width: 150px;
+		height: 150px;
+		display: inline-block;
+		background: #CCC;
+		border-radius: 50%;
+		overflow: hidden;
+			img {
+				width: 100%;
+				height: 100%;
+				}
+			}
+		}
+		.modal-content{
+			width: 630px;
+			margin: 0 auto;
+		}
+	}
+	.pic-status {
+		label {
+			display: inline-block;
+			width: auto !important;
+		}
+		display: inline-block;
+		vertical-align: middle;
+		&.custom-radio {
+			width: inherit;
+		}
+	}
+.modal-title {
+	margin-bottom: 0;
+	line-height: 0;
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 25px 5px;
+	margin: 0;
+	outline: none;
+}
+.close {
+	position: absolute;
+	right: 15px !important;
+	top: 5px !important;
+}
+.modal-body {
+	.radio-button-holder {
+		.custom-radio-popup {
+			display: block;
+			width: 100%;
+			margin-bottom: 5px;
+		}
+	}
+}

@@ -1,0 +1,63 @@
+﻿<div class="search-bar complaints-calendar-bar">
+    <div class="row">
+        <div class="col-md-6 left-sec">
+            <div class="add-user complaints-sort-holder">
+                <ul class="complaints-sort">
+                    @*<li class="lenght1">
+                            <div class="form-group">
+                                <span class="custom-dropdown">
+                                    <select class="form-control"
+                                            data-bind="
+                                                        options: DatePeriods,
+                                                        optionsText: 'Text',
+                                                        optionsValue: 'Value',
+                                                        value: SelectedPeriod"></select>
+                                </span>
+                            </div>
+                        </li>*@
+                    <li class="lenght1">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Complaint No." data-bind="value:ComplaintCodeSearch">
+                        </div>
+                    </li>
+                    <li class="lenght-dropdown">
+                        <div class="form-group">
+                            <span class="custom-dropdown">
+                                <select class="form-control"
+                                        data-bind="
+                                    options: ComplaintCategoryList,
+                                    optionsText: 'Text',
+                                    optionsValue: 'Value',
+                                    value: SelectedCategory,
+                                    optionsCaption: 'Select Type'"></select>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 rit-sec">
+            <div class="search-form">
+                <form class="form-inline">
+                    <ul class="nomargin">
+                        <li class="length length1">
+                            <div class="calendar-holder calendar-start">
+                                <input type="text" class="datepicker form-control" placeholder="Start Date" data-bind="value:StartDate">
+                                <span class="icon-calander-icon"></span>
+                            </div>
+                        </li>
+                        <li class="length length1">
+                            <div class="calendar-holder calendar-end">
+                                <input type="text" class="datepicker form-control" placeholder="End Date" data-bind="value:EndDate">
+                                <span class="icon-calander-icon"></span>
+                            </div>
+                        </li>
+                        <li class="length length2">
+                            <button type="button" id="complaintSearchButton" data-bind="click: onSearch" class="customBtn">Apply</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

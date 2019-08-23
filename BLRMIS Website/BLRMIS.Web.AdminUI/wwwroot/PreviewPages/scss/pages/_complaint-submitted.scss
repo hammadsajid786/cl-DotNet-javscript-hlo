@@ -1,0 +1,70 @@
+.complaint-submitted {
+  img {
+    margin-bottom: 10px;
+  }
+  .sub-box {
+    background: #F7F7F7;
+    padding: 50px 0;
+  }
+  p {
+    font-size: 18px;
+    line-height: 27px;
+    color: #4F4F4F;
+  }
+  h3 {
+    color: #000;
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 42px;
+  }
+  .largetext {
+    font-size: 28px;
+    font-weight: 400;
+    color: #4F4F4F;
+    line-height: 42px;
+  }
+  .phone-no {
+    line-height: 83px;
+    font-size: 55px;
+    color: #02ABAB;
+    font-weight: 900;
+  }
+  .btn-print {
+    background: #01923F;
+    border-radius: 3px;
+    color: #fff;
+    line-height: 21px;
+    font-size: 14px;
+    padding: 10px 10px;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .complaint-submitted {
+    .sub-box {
+      width: 90%;
+      margin: 0 auto;
+      padding: 30px 15px;
+    }
+    h3 {
+      font-size: 24px;
+      line-height: 30px;
+    }
+    .largetext {
+      font-size: 18px;
+      color: #4F4F4F;
+      line-height: 24px;
+    }
+    .phone-no {
+      line-height: 30px;
+      font-size: 26px;
+    }
+    p {
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .btn-print {
+      line-height: 16px;
+    }
+  }
+}
