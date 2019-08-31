@@ -20,6 +20,11 @@ namespace ConsoleApp1
 
             Employee.PromoteEmployee(empList, emp => emp.Experience > 5);
 
+            Employee.PromoteEmployee(empList, delegate (Employee emp)
+            {
+                return emp.Experience > 5;
+            });
+
             Console.ReadKey();
         }
     }
