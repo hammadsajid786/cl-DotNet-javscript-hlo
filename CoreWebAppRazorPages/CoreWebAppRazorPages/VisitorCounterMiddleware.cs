@@ -18,6 +18,7 @@ namespace CoreWebAppRazorPages
         public async Task Invoke(HttpContext context)
         {
             string visitorId = context.Request.Cookies["VisitorId"];
+
             if (visitorId == null)
             {
                 //don the necessary staffs here to save the count by one
@@ -27,6 +28,7 @@ namespace CoreWebAppRazorPages
                     Path = "/",
                     HttpOnly = true,
                     Secure = false,
+                    Expires=DateTime.Now.AddMinutes(1)
                 });
             }
 
