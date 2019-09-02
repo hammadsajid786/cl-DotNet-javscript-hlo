@@ -52,7 +52,9 @@ namespace CoreWebAppRazorPages
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseMiddleware(typeof(VisitorCounterMiddleware));
             app.UseMvc();
+
         }
     }
 }
