@@ -24,3 +24,4 @@ v10
 v11 added
 v12 supported
 v17 added
+v18 added
