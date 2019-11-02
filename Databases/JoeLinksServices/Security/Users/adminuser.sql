@@ -1,0 +1,2 @@
+CREATE USER [adminuser] WITHOUT LOGIN
+GO
