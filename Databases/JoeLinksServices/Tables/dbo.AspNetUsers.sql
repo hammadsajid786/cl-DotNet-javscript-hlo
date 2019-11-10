@@ -23,7 +23,8 @@ CREATE TABLE [dbo].[AspNetUsers]
 [LockoutEndDateUtc] [datetime] NULL,
 [LockoutEnabled] [bit] NOT NULL,
 [AccessFailedCount] [int] NOT NULL,
-[UserName] [nvarchar] (256) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
+[UserName] [nvarchar] (256) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[IsActive] [bit] NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[AspNetUsers] ADD CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED  ([Id]) ON [PRIMARY]
