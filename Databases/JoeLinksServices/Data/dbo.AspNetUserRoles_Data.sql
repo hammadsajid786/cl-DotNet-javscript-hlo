@@ -1,6 +1,6 @@
-INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (4, 1)
-INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (46, 1)
+INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (46, 3)
 INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (3, 3)
+INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (4, 1)
 INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (5, 3)
 INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (6, 3)
 INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (7, 3)
