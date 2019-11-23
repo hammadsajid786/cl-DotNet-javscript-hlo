@@ -37,7 +37,8 @@ CREATE TABLE [dbo].[jl_BusinessInfo]
 [LandLineNumber] [nvarchar] (400) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [MobileNumber] [nvarchar] (500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [BusinessHoursJson] [nvarchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-[IndustryType] [int] NULL
+[IndustryType] [int] NULL,
+[IsBusinessVerified] [bit] NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[jl_BusinessInfo] ADD CONSTRAINT [PK_jl_BusinessInfo] PRIMARY KEY CLUSTERED  ([BusinessInfoId]) ON [PRIMARY]
