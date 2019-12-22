@@ -39,8 +39,7 @@ CREATE TABLE [dbo].[jl_BusinessInfo]
 [BusinessHoursJson] [nvarchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [IndustryType] [int] NULL,
 [SmsEnabled] [bit] NULL,
-[IsBusinessVerified] [bit] NULL,
-[SmsEnabled2] [bit] NULL
+[IsBusinessVerified] [bit] NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[jl_BusinessInfo] ADD CONSTRAINT [PK_jl_BusinessInfo] PRIMARY KEY CLUSTERED  ([BusinessInfoId]) ON [PRIMARY]
