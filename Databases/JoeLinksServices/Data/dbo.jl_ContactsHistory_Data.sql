@@ -1,4 +1,12 @@
 SET IDENTITY_INSERT [dbo].[jl_ContactsHistory] ON
+INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (15, 46, 8, N'Business Card', '2019-12-10 19:47:28.207', 1, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (16, 46, 8, N'Business Card', '2019-12-10 19:47:34.277', 1, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (17, 46, 8, N'Business Card', '2019-12-10 19:48:48.673', 1, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (18, 46, 8, N'Business Card', '2019-12-10 19:48:49.060', 1, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (19, 46, 9, N'Business Card', '2019-12-10 20:02:06.387', 1, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (20, 46, 9, N'Business Card', '2019-12-10 20:02:26.353', 1, NULL, NULL, NULL, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[jl_ContactsHistory] OFF
+SET IDENTITY_INSERT [dbo].[jl_ContactsHistory] ON
 INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (1, 42, 4, N'A', '2019-09-09 00:00:00.000', 1, NULL, NULL, NULL, 5, NULL)
 INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (2, 46, 5, N'Business Card', '2019-10-31 19:19:33.527', 0, NULL, NULL, NULL, NULL, NULL)
 INSERT INTO [dbo].[jl_ContactsHistory] ([ContacHistoryId], [Id], [BusinessId], [ContextType], [Date], [Status], [card_Id], [resume_Id], [fax_Id], [email_Id], [letter_Id]) VALUES (3, 46, 5, N'Business Card', '2019-10-31 19:19:33.643', 0, NULL, NULL, NULL, NULL, NULL)
