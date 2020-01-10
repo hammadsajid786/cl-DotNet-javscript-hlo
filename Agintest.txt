@@ -1,16 +1,12 @@
-dfjsklew
-jfk
-fsdaflwef
-jkf
-fdsafldew
-jkldfsfw
-fds
-fdsa
-fdsjklf
-fdkslf
-fdsff
 
-fjdksl
-fjdskl
-jfkdsl
-VAlue 
+value
+Addded
+Mera fdsjk
+E
+fdkslf
+fdskl
+My name is Khan
+I am a friedn
+C#
+using namespace std;
+Do you understand, What i was saying too you.
