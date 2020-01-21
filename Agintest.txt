@@ -1,22 +1,5 @@
-git added
-Wallah 
-
-hjh'ghj
-hjkg
-fsdhg
-fdsklfsd
-
-
-fdjkl 2v
-jkrlwjlkfwe
-fkld
-fdsfdsfk
-fdskf
-VAlue revised
-Atonomy
-Alfa
-Wallah 
-fdsfk
-fdskf
-Beta
-Gamma
+git clone "url"
+git add -a 
+Add all updated files to que to commit
+git commit -m "message" 
+will commit all que listed file 
