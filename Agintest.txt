@@ -8,3 +8,5 @@ git fetch
 will fetch all changes only
 git pull
 will fetch and merge all changes to local branch
+
+rebase vs 
