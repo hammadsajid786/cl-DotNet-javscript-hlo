@@ -3,3 +3,8 @@ git add -a
 Add all updated files to que to commit
 git commit -m "message" 
 will commit all que listed file 
+
+git fetch 
+will fetch all changes only
+git pull
+will fetch and merge all changes to local branch
