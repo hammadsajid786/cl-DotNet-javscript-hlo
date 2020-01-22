@@ -9,4 +9,5 @@ will fetch all changes only
 git pull
 will fetch and merge all changes to local branch
 
-rebase vs 
+rebase is a type of merge 
+but on merge two branches merge and new point is maded but on rebase point is made on that branch only
