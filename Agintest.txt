@@ -20,5 +20,3 @@ git pull
 
 Migration Learning
 Git Fetch and merged
-M merged and fitted
-Because i have a contract with them so i am not able to expose that structure
