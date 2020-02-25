@@ -1,6 +1,5 @@
 git clone "url"
 git add -a 
-Add all updated files to que to commit
 git commit -m "message" 
 will commit all que listed file 
 
@@ -16,17 +15,4 @@ Doesn't mind
 Git rebase learning
 Git testing
 Git rebase Feb 2nd
-QUIT IS NO
-dfsfa
-hjhkhk
-jkh
-hjkh
-Acssfe 360
-Ascend 23
-fsdklf
-fdsjkalf
-fdsjkalfjk
-fjsdkla
-fdsfsd
-merge and rebase
-Testing These services
+
