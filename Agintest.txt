@@ -5,19 +5,11 @@ git commit -m "message"
 will commit all que listed file 
 
 git fetch 
-will fetch all changes only
 git pull
-will fetch and merge all changes to local branch
-
-rebase is a type of merge 
-but on merge two branches merge and new point is maded but on rebase point is made on that branch only
-
 NEEED TO LEARN dependency Injection Design pattern
 
 git fetch
 git pull
-dil ka darya beh e gaya
-
 Migration Learning
 Git Fetch and merged
 Doesn't mind
@@ -37,3 +29,4 @@ fdsjkalfjk
 fjsdkla
 fdsfsd
 merge and rebase
+Testing These services
