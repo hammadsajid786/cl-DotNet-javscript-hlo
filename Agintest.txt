@@ -6,4 +6,4 @@ will commit all que listed file
 git fetch 
 git pull
 NEEED TO LEARN dependency Injection Design pattern
-
+git clean -df
