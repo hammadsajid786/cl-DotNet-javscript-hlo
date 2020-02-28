@@ -7,15 +7,3 @@ git fetch
 git pull
 NEEED TO LEARN dependency Injection Design pattern
 
-git fetch
-git pull
-Migration Learning
-Git Fetch and merged
-Doesn't mind
-Git rebase learning
-Git testing
-Git rebase Feb 2nd
-
-
-git merge vs rebase
-Merged
