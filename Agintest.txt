@@ -5,7 +5,5 @@ fval added
 #include <studio.h>
 C#
 using namespace std;
-val addeed
-Gwl added
-Numer
-Alfa
+
+clearign space
