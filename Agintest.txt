@@ -1,9 +1,3 @@
-Cleaning
-Merging Files
-Rebasingva]]
-fval added
-#include <studio.h>
-C#
-using namespace std;
-
-clearign space
+Indiviuals 
+Value added
+Secretery
