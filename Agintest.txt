@@ -5,4 +5,4 @@ Val added
 val 2 addeds
 sbutr
 c#
-console.log('cal cal');
+removing values
