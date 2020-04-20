@@ -1,15 +1,1 @@
-clearing induviudal
-<h1>H1 tag added </h1>
-<h2></h2>
-Val added
-val 2 addeds
-sbutr
-c#
-removing values
-bsl gdflsg jkfdlsfsd fds
-f sda
-fdsfsf
-fdskfa
-fjksdfa
-<html>
-</html
+<html></html
