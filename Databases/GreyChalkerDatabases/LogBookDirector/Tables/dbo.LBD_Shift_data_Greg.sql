@@ -1,0 +1,33 @@
+CREATE TABLE [dbo].[LBD_Shift_data_Greg]
+(
+[ID] [int] NULL,
+[SS_1_Time] [datetime] NULL,
+[SS_1_Location_GPS] [sys].[geography] NULL,
+[SS_1_Location_DD] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_1_Location_Free] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_1_Vehicle_ID] [int] NULL,
+[SS_1_Odometer] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_1_Event] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_2_Time] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_2_Location_GPS] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_2_Location_DD] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_2_Location_Free] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_2_Vehicle_ID] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_2_Odometer] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_2_Event] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_3_Time] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_3_Location_GPS] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_3_Location_DD] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_3_Location_Free] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_3_Vehicle_ID] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_3_Odometer] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_3_Event] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_4_Time] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_4_Location_GPS] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_4_Location_DD] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_4_Location_Free] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_4_Vehicle_ID] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_4_Odometer] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SS_4_Event] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY]
+GO
