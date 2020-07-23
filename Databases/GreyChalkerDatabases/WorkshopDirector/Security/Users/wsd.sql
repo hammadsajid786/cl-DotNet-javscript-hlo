@@ -1,0 +1,2 @@
+CREATE USER [wsd] FOR LOGIN [wsd]
+GO

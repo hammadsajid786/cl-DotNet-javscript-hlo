@@ -1,0 +1,7 @@
+CREATE TABLE [dbo].[DD_States]
+(
+[state] [int] NOT NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[DD_States] ADD CONSTRAINT [PK_DD_States] PRIMARY KEY CLUSTERED  ([state]) ON [PRIMARY]
+GO
