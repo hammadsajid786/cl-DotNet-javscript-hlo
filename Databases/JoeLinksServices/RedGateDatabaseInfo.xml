@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<DatabaseInformation Version="2">
+<DatabaseInformation Version="3">
   <ScriptFileEncoding>UTF8</ScriptFileEncoding>
   <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
   <DefaultSchema>dbo</DefaultSchema>
   <DefaultUser>dbo</DefaultUser>
   <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   <DatabaseVersion>14</DatabaseVersion>
+  <CompatibilityLevel>140</CompatibilityLevel>
+  <EngineEdition>Unknown</EngineEdition>
   <IsAzure>False</IsAzure>
   <ScriptFolderType>Default</ScriptFolderType>
   <MaxDataFileSize>10485760</MaxDataFileSize>
@@ -60,34 +62,34 @@
   </WriteToFileOptions>
   <DataFileSet>
     <Count>29</Count>
-    <DataFile>dbo.jl_Email_Data.sql</DataFile>
     <DataFile>dbo.AspNetRoles_Data.sql</DataFile>
-    <DataFile>dbo.jl_Fax_Data.sql</DataFile>
-    <DataFile>dbo.jl_GuestImages_Data.sql</DataFile>
     <DataFile>dbo.AspNetUserClaims_Data.sql</DataFile>
-    <DataFile>dbo.jl_ImageGallery_Data.sql</DataFile>
     <DataFile>dbo.AspNetUserLogins_Data.sql</DataFile>
-    <DataFile>dbo.jl_Order_Data.sql</DataFile>
     <DataFile>dbo.AspNetUserRoles_Data.sql</DataFile>
     <DataFile>dbo.AspNetUsers_Data.sql</DataFile>
-    <DataFile>dbo.jl_Pakages_Data.sql</DataFile>
     <DataFile>dbo.C__MigrationHistory_Data.sql</DataFile>
-    <DataFile>dbo.jl_Profile_Data.sql</DataFile>
     <DataFile>dbo.jl_BusinessCard_Data.sql</DataFile>
-    <DataFile>dbo.jl_Resume_Data.sql</DataFile>
     <DataFile>dbo.jl_BusinessDetails_Data.sql</DataFile>
-    <DataFile>dbo.jl_TemplateDesign_Data.sql</DataFile>
     <DataFile>dbo.jl_BusinessInfo_Data.sql</DataFile>
-    <DataFile>dbo.jl_UserImages_Data.sql</DataFile>
     <DataFile>dbo.jl_BusinessLetter_Data.sql</DataFile>
-    <DataFile>dbo.jl_Users_Data.sql</DataFile>
     <DataFile>dbo.jl_ContactsHistory_Data.sql</DataFile>
-    <DataFile>dbo.regions_Data.sql</DataFile>
     <DataFile>dbo.jl_Countries_Data.sql</DataFile>
-    <DataFile>dbo.UserRoles_Data.sql</DataFile>
     <DataFile>dbo.jl_Desgins_Data.sql</DataFile>
-    <DataFile>dbo.__MigrationHistory_Data.sql</DataFile>
     <DataFile>dbo.jl_DesignFields_Data.sql</DataFile>
     <DataFile>dbo.jl_DesignTemplate_Data.sql</DataFile>
+    <DataFile>dbo.jl_Email_Data.sql</DataFile>
+    <DataFile>dbo.jl_Fax_Data.sql</DataFile>
+    <DataFile>dbo.jl_GuestImages_Data.sql</DataFile>
+    <DataFile>dbo.jl_ImageGallery_Data.sql</DataFile>
+    <DataFile>dbo.jl_Order_Data.sql</DataFile>
+    <DataFile>dbo.jl_Pakages_Data.sql</DataFile>
+    <DataFile>dbo.jl_Profile_Data.sql</DataFile>
+    <DataFile>dbo.jl_Resume_Data.sql</DataFile>
+    <DataFile>dbo.jl_TemplateDesign_Data.sql</DataFile>
+    <DataFile>dbo.jl_UserImages_Data.sql</DataFile>
+    <DataFile>dbo.jl_Users_Data.sql</DataFile>
+    <DataFile>dbo.regions_Data.sql</DataFile>
+    <DataFile>dbo.UserRoles_Data.sql</DataFile>
+    <DataFile>dbo.__MigrationHistory_Data.sql</DataFile>
   </DataFileSet>
 </DatabaseInformation>
