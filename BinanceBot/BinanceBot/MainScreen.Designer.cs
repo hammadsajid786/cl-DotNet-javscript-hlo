@@ -32,6 +32,8 @@
             this.txtBUSDSellMSLB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtOrdersExecuted = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.cbMaxOrderCountSMBL = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -47,9 +49,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtOrdersExecuted = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.btnMarketBuyLimitSell = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -100,6 +100,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(307, 236);
             this.panel1.TabIndex = 3;
+            // 
+            // txtOrdersExecuted
+            // 
+            this.txtOrdersExecuted.Enabled = false;
+            this.txtOrdersExecuted.Location = new System.Drawing.Point(177, 180);
+            this.txtOrdersExecuted.Name = "txtOrdersExecuted";
+            this.txtOrdersExecuted.Size = new System.Drawing.Size(100, 23);
+            this.txtOrdersExecuted.TabIndex = 12;
+            this.txtOrdersExecuted.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(80, 183);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(91, 15);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "Order Executed:";
             // 
             // cbMaxOrderCountSMBL
             // 
@@ -182,7 +200,7 @@
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.textBox2);
             this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.btnMarketBuyLimitSell);
             this.panel2.Location = new System.Drawing.Point(368, 23);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(281, 195);
@@ -253,32 +271,14 @@
             this.label8.TabIndex = 2;
             this.label8.Text = "Total BUSD Buy:";
             // 
-            // button1
+            // btnMarketBuyLimitSell
             // 
-            this.button1.Location = new System.Drawing.Point(21, 151);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(234, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Place Market Buy - Limit Sell";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // txtOrdersExecuted
-            // 
-            this.txtOrdersExecuted.Enabled = false;
-            this.txtOrdersExecuted.Location = new System.Drawing.Point(177, 180);
-            this.txtOrdersExecuted.Name = "txtOrdersExecuted";
-            this.txtOrdersExecuted.Size = new System.Drawing.Size(100, 23);
-            this.txtOrdersExecuted.TabIndex = 12;
-            this.txtOrdersExecuted.Text = "0";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(80, 183);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(91, 15);
-            this.label11.TabIndex = 13;
-            this.label11.Text = "Order Executed:";
+            this.btnMarketBuyLimitSell.Location = new System.Drawing.Point(21, 151);
+            this.btnMarketBuyLimitSell.Name = "btnMarketBuyLimitSell";
+            this.btnMarketBuyLimitSell.Size = new System.Drawing.Size(234, 23);
+            this.btnMarketBuyLimitSell.TabIndex = 0;
+            this.btnMarketBuyLimitSell.Text = "Place Market Buy - Limit Sell";
+            this.btnMarketBuyLimitSell.UseVisualStyleBackColor = true;
             // 
             // MainScreen
             // 
@@ -316,7 +316,7 @@
         private Label label7;
         private TextBox textBox2;
         private Label label8;
-        private Button button1;
+        private Button btnMarketBuyLimitSell;
         private ComboBox cbMaxOrderCountSMBL;
         private Label label9;
         private TextBox txtOrdersExecuted;
