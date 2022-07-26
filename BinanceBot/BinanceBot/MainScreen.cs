@@ -127,6 +127,8 @@ namespace BinanceBot
             txtBUSDSellMSLB.Enabled = enable;
             txtPurchaseMarginMSLB.Enabled = enable;
             cbMaxOrderCountSMBL.Enabled = enable;
+
+            btnMarketBuyLimitSell.Enabled = enable;
         }
     }
 }
