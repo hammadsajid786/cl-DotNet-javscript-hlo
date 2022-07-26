@@ -16,6 +16,7 @@ namespace BinanceBot
         {
             InitializeComponent();
             cbPairsMSLB.SelectedIndex = 0;
+            cbMaxOrderCountSMBL.SelectedIndex = 0;
         }
 
         private readonly string binanceApiKey = "laUY2nCE1LfjkqEemjdHzxPre09NoA1FfCfszbDC6fDd6QMoA87bEEEidiWb11UN";
@@ -25,15 +26,15 @@ namespace BinanceBot
 
         private async void btnPlaceMarketOrderMSLB_Click(object sender, EventArgs e)
         {
-
-            BinanceCustomClient customeClient = new BinanceCustomClient();
-
+            txtOrdersExecuted.Text = "0";
 
             EnableDisableFields(false);
 
             string tradePair = cbPairsMSLB.SelectedItem.ToString();
             decimal sellPriceBUSD = 50; // Override in ValidateSellPrice method
             decimal purchaseMargin = 10; // Override in ValidateSellPrice method
+
+            int maxOrderCount = int.Parse(cbMaxOrderCountSMBL.SelectedItem.ToString());
 
             if (!ValidateSellPrice(out sellPriceBUSD, out purchaseMargin))
             {
@@ -42,8 +43,9 @@ namespace BinanceBot
             }
 
             BinanceCustomClient binanceCustomClient = new BinanceCustomClient();
+            int ordersExecuted = maxOrderCount;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i <= maxOrderCount; i++)
             {
                 Tuple<bool, string> tupleResults = await binanceCustomClient.SellMarketThenBuyLimitOrder(tradePair, sellPriceBUSD, purchaseMargin);
 
@@ -51,12 +53,14 @@ namespace BinanceBot
                 {
                     if (tupleResults.Item2.Equals("Account has insufficient balance for requested action."))
                     {
+                        ordersExecuted = i - 1;
                         //Thread.Sleep(10000); // Wait 10 seconds
                         break;
                     }
 
                     if (tupleResults.Item2.Equals(Models.CustomEnums.Messages.PurchaseOrderNotCreated))
                     {
+                        ordersExecuted = i - 1;
                         MessageBox.Show(Models.CustomEnums.Messages.PurchaseOrderNotCreated);
                         break;
                     }
@@ -64,6 +68,8 @@ namespace BinanceBot
 
                 Thread.Sleep(2000); // Wait for 2 seconds.
             }
+
+            txtOrdersExecuted.Text = ordersExecuted.ToString();
 
             EnableDisableFields(true);
         }
@@ -120,6 +126,7 @@ namespace BinanceBot
             cbPairsMSLB.Enabled = enable;
             txtBUSDSellMSLB.Enabled = enable;
             txtPurchaseMarginMSLB.Enabled = enable;
+            cbMaxOrderCountSMBL.Enabled = enable;
         }
     }
 }
